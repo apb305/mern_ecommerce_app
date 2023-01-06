@@ -32,11 +32,13 @@ export function AuthProvider({ children }) {
 
   async function signup(email, password, name) {
     try {
+      //Create user with Firebase Auth
       const user = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(auth.currentUser, {
         displayName: name,
       });
-      await axios.post("http://localhost:5000/signup", {
+      //Create user in database.
+      await axios.post("/auth", {
         uid: user.user.uid,
         name: user.user.displayName,
         email: user.user.email,
@@ -88,7 +90,7 @@ export function AuthProvider({ children }) {
           prompt: "select_account",
         })
       );
-      axios.post("http://localhost:5000/signup", {
+      axios.post("/users", {
         _id: result.user.uid,
         name: result.user.displayName,
         email: result.user.email,

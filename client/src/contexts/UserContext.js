@@ -2,8 +2,6 @@ import React, { useContext, useState, useEffect } from "react";
 import {
   updateProfile,
   updateEmail,
-  sendPasswordResetEmail,
-  // signInWithRedirect,
 } from "firebase/auth";
 import axios from "axios";
 import { auth } from "../config/firebase";
@@ -28,18 +26,12 @@ export function UserProvider({ children }) {
       const token = await currentUser.getIdToken();
       const id = currentUser.uid;
       const user = await axios.post(
-        "http://localhost:5000/get-user",
+        "/users",
         { uid: id },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      // const userItems = await axios.post(
-      //   "http://localhost:5000/get-items",
-      //   { _id: id },
-      //   { headers: { Authorization: `Bearer ${token}` } }
-      // );
       if (user.data) {
         setUserDetails(user.data);
-        // getUserItems(userItems);
       }
       setGlobalLoader(false);
     } catch (error) {
@@ -58,7 +50,7 @@ export function UserProvider({ children }) {
         email: data.email,
       });
       await axios.put(
-        "http://localhost:5000/edit-user",
+        "/users",
         {
           uid: id,
           name: data.name,
@@ -99,8 +91,8 @@ export function UserProvider({ children }) {
     const id = currentUser.uid;
     setGlobalLoader(true);
     try {
-      await axios.put(
-        "http://localhost:5000/add-wishlist",
+      await axios.post(
+        "/wishlist",
         {
           uid: id,
           data: product,
@@ -118,15 +110,12 @@ export function UserProvider({ children }) {
     const id = currentUser.uid;
     setGlobalLoader(true);
     try {
-      const userWishlist = await axios.post(
-        "http://localhost:5000/get-wishlist",
-        {
-          uid: id,
-        },
+      const userData = await axios.get(
+        `/wishlist/${id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      if (userWishlist) {
-        setWishlistItems(userWishlist.data);
+      if (userData) {
+        setWishlistItems(userData.data);
         setGlobalLoader(false);
       }
     } catch (error) {
@@ -139,8 +128,8 @@ export function UserProvider({ children }) {
     const id = currentUser.uid;
     setGlobalLoader(true);
     try {
-      const userWishlist = await axios.post(
-        "http://localhost:5000/remove-wishlist",
+      await axios.put(
+        "/wishlist",
         {
           uid: id,
           _id: wishListItemId,

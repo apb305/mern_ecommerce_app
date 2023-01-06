@@ -11,7 +11,7 @@ function Cart() {
 
   const checkout = async () => {
     setLoading(true);
-    await fetch("http://localhost:5000/checkout", {
+    await fetch("/stripe", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ items: cartItems }),

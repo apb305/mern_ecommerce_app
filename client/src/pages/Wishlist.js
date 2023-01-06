@@ -8,7 +8,6 @@ import { GetCartItems } from "../contexts/CartContext";
 
 function Wishlist() {
   const [isLoading, setLoading] = useState(true);
-  const [items, setItems] = useState([]);
   const { getWishlist, wishlistItems, removeFromWishlist } = UserData();
   const { addToCart } = GetCartItems();
 

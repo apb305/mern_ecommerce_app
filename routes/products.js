@@ -5,7 +5,7 @@ require("../models/Products");
 const Products = mongoose.model("products");
 // const { cloudinary } = require("../config/cloudinary");
 
-router.get("/get-products", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const products = await Products.find();
     if (products) {
@@ -16,7 +16,7 @@ router.get("/get-products", async (req, res) => {
   }
 });
 
-router.get("/get-product/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const product = await Products.findById(id);

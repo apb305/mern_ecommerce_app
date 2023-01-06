@@ -43,7 +43,6 @@ function Product() {
     } else {
       try {
         await addToWishlist(product);
-        getWishlist();
         toast.success("Item added to Wishlist");
       } catch (error) {
         toast.error("Could not add item to your Wishlist");

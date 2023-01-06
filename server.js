@@ -7,6 +7,7 @@ const users = require("./routes/users");
 const stripe = require("./routes/stripe");
 const products = require("./routes/products");
 const auth = require("./routes/auth");
+const wishlist = require("./routes/wishlist")
 require("dotenv").config();
 
 //Connect DB
@@ -20,15 +21,16 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cors());
 
 //Use routes
-app.use(users);
-app.use(stripe);
-app.use(products);
-app.use(auth);
+app.use("/users", users);
+app.use("/wishlist", wishlist);
+app.use("/stripe", stripe);
+app.use("/products", products);
+app.use("/auth", auth);
 
 // Serve Static assets for production
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
-  app.get("/", (req, res) => {
+  app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 }

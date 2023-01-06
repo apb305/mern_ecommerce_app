@@ -8,7 +8,7 @@ const { ensureAuthenticated } = require("../middleware/auth");
 // const { cloudinary } = require("../../config/cloudinary");
 
 
-router.post("/checkout", async (req, res) => {
+router.post("/", async (req, res) => {
     const items = req.body.items;
     let lineItems = [];
     items.forEach((item)=> {
