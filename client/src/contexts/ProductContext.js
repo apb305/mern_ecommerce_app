@@ -18,6 +18,7 @@ export function ProductProvider({ children }) {
     try {
       const items = await axios.get("/products");
       setProducts(items.data);
+      console.log(items)
       setGlobalLoader(false);
     } catch (error) {
       console.log(error);
