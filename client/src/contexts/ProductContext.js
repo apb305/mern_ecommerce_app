@@ -16,9 +16,8 @@ export function ProductProvider({ children }) {
   async function getProducts() {
     setGlobalLoader(true);
     try {
-      const items = await axios.get("/products");
+      const items = await axios.get("http://localhost:5000/products");
       setProducts(items.data);
-      console.log(items)
       setGlobalLoader(false);
     } catch (error) {
       console.log(error);
@@ -28,7 +27,7 @@ export function ProductProvider({ children }) {
   async function getProduct(productId) {
     setGlobalLoader(true);
     try {
-      const item = await axios.get(`/products/${productId}`);
+      const item = await axios.get(`http://localhost:5000/products/${productId}`);
       setProduct(item.data);
       setGlobalLoader(false);
     } catch (error) {
