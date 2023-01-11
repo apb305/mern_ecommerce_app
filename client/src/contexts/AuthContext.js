@@ -38,7 +38,7 @@ export function AuthProvider({ children }) {
         displayName: name,
       });
       //Create user in database.
-      await axios.post("http://localhost:5000/auth", {
+      await axios.post("/auth", {
         uid: user.user.uid,
         name: user.user.displayName,
         email: user.user.email,
