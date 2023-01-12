@@ -44,8 +44,8 @@ router.post("/", async (req, res) => {
         line_items: lineItems,
         mode: 'payment',
         payment_method_types: ["card"],
-        success_url: "/success",
-        cancel_url: "/cart"
+        success_url: "http://localhost:3000/success",
+        cancel_url: "http://localhost:3000/cart"
       });
   
       res.send(JSON.stringify({
