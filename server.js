@@ -15,7 +15,7 @@ connectDB();
 
 //Init Middleware
 app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ limit: "50mb", extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 //Cors
 app.use(cors());
@@ -30,7 +30,7 @@ app.use("/auth", auth);
 // Serve Static assets for production
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
-  app.get("/", (req, res) => {
+  app.get("/*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
 }
