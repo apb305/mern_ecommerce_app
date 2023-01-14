@@ -16,7 +16,7 @@ export function ProductProvider({ children }) {
   async function getProducts() {
     setGlobalLoader(true);
     try {
-      const items = await axios.get("/products");
+      const items = await axios.get(`${"https://mern-ecommerce-app-12x4.onrender.com/products"}`);
       setProducts(items.data);
       setGlobalLoader(false);
     } catch (error) {
