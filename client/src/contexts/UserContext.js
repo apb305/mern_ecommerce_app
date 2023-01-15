@@ -89,7 +89,7 @@ export function UserProvider({ children }) {
     setGlobalLoader(true);
     try {
       await axios.post(
-        "http://localhost:5000/wishlist",
+        "/wishlist",
         {
           uid: id,
           data: product,
@@ -108,7 +108,7 @@ export function UserProvider({ children }) {
     setGlobalLoader(true);
     try {
       const userData = await axios.post(
-        "http://localhost:5000/users",
+        "/users",
         {
           uid: id,
         },
@@ -128,7 +128,7 @@ export function UserProvider({ children }) {
     const id = currentUser.uid;
     setGlobalLoader(true);
     try {
-      await axios.delete("http://localhost:5000/wishlist", {
+      await axios.delete("/wishlist", {
         data: {
           uid: id,
           _id: wishListItemId,
