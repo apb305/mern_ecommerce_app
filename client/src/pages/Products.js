@@ -69,7 +69,7 @@ function Products() {
                       <Card.Body>
                         <Link
                           className="text-decoration-none text-dark"
-                          to={`/products/${product._id}`}
+                          to={`/product/${product._id}`}
                         >
                           <img src={product.img} className="productImage" />
                           <Card.Title className="mt-2">
