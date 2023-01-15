@@ -1,8 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import {
-  updateProfile,
-  updateEmail,
-} from "firebase/auth";
+import { updateProfile, updateEmail } from "firebase/auth";
 import axios from "axios";
 import { auth } from "../config/firebase";
 
@@ -92,7 +89,7 @@ export function UserProvider({ children }) {
     setGlobalLoader(true);
     try {
       await axios.post(
-        "/wishlist",
+        "http://localhost:5000/wishlist",
         {
           uid: id,
           data: product,
@@ -110,12 +107,15 @@ export function UserProvider({ children }) {
     const id = currentUser.uid;
     setGlobalLoader(true);
     try {
-      const userData = await axios.get(
-        `/wishlist/${id}`,
+      const userData = await axios.post(
+        "http://localhost:5000/users",
+        {
+          uid: id,
+        },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       if (userData) {
-        setWishlistItems(userData.data);
+        setWishlistItems(userData.data.wishlist);
         setGlobalLoader(false);
       }
     } catch (error) {
@@ -128,14 +128,13 @@ export function UserProvider({ children }) {
     const id = currentUser.uid;
     setGlobalLoader(true);
     try {
-      await axios.put(
-        "/wishlist",
-        {
+      await axios.delete("http://localhost:5000/wishlist", {
+        data: {
           uid: id,
           _id: wishListItemId,
         },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setGlobalLoader(false);
     } catch (error) {
       console.log(error);

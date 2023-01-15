@@ -7,17 +7,16 @@ const { ensureAuthenticated } = require("../middleware/auth");
 // const { cloudinary } = require("../config/cloudinary");
 
 
-router.get("/:id", ensureAuthenticated, async (req, res) => {
-  try {
-    const { id } = req.params;
-    const user = await User.findOne({ uid: id });
-    if (user) {
-      res.status(200).json(user.wishlist);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-});
+// router.post("/", ensureAuthenticated, async (req, res) => {
+//   try {
+//     const user = await User.findOne({ uid: req.body.id });
+//     if (user) {
+//       res.status(200).json(user.wishlist);
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// });
 
 router.post("/", ensureAuthenticated, async (req, res) => {
   try {
@@ -32,7 +31,7 @@ router.post("/", ensureAuthenticated, async (req, res) => {
 });
 
 
-router.put("/", ensureAuthenticated, async (req, res) => {
+router.delete("/", ensureAuthenticated, async (req, res) => {
   try {
     await User.updateOne(
       { uid: req.body.uid },
