@@ -27,9 +27,9 @@ function Product() {
 
   useEffect(() => {
     loadProduct();
-    // return () => {
-    //   setProduct({});
-    // };
+    return () => {
+      setProduct({});
+    };
   }, [id]);
 
   if (!product) {

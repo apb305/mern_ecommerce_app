@@ -30,12 +30,17 @@ function Cart() {
       key={item._id}
     >
       <div className="ms-2 me-auto text-left">
-        <p className="fw-bold mb-2">{item.productName}</p>
-        <img
-          src={item.img}
-          style={{ width: 50, height: 50 }}
-          alt={item.productName}
-        ></img>
+        <Link
+          className="text-decoration-none text-dark"
+          to={`/product/${item._id}`}
+        >
+          <p className="fw-bold mb-2">{item.productName}</p>
+          <img
+            src={item.img}
+            style={{ width: 50, height: 50 }}
+            alt={item.productName}
+          ></img>
+        </Link>
         <div className="d-flex mt-2 justify-content-left">
           <i
             className="bi bi-dash-circle-fill"
