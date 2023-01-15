@@ -18,16 +18,8 @@ function Products() {
   const { currentUser } = UseAuth();
   const { addToCart } = GetCartItems();
 
-  const loadProducts = async () => {
-    try {
-      await getProducts();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    loadProducts();
+    getProducts();
   }, []);
 
   // const addToFavorites = (product) => {
@@ -77,7 +69,7 @@ function Products() {
                       <Card.Body>
                         <Link
                           className="text-decoration-none text-dark"
-                          to={`/product/${product._id}`}
+                          to={`/products/${product._id}`}
                         >
                           <img src={product.img} className="productImage" />
                           <Card.Title className="mt-2">
