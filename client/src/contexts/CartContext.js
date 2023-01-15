@@ -28,7 +28,6 @@ export function CartProvider({ children }) {
             : item
         )
       );
-      toast.success("Item quantity updated");
     } else {
       setCartItems([...cartItems, { ...product, quantity: 1 }]);
       toast.success("Item added to cart");

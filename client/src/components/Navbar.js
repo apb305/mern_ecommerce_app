@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Navbar, Container, Nav, NavDropdown, Dropdown } from "react-bootstrap";
+import { Navbar, Container, Nav, NavDropdown, Dropdown, NavbarBrand } from "react-bootstrap";
 import { getAuth } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -55,9 +55,9 @@ export default function NavigationBar() {
     <>
       <Navbar bg="light" expand="lg">
         <Container>
-          <Nav.Link className="navbar-brand" as={Link} to="/">
-            eCommerce App
-          </Nav.Link>
+          <Navbar.Brand className="navbar-brand">
+            <Link className="text-decoration-none text-dark" to="/">eCommerce App</Link>
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
