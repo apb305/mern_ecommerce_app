@@ -18,8 +18,16 @@ function Products() {
   const { currentUser } = UseAuth();
   const { addToCart } = GetCartItems();
 
+  const loadProducts = async () => {
+    try {
+      await getProducts();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    getProducts();
+    loadProducts();
   }, []);
 
   // const addToFavorites = (product) => {
