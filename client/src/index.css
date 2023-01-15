@@ -133,6 +133,15 @@ button:disabled {
   padding: 15px;
 }
 
+@font-face {
+  font-family: 'MyLocalFont';
+  src: url('/fonts/font.ttf');
+}
+@font-face {
+  font-family: 'ExternalFont';
+  src: url('https://cdn.example.com/fonts/font.ttf');
+}
+
 @keyframes loading {
   0% {
     -webkit-transform: rotate(0deg);
