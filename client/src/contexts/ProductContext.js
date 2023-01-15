@@ -16,7 +16,7 @@ export function ProductProvider({ children }) {
   async function getProducts() {
     setGlobalLoader(true);
     try {
-      const items = await axios.get("/products");
+      const items = await axios.post("/products");
       setProducts(items.data);
       setGlobalLoader(false);
     } catch (error) {
@@ -27,7 +27,7 @@ export function ProductProvider({ children }) {
   async function getProduct(productId) {
     setGlobalLoader(true);
     try {
-      const item = await axios.get(`/product/${productId}`);
+      const item = await axios.post(`/product/${productId}`);
       setProduct(item.data);
       setGlobalLoader(false);
     } catch (error) {
