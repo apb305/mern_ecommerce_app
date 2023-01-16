@@ -44,8 +44,8 @@ router.post("/", async (req, res) => {
         line_items: lineItems,
         mode: 'payment',
         payment_method_types: ["card"],
-        success_url: `${"http://localhost:3000/success" || "https://mern-ecommerce-app-client.onrender.com/success"}`,
-        cancel_url: `${"http://localhost:3000/cart" || "https://mern-ecommerce-app-client.onrender.com/cart"}`
+        success_url: `${process.env.PORT === 5000 ? "http://localhost:3000/success" : "https://mern-ecommerce-app-client.onrender.com/success"}`,
+        cancel_url: `${process.env.PORT === 5000 ? "http://localhost:3000/cart" : "https://mern-ecommerce-app-client.onrender.com/cart"}`
       });
   
       res.send(JSON.stringify({
