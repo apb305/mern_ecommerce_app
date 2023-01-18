@@ -11,6 +11,7 @@ import {
 import { LoadProducts } from "../contexts/ProductContext";
 import { UseAuth } from "../contexts/AuthContext";
 import { GetCartItems } from "../contexts/CartContext";
+import CardSkeleton from "../components/CardSkeleton";
 
 function Products() {
   const navigate = useNavigate();
@@ -54,7 +55,14 @@ function Products() {
   return (
     <>
       {globalLoader ? (
-        <Spinner />
+        // <Spinner />
+        <Container>
+          <main>
+            <div className="row row-cols-1 row-cols-md-3 g-4 mt-4">
+              <CardSkeleton />
+            </div>
+          </main>
+        </Container>
       ) : (
         <div>
           <header>
