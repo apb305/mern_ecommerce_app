@@ -55,14 +55,14 @@ function Products() {
   return (
     <>
       {globalLoader ? (
-        // <Spinner />
-        <Container>
-          <main>
-            <div className="row row-cols-1 row-cols-md-3 g-4 mt-4">
-              <CardSkeleton />
-            </div>
-          </main>
-        </Container>
+        <Spinner />
+        // <Container>
+        //   <main>
+        //     <div className="row row-cols-1 row-cols-md-3 g-4 mt-4">
+        //       <CardSkeleton />
+        //     </div>
+        //   </main>
+        // </Container>
       ) : (
         <div>
           <header>
