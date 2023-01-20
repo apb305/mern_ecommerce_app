@@ -38,7 +38,7 @@ export function AuthProvider({ children }) {
         displayName: name,
       });
       //Create user in database.
-      await axios.post("/auth", {
+      await axios.post(process.env.NODE_ENV === "development" ? `http://localhost:5000/auth` : "/auth", {
         uid: user.user.uid,
         name: user.user.displayName,
         email: user.user.email,
@@ -90,7 +90,7 @@ export function AuthProvider({ children }) {
           prompt: "select_account",
         })
       );
-      axios.post("/users", {
+      axios.post( process.env.NODE_ENV === "development" ? `http://localhost:5000/users` : "/users", {
         _id: result.user.uid,
         name: result.user.displayName,
         email: result.user.email,

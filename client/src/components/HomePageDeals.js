@@ -4,11 +4,11 @@ function HomePageDeals() {
   return (
     <div>
       <div className="container col-xxl-8 px-4">
-        <div className="row flex-lg-row-reverse align-items-center g-5 py-2">
+        <div className="row flex-lg-row-reverse align-items-center justify-content-center g-5 py-2">
           <div className="col-10 col-sm-8 col-lg-6">
             <img
               src="https://res.cloudinary.com/dq0dmnn7q/image/upload/v1672768426/ipadpro_m7ozvo.jpg"
-              className="d-block mx-lg-auto img-fluid"
+              className="img-fluid"
               alt="Bootstrap Themes"
               width="200"
               height="200"

@@ -47,11 +47,8 @@ function Home() {
           </header>
           <Container>
             <main>
-              <div className="text-center mt-4">
+              <div className="text-center">
                 <HomePageDeals />
-                <div className="d-flex justify-content-between mt-3">
-                  <div className="row g-4"></div>
-                </div>
               </div>
             </main>
           </Container>

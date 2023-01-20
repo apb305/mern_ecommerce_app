@@ -11,7 +11,7 @@ function Cart() {
 
   const checkout = async () => {
     setLoading(true);
-    await fetch("/stripe", {
+    await fetch(process.env.NODE_ENV === "development" ? `http://localhost:5000/stripe` : "/stripe", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ items: cartItems }),

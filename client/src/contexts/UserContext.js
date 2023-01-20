@@ -23,7 +23,7 @@ export function UserProvider({ children }) {
       const token = await currentUser.getIdToken();
       const id = currentUser.uid;
       const user = await axios.post(
-        "/users",
+        process.env.NODE_ENV === "development" ? `http://localhost:5000/users` : "/users",
         { uid: id },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -47,7 +47,7 @@ export function UserProvider({ children }) {
         email: data.email,
       });
       await axios.put(
-        "/users",
+        process.env.NODE_ENV === "development" ? `http://localhost:5000/users` : "/users",
         {
           uid: id,
           name: data.name,
@@ -70,7 +70,7 @@ export function UserProvider({ children }) {
     setGlobalLoader(true);
     try {
       await axios.put(
-        "/edit-profile-image",
+        process.env.NODE_ENV === "development" ? `http://localhost:5000/edit-profile-image` : "/edit-profile-image",
         {
           _id: id,
           data: base64Image,
@@ -89,7 +89,7 @@ export function UserProvider({ children }) {
     setGlobalLoader(true);
     try {
       await axios.post(
-        "/wishlist",
+        process.env.NODE_ENV === "development" ? `http://localhost:5000/wishlist` :  "/wishlist",
         {
           uid: id,
           data: product,
@@ -108,7 +108,7 @@ export function UserProvider({ children }) {
     setGlobalLoader(true);
     try {
       const userData = await axios.post(
-        "/users",
+        process.env.NODE_ENV === "development" ? `http://localhost:5000/users` : "/users",
         {
           uid: id,
         },
@@ -128,7 +128,7 @@ export function UserProvider({ children }) {
     const id = currentUser.uid;
     setGlobalLoader(true);
     try {
-      await axios.delete("/wishlist", {
+      await axios.delete( process.env.NODE_ENV === "development" ? `http://localhost:5000/wishlist` : "/wishlist", {
         data: {
           uid: id,
           _id: wishListItemId,

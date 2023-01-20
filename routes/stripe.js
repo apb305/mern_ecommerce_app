@@ -1,12 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
 require("../models/Users");
-const User = mongoose.model("users");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-const { ensureAuthenticated } = require("../middleware/auth");
-// const { cloudinary } = require("../../config/cloudinary");
-
 
 router.post("/", async (req, res) => {
     const items = req.body.items;
@@ -47,7 +42,6 @@ router.post("/", async (req, res) => {
         success_url: `${process.env.PORT === 5000 ? "http://localhost:3000/success" : "https://mern-ecommerce-app-client.onrender.com/success"}`,
         cancel_url: `${process.env.PORT === 5000 ? "http://localhost:3000/cart" : "https://mern-ecommerce-app-client.onrender.com/cart"}`
       });
-  
       res.send(JSON.stringify({
         url: session.url
     }));

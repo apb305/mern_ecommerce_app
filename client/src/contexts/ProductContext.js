@@ -15,8 +15,8 @@ export function ProductProvider({ children }) {
 
   async function getProducts() {
     setGlobalLoader(true);
-    try {
-      const items = await axios.post("/products");
+    try { 
+      const items = await axios.post(process.env.NODE_ENV === "development" ? `http://localhost:5000/products` : "/products" );
       setProducts(items.data);
       setGlobalLoader(false);
     } catch (error) {
@@ -27,7 +27,7 @@ export function ProductProvider({ children }) {
   async function getProduct(productId) {
     setGlobalLoader(true);
     try {
-      const item = await axios.post(`/product/${productId}`);
+      const item = await axios.post(process.env.NODE_ENV === "development" ? `http://localhost:5000/product/${productId}` : `/product/${productId}`);
       setProduct(item.data);
       setGlobalLoader(false);
     } catch (error) {
