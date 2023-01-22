@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
 import axios from "../config/axiosConfig";
-import { toast } from "react-toastify";
 
 const ProductContext = React.createContext();
 
