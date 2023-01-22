@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ListGroup, Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { GetCartItems } from "../contexts/CartContext";
+import axios from "../config/axiosConfig";
 
 function Cart() {
   const { cartItems, addToCart, decrement, removeSingleItem, cartTotal } =
@@ -11,17 +12,12 @@ function Cart() {
 
   const checkout = async () => {
     setLoading(true);
-    await fetch(process.env.NODE_ENV === "development" ? `http://localhost:5000/stripe` : "/stripe", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items: cartItems }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.url) {
-          window.location.assign(data.url); // Forwarding user to Stripe
-        }
-      });
+    const stripeUrl = await axios.post("/stripe", {
+      data: cartItems,
+    });
+    if (stripeUrl.data.url) {
+      window.location.assign(stripeUrl.data.url); // Forwarding user to Stripe
+    }
   };
 
   const renderedProducts = cartItems.map((item) => (

@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../config/axiosConfig";
 import { toast } from "react-toastify";
 
 const ProductContext = React.createContext();
@@ -16,7 +16,7 @@ export function ProductProvider({ children }) {
   async function getProducts() {
     setGlobalLoader(true);
     try { 
-      const items = await axios.post(process.env.NODE_ENV === "development" ? `http://localhost:5000/products` : "/products" );
+      const items = await axios.post("/products" );
       setProducts(items.data);
       setGlobalLoader(false);
     } catch (error) {
@@ -27,7 +27,7 @@ export function ProductProvider({ children }) {
   async function getProduct(productId) {
     setGlobalLoader(true);
     try {
-      const item = await axios.post(process.env.NODE_ENV === "development" ? `http://localhost:5000/product/${productId}` : `/product/${productId}`);
+      const item = await axios.post(`/product/${productId}`);
       setProduct(item.data);
       setGlobalLoader(false);
     } catch (error) {

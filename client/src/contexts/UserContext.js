@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { updateProfile, updateEmail } from "firebase/auth";
-import axios from "axios";
+import axios from "../config/axiosConfig";
 import { auth } from "../config/firebase";
 
 const UserContext = React.createContext();
@@ -23,7 +23,7 @@ export function UserProvider({ children }) {
       const token = await currentUser.getIdToken();
       const id = currentUser.uid;
       const user = await axios.post(
-        process.env.NODE_ENV === "development" ? `http://localhost:5000/users` : "/users",
+      "/users",
         { uid: id },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -47,7 +47,7 @@ export function UserProvider({ children }) {
         email: data.email,
       });
       await axios.put(
-        process.env.NODE_ENV === "development" ? `http://localhost:5000/users` : "/users",
+      "/users",
         {
           uid: id,
           name: data.name,
@@ -70,7 +70,7 @@ export function UserProvider({ children }) {
     setGlobalLoader(true);
     try {
       await axios.put(
-        process.env.NODE_ENV === "development" ? `http://localhost:5000/edit-profile-image` : "/edit-profile-image",
+       "/edit-profile-image",
         {
           _id: id,
           data: base64Image,
@@ -89,7 +89,7 @@ export function UserProvider({ children }) {
     setGlobalLoader(true);
     try {
       await axios.post(
-        process.env.NODE_ENV === "development" ? `http://localhost:5000/wishlist` :  "/wishlist",
+        "/wishlist",
         {
           uid: id,
           data: product,
@@ -108,7 +108,7 @@ export function UserProvider({ children }) {
     setGlobalLoader(true);
     try {
       const userData = await axios.post(
-        process.env.NODE_ENV === "development" ? `http://localhost:5000/users` : "/users",
+        "/users",
         {
           uid: id,
         },
@@ -128,7 +128,7 @@ export function UserProvider({ children }) {
     const id = currentUser.uid;
     setGlobalLoader(true);
     try {
-      await axios.delete( process.env.NODE_ENV === "development" ? `http://localhost:5000/wishlist` : "/wishlist", {
+      await axios.delete("/wishlist", {
         data: {
           uid: id,
           _id: wishListItemId,

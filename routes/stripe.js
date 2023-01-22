@@ -4,7 +4,7 @@ require("../models/Users");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 router.post("/", async (req, res) => {
-    const items = req.body.items;
+    const items = req.body.data;
     let lineItems = [];
     items.forEach((item)=> {
         lineItems.push(
@@ -14,24 +14,6 @@ router.post("/", async (req, res) => {
             }
         )
     });
-  
-    // const line_items = req.body.items.map((item) => {
-    //   return {
-    //     price_data: {
-    //       currency: "usd",
-    //       product_data: {
-    //         name: item.productName,
-    //         images: item.img,
-    //         description: item.productDescription,
-    //         metadata: {
-    //           id: item.id,
-    //         },
-    //       },
-    //       unit_amount: item.productPrice * 100,
-    //     },
-    //     quantity: item.quantity,
-    //   };
-    // });
   
     try {
       // Create a PaymentIntent with the order amount and currency

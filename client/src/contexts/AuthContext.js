@@ -12,7 +12,7 @@ import {
   EmailAuthProvider,
   // signInWithRedirect,
 } from "firebase/auth";
-import axios from "axios";
+import axios from "../config/axiosConfig";
 import { toast } from "react-toastify";
 import { auth } from "../config/firebase";
 
@@ -38,7 +38,7 @@ export function AuthProvider({ children }) {
         displayName: name,
       });
       //Create user in database.
-      await axios.post(process.env.NODE_ENV === "development" ? `http://localhost:5000/auth` : "/auth", {
+      await axios.post("/auth", {
         uid: user.user.uid,
         name: user.user.displayName,
         email: user.user.email,
@@ -90,7 +90,7 @@ export function AuthProvider({ children }) {
           prompt: "select_account",
         })
       );
-      axios.post( process.env.NODE_ENV === "development" ? `http://localhost:5000/users` : "/users", {
+      axios.post("/users", {
         _id: result.user.uid,
         name: result.user.displayName,
         email: result.user.email,
