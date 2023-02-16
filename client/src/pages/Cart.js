@@ -1,23 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ListGroup, Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { GetCartItems } from "../contexts/CartContext";
-import axios from "../config/axiosConfig";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCart,
+  decrement,
+  getTotal,
+  increment,
+  remove,
+} from "../features/cart/cartSlice";
+import { cartTotalPriceSelector } from "../app/selectors";
+import instance from "../config/axiosConfig";
 
 function Cart() {
-  const { cartItems, addToCart, decrement, removeSingleItem, cartTotal } =
-    GetCartItems();
-  const total = cartTotal();
+  // const {  addToCart, decrement, removeSingleItem, cartTotal } =
+  //   GetCartItems();
+  // const total = cartTotal();
   const [isLoading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const { cartItems, cartTotal } = useSelector((state) => state.cart);
+
+  useEffect(() => {
+dispatch(getTotal())
+  })
 
   const checkout = async () => {
-    setLoading(true);
-    const stripeUrl = await axios.post("/stripe", {
+    setLoading(true)
+    const stripeUrl = await instance.post("/stripe", {
       data: cartItems,
     });
     if (stripeUrl.data.url) {
       window.location.assign(stripeUrl.data.url); // Forwarding user to Stripe
     }
+    setLoading(false)
   };
 
   const renderedProducts = cartItems.map((item) => (
@@ -40,12 +55,12 @@ function Cart() {
         <div className="d-flex mt-2 justify-content-left">
           <i
             className="bi bi-dash-circle-fill"
-            onClick={() => decrement(item)}
+            onClick={() => dispatch(decrement(item._id))}
           ></i>
           <div className="mx-3">{item.quantity}</div>
           <i
             className="bi bi-plus-circle-fill"
-            onClick={() => addToCart(item)}
+            onClick={() => dispatch(increment(item._id))}
           ></i>
         </div>
       </div>
@@ -54,7 +69,7 @@ function Cart() {
         <Link
           className="text-decoration-none text-danger"
           to="#"
-          onClick={() => removeSingleItem(item)}
+          onClick={() => dispatch(remove(item._id))}
         >
           Remove
         </Link>
@@ -73,10 +88,10 @@ function Cart() {
           </ListGroup>
           <div>
             {" "}
-            {total > 0 ? (
+            {cartItems.length > 0 ? (
               <div>
                 <h3 className="fw-bold mt-3 text-center">
-                  Total: ${total.toFixed(2)}
+                  Total: ${cartTotal.toFixed(2)}
                 </h3>
                 <Button
                   disabled={isLoading}

@@ -1,27 +1,31 @@
 import React, { Fragment } from "react";
-import { Navbar, Container, Nav, NavDropdown, Dropdown, NavbarBrand } from "react-bootstrap";
-import { getAuth } from "firebase/auth";
+import { Navbar, Container, Nav, NavDropdown, Dropdown} from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { UseAuth } from "../contexts/AuthContext";
-import { GetCartItems } from "../contexts/CartContext";
+import { useDispatch, useSelector } from "react-redux";
+import { auth } from "../config/firebase";
+import { logout } from "../features/auth/authSlice";
+
 
 export default function NavigationBar() {
-  const auth = getAuth();
   const navigate = useNavigate();
-  const { cartItems } = GetCartItems();
-  // const user = useSelector((state) => state.user.user);
-  const { currentUser, logout } = UseAuth();
+  const dispatch = useDispatch();
+  const { userDetails } = useSelector((state) => state.user);
+  const { cartItems } = useSelector((state) => state.cart)
+  // const { user } = useSelector((state) => state.auth)
+  const { currentUser } = UseAuth();
+  
 
   async function onLogout() {
     try {
-      logout();
+      dispatch(logout());
+      auth.signOut();
       navigate("/login");
     } catch (error) {
       console.log(error);
     }
   }
-
+  
   const authLinks = (
     <Fragment>
       <NavDropdown.Item className=" text-dark" as={Link} to="/account-settings">

@@ -1,16 +1,27 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-require("../models/Users");
-const User = mongoose.model("users");
+require("../models/Cart");
+const Cart = mongoose.model("cart");
 const { ensureAuthenticated } = require("../middleware/auth");
 // const { cloudinary } = require("../config/cloudinary");
 
 router.post("/", ensureAuthenticated, async (req, res) => {
   try {
-    const user = await User.findOne({ uid: req.body.uid });
-    if (user) {
-      res.status(200).json(user.wishlist);
+    const cartExits = await Cart.findOne({ uid: req.body.uid });
+    if (cartExits) {
+     const updatedCart = [cartExits, ...req.body.items]
+      await Cart.updateOne(
+        { uid: req.body.uid },
+        { $set: { items: updatedCart } }
+      );
+    } else {
+      const cart = new Cart({
+        uid: req.body.uid,
+        items: req.body.items,
+      });
+      cart.save();
+      res.status(200).json(cart);
     }
   } catch (error) {
     console.log(error);
@@ -19,12 +30,10 @@ router.post("/", ensureAuthenticated, async (req, res) => {
 
 router.put("/", ensureAuthenticated, async (req, res) => {
   try {
-   await User.updateOne(
+    await Cart.updateOne(
       { uid: req.body.uid },
       { $addToSet: { wishlist: req.body.data } }
     );
-    const user = User.findOne({ uid: req.body.uid });
-    res.status(200).json(user.wishlist);
   } catch (error) {
     console.log(error);
   }
@@ -32,12 +41,11 @@ router.put("/", ensureAuthenticated, async (req, res) => {
 
 router.delete("/", ensureAuthenticated, async (req, res) => {
   try {
-   await User.updateOne(
+    await User.updateOne(
       { uid: req.body.uid },
       { $pull: { wishlist: { _id: req.body._id } } }
     );
-    const user = User.findOne({ uid: req.body.uid });
-    res.status(200).json(user.wishlist);
+    res.status(200).json("Success");
   } catch (error) {
     console.log(error);
   }

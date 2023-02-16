@@ -5,11 +5,13 @@ import {
   Form,
   Accordion,
 } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { UserData } from "../contexts/UserContext";
+import { getUserDetails, updateUserDetails } from "../features/user/user-thunk";
 
 function AccountDetails() {
-  const { loadUser, globalLoader, userDetails, updateUser } = UserData();
+  const dispatch = useDispatch()
+  const { userDetails, isLoading } = useSelector((state) => state.user)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -17,13 +19,11 @@ function AccountDetails() {
 
   const { name, email } = formData;
 
-  const onSubmit = async () => {
+  const onSubmit = async (e) => {
+    e.preventDefault();
     try {
-      await updateUser({
-        name: name,
-        email: email,
-      });
-      loadUser();
+    dispatch(updateUserDetails(formData))
+     dispatch(getUserDetails());
       toast.success("Your profile has been updated");
       setFormData({
         name: "",
@@ -77,10 +77,10 @@ function AccountDetails() {
               size="sm"
               className="w-100"
               type="button"
-              disabled={globalLoader}
+              disabled={isLoading}
               onClick={onSubmit}
             >
-              {globalLoader ? "Please wait..." : "Save"}
+              {isLoading ? "Please wait..." : "Save"}
             </Button>
           </div>
         </Accordion.Body>

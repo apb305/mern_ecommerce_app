@@ -1,31 +1,33 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
-  uid: {
-    type: String,
-    required: true
+const UserSchema = new Schema(
+  {
+    uid: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: [true, "Please add your name"],
+    },
+    email: {
+      type: String,
+      required: [true, "Please add an email"],
+    },
+    phone: {
+      type: String,
+    },
+    wishlist: {
+      type: Array,
+    },
+    isAdmin: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
-  name: {
-    type: String,
-    required: [true, "Please add your name"],
-  },
-  email: {
-    type: String,
-    required: [true, "Please add an email"],
-  },
-  phone: {
-    type: String,
-  },
-  photoURL: {
-    type: String,
-  },
-  photoId: {
-    type: String,
-  },
-  wishlist: {
-    type: Array
-  }
-});
+  { timestamps: true }
+);
 
-module.exports = mongoose.model("users", userSchema);
+module.exports = mongoose.model("users", UserSchema);

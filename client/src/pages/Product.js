@@ -1,35 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Container, Tab, Tabs } from "react-bootstrap";
-import { useParams, Navigate, useNavigate, Link } from "react-router-dom";
+import { useParams, Navigate, useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
-import { LoadProducts } from "../contexts/ProductContext";
-import { GetCartItems } from "../contexts/CartContext";
 import { UseAuth } from "../contexts/AuthContext";
-import { UserData } from "../contexts/UserContext";
+import { useSelector, useDispatch } from "react-redux";
+import { getProduct } from "../features/products/products-thunk";
+import { addToCart } from "../features/cart/cartSlice";
+import { addToUserWishlist } from "../features/wishlist/wishlist-thunk";
 
 function Product() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { getProduct, product, globalLoader, setProduct } = LoadProducts();
-  const { addToCart } = GetCartItems();
+  const { product, isLoading } = useSelector((state) => state.products)
+  // const { user } = useSelector((state) => state.auth)
   const { currentUser } = UseAuth();
-  const { addToWishlist, wishlistItems, getWishlist, removeFromWishlist } =
-    UserData();
-
-  const loadProduct = async () => {
-    try {
-      await getProduct(id);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    loadProduct();
-    return () => {
-      setProduct({});
-    };
+   dispatch(getProduct(id))
   }, [id]);
 
   if (!product) {
@@ -42,7 +31,7 @@ function Product() {
       navigate("/login");
     } else {
       try {
-        await addToWishlist(product);
+        dispatch(addToUserWishlist(product))
         toast.success("Item added to Wishlist");
       } catch (error) {
         toast.error("Could not add item to your Wishlist");
@@ -81,7 +70,7 @@ function Product() {
 
   return (
     <Container>
-      {globalLoader ? (
+      {isLoading ? (
         <Spinner />
       ) : (
         <div>
@@ -107,7 +96,7 @@ function Product() {
                     <button
                       type="button"
                       className="btn btn-dark btn-sm px-4 me-md-2"
-                      onClick={() => addToCart(product)}
+                      onClick={() => dispatch(addToCart(product))} 
                     >
                       Add to cart
                     </button>

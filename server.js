@@ -9,6 +9,8 @@ const products = require("./routes/products");
 const product = require("./routes/product")
 const auth = require("./routes/auth");
 const wishlist = require("./routes/wishlist")
+const cart = require("./routes/cart")
+app.use(express.static('public'))
 require("dotenv").config();
 
 //Connect DB
@@ -28,6 +30,7 @@ app.use("/stripe", stripe);
 app.use("/product", product);
 app.use("/products", products);
 app.use("/auth", auth);
+app.use("/cart", cart)
 
 // Serve Static assets for production
 if (process.env.NODE_ENV === "production") {

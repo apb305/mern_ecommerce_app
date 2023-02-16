@@ -15,6 +15,9 @@ import {
 import axios from "../config/axiosConfig";
 import { toast } from "react-toastify";
 import { auth } from "../config/firebase";
+import { useDispatch } from "react-redux";
+import { setAuthUser } from "../features/auth/authSlice";
+import { getUserDetails } from "../features/user/user-thunk";
 
 const AuthContext = React.createContext();
 
@@ -29,6 +32,7 @@ export function AuthProvider({ children }) {
   const [userDetails, setUserDetails] = useState({});
   const [loading, setLoading] = useState(true);
   const [globalLoader, setGlobalLoader] = useState(true);
+  const dispatch = useDispatch();
 
   async function signup(email, password, name) {
     try {
@@ -67,11 +71,14 @@ export function AuthProvider({ children }) {
         user,
         currentCredentials
       );
-     const updatedPassword = updatePassword((await reauthenticated).user, newPassword);
-     if(updatedPassword) {
-      console.log(updatedPassword)
-      toast.success("Your password has been updated");
-     }  
+      const updatedPassword = updatePassword(
+        (await reauthenticated).user,
+        newPassword
+      );
+      if (updatedPassword) {
+        console.log(updatedPassword);
+        toast.success("Your password has been updated");
+      }
     } catch (error) {
       toast.error("Could not update password");
     }
@@ -104,8 +111,16 @@ export function AuthProvider({ children }) {
   }
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged( async (user) => {
       setCurrentUser(user);
+      if (user) {
+        dispatch(
+          setAuthUser({ name: user.displayName,  uid: user.uid, })
+        );
+        dispatch(getUserDetails())
+      } else {
+        dispatch(setAuthUser({ name: null, uid: null, }));
+      }
       setLoading(false);
     });
     return unsubscribe;

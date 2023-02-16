@@ -2,7 +2,7 @@ module.exports = {
     ensureAuthenticated: function (req, res, next) {
       const admin = require("firebase-admin");
       const serviceAccount = require("../config/firebase");
-  
+
       if (admin.apps.length === 0) {
         admin.initializeApp({
           credential: admin.credential.cert(serviceAccount),
@@ -13,9 +13,9 @@ module.exports = {
         : null;
   
       if (!tokenString) {
-        res.send("No header provided");
+        res.send('Unauthorized');
       } else if (!tokenString[1]) {
-        res.send("No token provided");
+        res.send('Unauthorized');
       } else {
         const { getAuth } = require("firebase-admin/auth");
         getAuth()
@@ -31,4 +31,3 @@ module.exports = {
       }
     },
   };
-  

@@ -26,8 +26,7 @@ router.put("/", ensureAuthenticated, async (req, res) => {
     user.bio = req.body.bio ? req.body.bio : user.bio;
     await user.save();
     if (user) {
-      //   res.json(user);
-      res.status(200).send("Success");
+      res.status(200).json(user);
     }
   } catch (error) {
     console.log(error);

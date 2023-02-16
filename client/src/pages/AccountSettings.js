@@ -11,13 +11,16 @@ import {
   Accordion,
 } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { UserData } from "../contexts/UserContext";
 import AccountDetails from "../components/AccountDetails";
 import AccountSecurity from "../components/AccountSecurity";
+import { getUserDetails } from "../features/user/user-thunk";
+import { useDispatch, useSelector } from "react-redux";
 
 function Profile() {
-  const { loadUser, globalLoader, userDetails, updateUser } = UserData();
-  const [isLoading, setLoading] = useState(true);
+  // const { loadUser, globalLoader, userDetails, updateUser } = UserData();
+  const { isLoading, userDetails } = useSelector((state) => state.user)
+  const dispatch = useDispatch()
+  // const [isLoading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -26,21 +29,21 @@ function Profile() {
   const { name, email } = formData;
 
   useEffect(() => {
-    const getUserProfile = async () => {
-      try {
-        loadUser();
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getUserProfile();
+    // const getUserProfile = async () => {
+    //   try {
+    //     loadUser();
+    //     setLoading(false);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+    // getUserProfile();
+    dispatch(getUserDetails())
   }, []);
 
   const onSubmit = async () => {
-    setLoading(true);
     try {
-      loadUser();
+      // loadUser();
       toast.success("Your profile has been updated");
       setFormData({
         name: "",
@@ -49,12 +52,11 @@ function Profile() {
     } catch (error) {
       toast.error("Could not update profile details");
     }
-    setLoading(false);
   };
 
   return (
     <>
-      {globalLoader ? (
+      {isLoading ? (
         <Spinner />
       ) : (
         <Container>

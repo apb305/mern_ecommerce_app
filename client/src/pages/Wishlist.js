@@ -1,40 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Button, Container, ListGroup } from "react-bootstrap";
 import Spinner from "../components/Spinner";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import { UserData } from "../contexts/UserContext";
-import { GetCartItems } from "../contexts/CartContext";
+import {
+  getUserWishlist,
+  removeFromUserWishlist,
+} from "../features/wishlist/wishlist-thunk";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../features/cart/cartSlice";
 
 function Wishlist() {
-  const [isLoading, setLoading] = useState(true);
-  const { getWishlist, wishlistItems, removeFromWishlist } = UserData();
-  const { addToCart } = GetCartItems();
+  
+  const dispatch = useDispatch();
+  const { wishlist, isLoading } = useSelector((state) => state.wishlist);
 
-  const getUserWishlist = async () => {
-    try {
-      await getWishlist();
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    setLoading(true);
-    getUserWishlist();
-  }, []);
-
-  const remove = async (productId) => {
-    try {
-      await removeFromWishlist(productId);
-      getWishlist();
-      toast.success("Item removed from Wishlist");
-    } catch (error) {
-      toast.error("Could not remove item from your Wishlist");
-      console.log(error);
-    }
-  };
+  useEffect(() =>{
+    dispatch(getUserWishlist());
+  },[])
 
   return (
     <>
@@ -48,8 +30,8 @@ function Wishlist() {
           <main>
             <Container>
               <ListGroup as="ol" className="mb-5">
-                {wishlistItems.length > 0 ? (
-                  wishlistItems.map((product) => (
+                {wishlist.length > 0 ? (
+                  wishlist.map((product) => (
                     <ListGroup.Item
                       as="li"
                       className="d-flex justify-content-between align-items-start"
@@ -60,7 +42,9 @@ function Wishlist() {
                           className="text-decoration-none text-dark"
                           to={`/product/${product._id}`}
                         >
-                          <div className="fw-bold mb-2">{product.productName}</div>
+                          <div className="fw-bold mb-2">
+                            {product.productName}
+                          </div>
                           <img
                             src={product.img}
                             style={{ width: 50, height: 50 }}
@@ -71,21 +55,17 @@ function Wishlist() {
                         <div className="mt-2 justify-content-left">
                           <Button
                             variant="dark text-center btn-sm"
-                            onClick={() => addToCart(product)}
+                            onClick={() => dispatch(addToCart(product))}
                           >
                             Add to cart
                           </Button>
                         </div>
                       </div>
-                      {/* <Badge bg="primary" pill>
-                      14
-                    </Badge> */}
-
                       <div>
                         <Link
                           to="#"
                           className="text-decoration-none text-danger"
-                          onClick={() => remove(product._id)}
+                          onClick={() => dispatch(removeFromUserWishlist(product._id))}
                         >
                           Remove
                         </Link>

@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Button, Card, Form, FormGroup, Accordion } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { UseAuth } from "../contexts/AuthContext";
-import { UserData } from "../contexts/UserContext";
+// import { UserData } from "../contexts/UserContext";
 
 function AccountSecurity() {
   const { updateUserPassword, currentUser } = UseAuth();
-  const { globalLoader } = UserData();
+  // const { globalLoader } = UserData();
+  const [globalLoader, setGlobalLoader] = useState(false)
   const [formData, setFormData] = useState({
     newPassword: "",
     passwordConfirm: "",
@@ -17,6 +18,7 @@ function AccountSecurity() {
 
   const onSubmit = async (event) => {
     event.preventDefault();
+    setGlobalLoader(true)
     if (newPassword !== passwordConfirm) {
       return toast.error("Passwords do not match");
     }
@@ -33,6 +35,7 @@ function AccountSecurity() {
         passwordConfirm: "",
         currentPassword: "",
       });
+      setGlobalLoader(false)
   };
 
   const onChange = (e) => {

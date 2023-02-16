@@ -1,37 +1,32 @@
-import { Card, Button, Container, Image } from "react-bootstrap";
+import { Card, Button, Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getProducts } from "../features/products/products-thunk";
+import { addToCart } from "../features/cart/cartSlice";
+import { addToUserWishlist, getUserWishlist, removeFromUserWishlist } from "../features/wishlist/wishlist-thunk";
 import { toast } from "react-toastify";
-import {
-  addToUserWishlist,
-  getUserWishlist,
-  removeFromUserWishlist,
-} from "../features/user/userSlice";
-import { LoadProducts } from "../contexts/ProductContext";
-import { UseAuth } from "../contexts/AuthContext";
-import { GetCartItems } from "../contexts/CartContext";
-import CardSkeleton from "../components/CardSkeleton";
 
 function Products() {
   const navigate = useNavigate();
-  const { getProducts, products, globalLoader } = LoadProducts();
-  const { currentUser } = UseAuth();
-  const { addToCart } = GetCartItems();
+  const { products, isLoading } = useSelector((state) => state.products)
+  const dispatch = useDispatch()
+  const { userDetails } = useSelector((state) => state.user)
+
 
   useEffect(() => {
-    getProducts();
+    dispatch(getProducts())
   }, []);
 
   // const addToFavorites = (product) => {
-  //   if (!currentUser) {
+  //   if (!userDetails) {
   //     toast.error("Please login to use this feature");
   //     navigate("/login");
   //   } else {
   //     try {
-  //       const item = { product: product, id: currentUser.uid };
-  //       dispatch(addToUserWishlist(item));
-  //       dispatch(getUserWishlist(currentUser.uid));
+  //       dispatch(addToUserWishlist(product));
+  //       dispatch(getUserWishlist(userDetails.uid));
   //       toast.success("Item added to Wishlist");
   //     } catch (error) {
   //       toast.error("Could not add item to your Wishlist");
@@ -42,10 +37,9 @@ function Products() {
 
   // const removeFromWishlist = (product) => {
   //   try {
-  //     const item = { product: product, id: currentUser.uid };
-  //     dispatch(removeFromUserWishlist(item));
-  //     dispatch(getUserWishlist(currentUser.uid));
-  //     toast.success("Item removed from Wishlist");
+  //     dispatch(removeFromUserWishlist(product));
+  //     dispatch(getUserWishlist(userDetails.uid));
+  //     // toast.success("Item removed from Wishlist");
   //   } catch (error) {
   //     toast.error("Could not remove item from your Wishlist");
   //     console.log(error);
@@ -54,7 +48,7 @@ function Products() {
 
   return (
     <>
-      {globalLoader ? (
+      {isLoading ? (
         <Spinner />
         // <Container>
         //   <main>
@@ -89,25 +83,25 @@ function Products() {
                         </Link>
                         <Button
                           variant="dark text-center btn-sm mt-3"
-                          onClick={() => addToCart(product)}
+                          onClick={() => dispatch(addToCart(product))}
                         >
                           Add to cart
                         </Button>
                       </Card.Body>
 
                       {/* <div className="mb-2">
-          {user && wishlist.find((item) => item.id === product.id) ? (
+          {userDetails.wishlist.find((item) => item._id === product._id) ? (
             <Link
-            to="/wishlist"
+            // to="/wishlist"
               className="text-decoration-none"
-              // onClick={() => removeFromWishlist(product)}
+              onClick={() => removeFromWishlist(product._id)}
             >
-               Saved to Wishlist
+               Remove from Wishlist
             </Link>
           ) : (
             <button
               type="button"
-              disabled={loading}
+              disabled={isLoading}
               className="btn btn-outline-dark btn-sm px-4"
               onClick={() => addToFavorites(product)}
             >
