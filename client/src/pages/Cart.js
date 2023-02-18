@@ -3,36 +3,30 @@ import { ListGroup, Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addToCart,
   decrement,
   getTotal,
   increment,
   remove,
 } from "../features/cart/cartSlice";
-import { cartTotalPriceSelector } from "../app/selectors";
 import instance from "../config/axiosConfig";
 
 function Cart() {
-  // const {  addToCart, decrement, removeSingleItem, cartTotal } =
-  //   GetCartItems();
-  // const total = cartTotal();
   const [isLoading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { cartItems, cartTotal } = useSelector((state) => state.cart);
 
   useEffect(() => {
-dispatch(getTotal())
-  })
+    dispatch(getTotal());
+  });
 
   const checkout = async () => {
-    setLoading(true)
+    setLoading(true);
     const stripeUrl = await instance.post("/stripe", {
       data: cartItems,
     });
     if (stripeUrl.data.url) {
       window.location.assign(stripeUrl.data.url); // Forwarding user to Stripe
     }
-    setLoading(false)
   };
 
   const renderedProducts = cartItems.map((item) => (

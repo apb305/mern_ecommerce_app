@@ -12,12 +12,14 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Cart from "./pages/Cart";
 import Product from "./pages/Product";
+import Success from "./pages/Success";
 import ForgotPassword from "./pages/ForgotPassword";
 import AccountSettings from "./pages/AccountSettings";
 import PrivateRoute from "./components/PrivateRoute";
 import Wishlist from "./pages/Wishlist";
 import ErrorPage from "./pages/ErrorPage";
 import { AuthProvider } from "./contexts/AuthContext";
+
 
 function App() {
   return (
@@ -39,6 +41,7 @@ function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/product/:id" element={<Product />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/success" element={<Success />} />
             <Route path="*" element={<ErrorPage />} />
           </Routes>
           <Footer />
