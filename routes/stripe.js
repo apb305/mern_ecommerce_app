@@ -28,8 +28,8 @@ router.post("/", async (req, res) => {
       // automatic_tax: {
       //   enabled: true
       // },
-      success_url: `${process.env.HOST_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.HOST_URL}/cart`,
+      success_url: `${process.env.SUCCESS_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.SUCCESS_URL}/cart`,
     });
     res.send(
       JSON.stringify({
