@@ -45,10 +45,10 @@ router.post("/", async (req, res) => {
   }
 });
 
-// router.post("/order", async (req, res) =>{
-//   const session = await stripe.checkout.sessions.retrieve(req.body.sessionId);
-//   const customer = await stripe.customers.retrieve(session.customer);
-//   res.status(200).json(customer)
-// })
+router.post("/order", async (req, res) =>{
+  const session = await stripe.checkout.sessions.retrieve(req.body.sessionId);
+  const customer = await stripe.customers.retrieve(session.customer);
+  res.status(200).json(customer)
+})
 
 module.exports = router;
