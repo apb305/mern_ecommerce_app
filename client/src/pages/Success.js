@@ -24,6 +24,7 @@ function Success() {
     } else {
       setLoading(true);
       const res = await instance.post("/stripe/order", { sessionId: sessionId });
+      console.log(res.data.name)
       setOrderDetails({
         orderName: res.data.name,
         orderEmail: res.data.email,
