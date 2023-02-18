@@ -10,7 +10,7 @@ const product = require("./routes/product")
 const auth = require("./routes/auth");
 const wishlist = require("./routes/wishlist")
 const cart = require("./routes/cart")
-app.use(express.static('public'))
+// app.use(express.static('public'))
 require("dotenv").config();
 
 //Connect DB
