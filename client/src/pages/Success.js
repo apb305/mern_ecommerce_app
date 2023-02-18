@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import instance from "../config/axiosConfig";
+import { clearCart } from "../features/cart/cartSlice";
+
 
 function Success() {
   const [orderDetails, setOrderDetails] = useState({
@@ -12,6 +15,7 @@ function Success() {
   const [isLoading, setLoading] = useState(null);
   let urlParams = new URLSearchParams(window.location.search);
   let sessionId = urlParams.get("session_id");
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const confirmOrder = async () => {
@@ -30,6 +34,7 @@ function Success() {
 
   useEffect(async () => {
     confirmOrder();
+    dispatch(clearCart())
   }, []);
 
   return (
