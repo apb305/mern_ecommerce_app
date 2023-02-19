@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify"
 
 const initialState = {
   cartItems: [],
@@ -16,11 +17,13 @@ export const cartSlice = createSlice({
       );
       if (itemAlreadyExists) {
         itemAlreadyExists.quantity++;
+        toast.success("Item added to cart")
       } else {
         state.cartItems.push({
           ...action.payload,
           quantity: 1,
         });
+        toast.success("Item added to cart")
       }
     },
     increment: (state, action) => {
