@@ -33,7 +33,7 @@ function Success() {
     setLoading(false);
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     confirmOrder();
     dispatch(clearCart())
   }, []);
