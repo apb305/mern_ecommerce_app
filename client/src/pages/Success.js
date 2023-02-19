@@ -23,8 +23,8 @@ function Success() {
       navigate("/products");
     } else {
       setLoading(true);
+      console.log(sessionId)
       const res = await instance.post("/stripe/order", { sessionId: sessionId });
-      console.log(res.data.name)
       setOrderDetails({
         orderName: res.data.name,
         orderEmail: res.data.email,
