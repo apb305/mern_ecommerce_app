@@ -52,8 +52,8 @@ function Success() {
             <main>
               <div className="container text-center mt-4">
                 <p className="mt-4">
-                  You will receive an order confirmation email at{" "}
-                  {orderDetails.orderEmail} with details of your order. If you
+                  A confirmation email has been sent to{" "}
+                  {orderDetails.orderEmail}. If you
                   have any questions, please email
                   <a
                     className="text-decoration-none"

@@ -18,7 +18,7 @@ export const getUserWishlist = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   }
 );
@@ -39,7 +39,7 @@ export const addToUserWishlist = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   }
 );

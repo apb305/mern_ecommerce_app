@@ -9,6 +9,7 @@ const products = require("./routes/products");
 const product = require("./routes/product")
 const auth = require("./routes/auth");
 const wishlist = require("./routes/wishlist")
+const reviews = require("./routes/reviews")
 const cart = require("./routes/cart")
 // app.use(express.static('public'))
 require("dotenv").config();
@@ -29,6 +30,7 @@ app.use("/wishlist", wishlist);
 app.use("/stripe", stripe);
 app.use("/product", product);
 app.use("/products", products);
+app.use("/reviews", reviews);
 app.use("/auth", auth);
 app.use("/cart", cart)
 
@@ -40,5 +42,5 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`Server started on port ${port}`));

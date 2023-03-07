@@ -8,7 +8,7 @@ export const getProducts = createAsyncThunk(
       const response = await instance.post("/products");
       return response.data;
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   }
 );
@@ -18,6 +18,6 @@ export const getProduct = createAsyncThunk("product/getProduct", async (id) => {
     const response = await instance.post(`/product/${id}`);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 });

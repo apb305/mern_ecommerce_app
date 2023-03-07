@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { Container, Tab, Tabs } from "react-bootstrap";
-import { useParams, Navigate, useNavigate } from "react-router-dom";
+import { Button, Container, Tab, Tabs } from "react-bootstrap";
+import { useParams, Navigate, useNavigate, Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
 import { UseAuth } from "../contexts/AuthContext";
@@ -8,17 +8,21 @@ import { useSelector, useDispatch } from "react-redux";
 import { getProduct } from "../features/products/products-thunk";
 import { addToCart } from "../features/cart/cartSlice";
 import { addToUserWishlist } from "../features/wishlist/wishlist-thunk";
+import { getReviews } from "../features/reviews/review-thunk";
+import ReviewForm from "../components/ReviewForm";
 
 function Product() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { product, isLoading } = useSelector((state) => state.products)
+  const { product, isLoading } = useSelector((state) => state.products);
+  const { productReviews } = useSelector((state) => state.reviews);
   // const { user } = useSelector((state) => state.auth)
   const { currentUser } = UseAuth();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-   dispatch(getProduct(id))
+    dispatch(getProduct(id));
+    dispatch(getReviews(id));
   }, [id]);
 
   if (!product) {
@@ -31,42 +35,13 @@ function Product() {
       navigate("/login");
     } else {
       try {
-        dispatch(addToUserWishlist(product))
+        dispatch(addToUserWishlist(product));
         toast.success("Item added to Wishlist");
       } catch (error) {
         toast.error("Could not add item to your Wishlist");
       }
     }
   };
-
-  // const remove = async (productId) => {
-  //   try {
-  //    await removeFromWishlist(productId);
-  //     getWishlist();
-  //     toast.success("Item removed from Wishlist");
-  //   } catch (error) {
-  //     toast.error("Could not remove item from your Wishlist");
-  //     console.log(error);
-  //   }
-  // };
-
-  // const userWishlist = <>{wishlistItems.find((item) => item._id === product._id) ? (
-  //   <Link
-  //     to="/wishlist"
-  //     className="text-decoration-none"
-  //     // onClick={() => remove(product._id)}
-  //   >
-  //     Saved to Wishlist
-  //   </Link>
-  // ) : (
-  //   <button
-  //     type="button"
-  //     className="btn btn-outline-secondary btn-sm px-4"
-  //     onClick={() => addToFavorites(product)}
-  //   >
-  //     <i className="bi bi-heart mb-1"></i> Add to Wishlist
-  //   </button>
-  //  )} </>
 
   return (
     <Container>
@@ -96,7 +71,7 @@ function Product() {
                     <button
                       type="button"
                       className="btn btn-dark btn-sm px-4 me-md-2"
-                      onClick={() => dispatch(addToCart(product))} 
+                      onClick={() => dispatch(addToCart(product))}
                     >
                       Add to cart
                     </button>
@@ -119,7 +94,62 @@ function Product() {
                   {product.productDescription}
                 </Tab>
                 <Tab eventKey="reviews" title="Reviews">
-                  No Reviews
+                  <div className="row d-flex justify-content-center">
+                    <div className="">
+                      <div className="text-dark">
+                        {/* Start of the review */}
+                        {productReviews.length > 0 ? (
+                          productReviews.map((review) => (
+                            <div className="border mb-3 p-4" key={review._id}>
+                              <div className="d-flex flex-start">
+                                <div>
+                                  <h5 className="fw-bold mb-1">
+                                    {review.title}
+                                  </h5>
+                                  <div className="d-flex align-items-center mb-3">
+                                    <p className="mb-0">
+                                      <small>Maggie M. - March 07, 2021</small>
+                                    </p>
+                                    <a href="#!" className="link-muted">
+                                      <i className="fas fa-pencil-alt ms-2"></i>
+                                    </a>
+                                    <a href="#!" className="link-muted">
+                                      <i className="fas fa-redo-alt ms-2"></i>
+                                    </a>
+                                    <a href="#!" className="link-muted">
+                                      <i className="fas fa-heart ms-2"></i>
+                                    </a>
+                                  </div>
+                                  <p className="mb-0">{review.body}</p>
+                                </div>
+                              </div>
+                            </div>
+                          ))
+                        ) : (
+                          <div>
+                            <p className="fw-bold text-center mt-4">
+                              No reviews available
+                            </p>
+                            <div className="mt-5">
+                            <ReviewForm />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  {productReviews.length > 0 ? (
+                    <div className="text-center">
+                      <Link
+                        className="btn btn-sm btn-primary"
+                        to={`/reviews/product/${product._id}`}
+                      >
+                        See All Reviews
+                      </Link>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </Tab>
               </Tabs>
             </div>

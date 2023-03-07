@@ -19,7 +19,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import Wishlist from "./pages/Wishlist";
 import ErrorPage from "./pages/ErrorPage";
 import { AuthProvider } from "./contexts/AuthContext";
-
+import Reviews from "./pages/Reviews";
 
 function App() {
   return (
@@ -40,6 +40,7 @@ function App() {
             </Route>
             <Route path="/products" element={<Products />} />
             <Route path="/product/:id" element={<Product />} />
+            <Route path="/reviews/product/:id" element={<Reviews />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/success" element={<Success />} />
             <Route path="*" element={<ErrorPage />} />
