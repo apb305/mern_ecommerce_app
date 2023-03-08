@@ -21,7 +21,7 @@ function Product() {
 
   useEffect(() => {
     dispatch(getProduct(id));
-    // dispatch(getReviews(id));
+    dispatch(getReviews(id));
   }, [id, dispatch]);
 
   if (!product) {
