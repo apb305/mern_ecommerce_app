@@ -5,6 +5,7 @@ import { UseAuth } from "../contexts/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "../config/firebase";
 import { logout } from "../features/auth/authSlice";
+import { toast } from "react-toastify";
 
 
 export default function NavigationBar() {
@@ -20,7 +21,7 @@ export default function NavigationBar() {
     try {
       dispatch(logout());
       auth.signOut();
-      navigate("/login");
+      toast.success("You have logged out successfully")
     } catch (error) {
       console.log(error);
     }

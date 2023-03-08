@@ -26,14 +26,14 @@ const rootReducer = combineReducers({
   reviews: reviewReducer,
   auth: authReducer,
   user: userReducer,
-  wishlist: wishlistReducer
+  wishlist: wishlistReducer,
 });
 
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: [ 'wishlist', 'user', 'reviews' ]
+  blacklist: ["wishlist", "user", "reviews"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

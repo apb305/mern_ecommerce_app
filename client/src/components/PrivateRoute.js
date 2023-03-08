@@ -1,21 +1,10 @@
-import { Navigate, Outlet, useLocation } from "react-router-dom";
-import Spinner from "./Spinner";
+import { Navigate, Outlet } from "react-router-dom";
 import { UseAuth } from "../contexts/AuthContext";
 
 const PrivateRoute = () => {
- const { currentUser } = UseAuth();
-  const location = useLocation();
+  const { currentUser } = UseAuth();
 
-  // if (!currentUser) {
-  //   return <Spinner />;
-  // }
-
-  return currentUser ? (
-    <Outlet />
-  ) : (
-    <Navigate to="/login" state={{ from: location }} replace />
-  );
+  return currentUser ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;
-

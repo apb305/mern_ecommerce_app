@@ -18,10 +18,10 @@ function Reviews() {
   useEffect(() => {
     dispatch(getReviews(id));
     dispatch(getProduct(id));
-  }, [id]);
+  }, [id, dispatch]);
 
   if (!product || !productReviews) {
-    return <Navigate to="*" />;
+    return <Navigate to="/error" />;
   }
 
   return (

@@ -44,7 +44,6 @@ export default function ReviewForm() {
         body: body,
       };
       dispatch(addProductReview(formData));
-      // navigate(`/reviews/product/${product._id}`)
       toast.success("Review Submitted");
     } catch (error) {
       toast.error("An error has occured");

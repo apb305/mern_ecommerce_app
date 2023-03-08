@@ -22,11 +22,14 @@ function Product() {
 
   useEffect(() => {
     dispatch(getProduct(id));
+  }, [id, dispatch]);
+
+  useEffect(() => {
     dispatch(getReviews(id));
-  }, [id]);
+  }, [id, dispatch]);
 
   if (!product) {
-    return <Navigate to="*" />;
+    return <Navigate to="/error" />;
   }
 
   const addToFavorites = async (product) => {

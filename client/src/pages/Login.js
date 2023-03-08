@@ -34,7 +34,7 @@ export default function Login() {
         password
       );
       if (userCredential.user) {
-        navigate("/products");
+        navigate(-1);
       }
     } catch (error) {
       setLoading(false)
@@ -81,7 +81,8 @@ export default function Login() {
               >
                 {loading ? "Please wait..." : "Log In"}
               </Button>
-              <OAuth />
+              {/* Google Login */}
+              {/* <OAuth /> */}
             </Form>
             <div className="text-center mt-4">
               <Link className="text-decoration-none" to="/forgot-password">Forgot Password?</Link>

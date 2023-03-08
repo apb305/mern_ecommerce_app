@@ -43,7 +43,7 @@ function App() {
             <Route path="/reviews/product/:id" element={<Reviews />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/success" element={<Success />} />
-            <Route path="*" element={<ErrorPage />} />
+            <Route path="/error" element={<ErrorPage />} />
           </Routes>
           <Footer />
         </AuthProvider>

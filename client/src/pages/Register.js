@@ -44,7 +44,7 @@ export default function Register() {
         formData.password,
         formData.name
       );
-      navigate("/products");
+      navigate(-1);
     } catch (error) {
       setLoading(false);
       toast.error("An error has occured");
@@ -107,7 +107,8 @@ export default function Register() {
               <Button disabled={loading} className="w-100 mt-4 btn-dark" type="submit">
                 {loading ? "Please Wait..." : "Sign Up"}
               </Button>
-              <OAuth />
+              {/* Google Login */}
+              {/* <OAuth /> */}
             </Form>
             <div className="text-center mt-4">
               Already have an account?{" "}
