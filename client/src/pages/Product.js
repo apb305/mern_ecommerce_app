@@ -21,7 +21,7 @@ function Product() {
 
   useEffect(() => {
     dispatch(getProduct(id));
-    dispatch(getReviews(id));
+    // dispatch(getReviews(id));
   }, [id, dispatch]);
 
   if (!product) {
@@ -97,7 +97,7 @@ function Product() {
                     <div className="">
                       <div className="text-dark">
                         {/* Start of the review */}
-                        {productReviews.length > 0 ? (
+                        {/* {productReviews.length > 0 ? (
                           productReviews.map((review) => (
                             <div className="border mb-3 p-4" key={review._id}>
                               <div className="d-flex flex-start">
@@ -133,7 +133,7 @@ function Product() {
                             <ReviewForm />
                             </div>
                           </div>
-                        )}
+                        )} */}
                       </div>
                     </div>
                   </div>
