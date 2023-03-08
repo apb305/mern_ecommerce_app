@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Button, Container, Tab, Tabs } from "react-bootstrap";
+import { Container, Tab, Tabs } from "react-bootstrap";
 import { useParams, Navigate, useNavigate, Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
@@ -16,7 +16,6 @@ function Product() {
   const navigate = useNavigate();
   const { product, isLoading } = useSelector((state) => state.products);
   const { productReviews } = useSelector((state) => state.reviews);
-  // const { user } = useSelector((state) => state.auth)
   const { currentUser } = UseAuth();
   const dispatch = useDispatch();
 

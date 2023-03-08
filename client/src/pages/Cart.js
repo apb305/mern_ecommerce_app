@@ -17,7 +17,7 @@ function Cart() {
 
   useEffect(() => {
     dispatch(getTotal());
-  });
+  }, [dispatch]);
 
   const checkout = async () => {
     setLoading(true);

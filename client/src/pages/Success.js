@@ -35,7 +35,7 @@ function Success() {
   useEffect(() => {
     confirmOrder();
     dispatch(clearCart())
-  }, []);
+  }, [dispatch]);
 
   return (
     <Container>

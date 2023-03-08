@@ -12,7 +12,7 @@ function Products() {
 
   useEffect(() => {
     dispatch(getProducts())
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
@@ -34,7 +34,7 @@ function Products() {
                           className="text-decoration-none text-dark"
                           to={`/product/${product._id}`}
                         >
-                          <img src={product.img} className="productImage" />
+                          <img src={product.img} className="productImage" alt={product.productName} />
                           <Card.Title className="mt-2">
                             {product.productName}
                           </Card.Title>
