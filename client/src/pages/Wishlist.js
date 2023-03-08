@@ -16,7 +16,7 @@ function Wishlist() {
 
   useEffect(() =>{
     dispatch(getUserWishlist());
-  },[dispatch])
+  },[])
 
   return (
     <>

@@ -22,9 +22,6 @@ function Product() {
 
   useEffect(() => {
     dispatch(getProduct(id));
-  }, [id, dispatch]);
-
-  useEffect(() => {
     dispatch(getReviews(id));
   }, [id, dispatch]);
 
