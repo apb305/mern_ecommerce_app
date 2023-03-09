@@ -40,7 +40,7 @@ function App() {
             </Route>
             <Route path="/products" element={<Products />} />
             <Route path="/product/:id" element={<Product />} />
-            <Route path="/reviews/product/:id" element={<Reviews />} />
+            <Route path="/reviews/:id" element={<Reviews />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/success" element={<Success />} />
             <Route path="/error" element={<ErrorPage />} />

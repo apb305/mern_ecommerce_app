@@ -21,9 +21,9 @@ function Product() {
     dispatch(getProduct(id));
   }, [id, dispatch]);
 
-  if (!product) {
-    return <Navigate to="/error" />;
-  }
+  // if (!product) {
+  //   return <Navigate to="/error" />;
+  // }
 
   const addToFavorites = async (product) => {
     if (!currentUser) {

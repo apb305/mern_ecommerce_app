@@ -16,9 +16,9 @@ function Reviews() {
     dispatch(getReviews(id));
   }, [id, dispatch]);
 
-  if (!productReviews) {
-    return <Navigate to="/error" />;
-  }
+//   if (!productReviews) {
+//     return <Navigate to="/error" />;
+//   }
 
   return (
     <>
