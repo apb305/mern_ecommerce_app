@@ -32,7 +32,7 @@ function Reviews() {
             <div>
               <div className="row d-flex justify-content-center">
                 <h1 className="text-center mt-2">Reviews</h1>
-                <small className="text-center">Reviews for {product.productName}</small>
+                {/* <small className="text-center">Reviews for {product.productName}</small> */}
                 <div className="p-4">
                   <div className="text-dark">
                     {/* Start of the review */}
