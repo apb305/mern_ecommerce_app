@@ -8,12 +8,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { getProduct } from "../features/products/products-thunk";
 import { addToCart } from "../features/cart/cartSlice";
 import { addToUserWishlist } from "../features/wishlist/wishlist-thunk";
-import ReviewForm from "../components/ReviewForm";
 
 function Product() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { product, productReviews, isLoading } = useSelector((state) => state.products);
+  const { product, productReviews, isLoading } = useSelector(
+    (state) => state.products
+  );
   const { currentUser } = UseAuth();
   const dispatch = useDispatch();
 
@@ -126,8 +127,13 @@ function Product() {
                             <p className="fw-bold text-center mt-4">
                               No reviews available
                             </p>
-                            <div className="mt-5">
-                            <ReviewForm />
+                            <div className="text-center mt-3">
+                              <Link
+                                className="btn btn-sm btn-primary"
+                                to={`/reviews/${product._id}`}
+                              >
+                                Write a review
+                              </Link>
                             </div>
                           </div>
                         )}
