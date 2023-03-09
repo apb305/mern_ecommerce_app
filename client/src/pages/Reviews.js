@@ -24,6 +24,32 @@ function Reviews() {
     return <Navigate to="/error" />;
   }
 
+  const reviews = (productReviews.map((review) => (
+    <div className="border mb-2 p-4" key={review._id}>
+      {/* <hr className="mt--3" style={{ height: "1px" }} /> */}
+      <div className="d-flex flex-start">
+        <div>
+          <h5 className="fw-bold mb-1">{review.title}</h5>
+          <div className="d-flex align-items-center mb-3">
+            <p className="mb-0">
+              <small>Maggie M. - March 07, 2021</small>
+            </p>
+            <a href="#!" className="link-muted">
+              <i className="fas fa-pencil-alt ms-2"></i>
+            </a>
+            <a href="#!" className="link-muted">
+              <i className="fas fa-redo-alt ms-2"></i>
+            </a>
+            <a href="#!" className="link-muted">
+              <i className="fas fa-heart ms-2"></i>
+            </a>
+          </div>
+          <p className="mb-0">{review.body}</p>
+        </div>
+      </div>
+    </div>
+  )))
+
   return (
     <>
       {isLoading ? (
@@ -40,33 +66,7 @@ function Reviews() {
                 <div className="p-4">
                   <div className="text-dark">
                     {/* Start of the review */}
-                    {productReviews.length > 0 ? (
-                      productReviews.map((review) => (
-                        <div className="border mb-2 p-4" key={review._id}>
-                          {/* <hr className="mt--3" style={{ height: "1px" }} /> */}
-                          <div className="d-flex flex-start">
-                            <div>
-                              <h5 className="fw-bold mb-1">{review.title}</h5>
-                              <div className="d-flex align-items-center mb-3">
-                                <p className="mb-0">
-                                  <small>Maggie M. - March 07, 2021</small>
-                                </p>
-                                <a href="#!" className="link-muted">
-                                  <i className="fas fa-pencil-alt ms-2"></i>
-                                </a>
-                                <a href="#!" className="link-muted">
-                                  <i className="fas fa-redo-alt ms-2"></i>
-                                </a>
-                                <a href="#!" className="link-muted">
-                                  <i className="fas fa-heart ms-2"></i>
-                                </a>
-                              </div>
-                              <p className="mb-0">{review.body}</p>
-                            </div>
-                          </div>
-                        </div>
-                      ))
-                    ) : (
+                    {reviews ? reviews : (
                         <div>
                         <p className="fw-bold text-center mt-4">
                           No reviews available
@@ -76,7 +76,7 @@ function Reviews() {
                         </div>
                       </div>
                     )}
-                    {productReviews.length > 0 ? (
+                    {reviews ? (
                       <div>
                         <ReviewForm />
                       </div>
