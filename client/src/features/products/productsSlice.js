@@ -4,6 +4,7 @@ import {getProduct, getProducts } from "./products-thunk"
 const initialState = {
   products: [],
   product: {},
+  productReviews: [],
   isLoading: true,
 };
 
@@ -26,7 +27,8 @@ export const productsSlice = createSlice({
     });
     builder.addCase(getProduct.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.product = action.payload;
+      state.product = action.payload.product;
+      state.productReviews = action.payload.reviews
     });
     builder.addCase(getProduct.rejected, (state, action) => {
       state.isLoading = false;

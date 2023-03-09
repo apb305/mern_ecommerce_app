@@ -2,7 +2,9 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 require("../models/Reviews");
+require("../models/Products")
 const Reviews = mongoose.model("reviews");
+const Product = mongoose.model("products")
 const { ensureAuthenticated } = require("../middleware/auth");
 // const { cloudinary } = require("../config/cloudinary");
 
@@ -10,7 +12,8 @@ router.get("/:id", async (req, res) => {
   const productId = mongoose.Types.ObjectId(req.params.id);
   try {
     const reviews = await Reviews.find({"product": productId}).populate("product");
-    res.status(200).json(reviews);
+    const product = await Product.findById(productId);
+    res.status(200).json({reviews: reviews, product: product});
   } catch (error) {
     res.status(400).json("An error has occured")
     console.log(error);

@@ -8,20 +8,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { getProduct } from "../features/products/products-thunk";
 import { addToCart } from "../features/cart/cartSlice";
 import { addToUserWishlist } from "../features/wishlist/wishlist-thunk";
-import { getReviews } from "../features/reviews/review-thunk";
 import ReviewForm from "../components/ReviewForm";
 
 function Product() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { product, isLoading } = useSelector((state) => state.products);
-  const { productReviews } = useSelector((state) => state.reviews);
+  const { product, productReviews, isLoading } = useSelector((state) => state.products);
   const { currentUser } = UseAuth();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getProduct(id));
-    dispatch(getReviews(id));
   }, [id, dispatch]);
 
   if (!product) {
@@ -97,7 +94,7 @@ function Product() {
                     <div className="">
                       <div className="text-dark">
                         {/* Start of the review */}
-                        {/* {productReviews.length > 0 ? (
+                        {productReviews.length > 0 ? (
                           productReviews.map((review) => (
                             <div className="border mb-3 p-4" key={review._id}>
                               <div className="d-flex flex-start">
@@ -133,7 +130,7 @@ function Product() {
                             <ReviewForm />
                             </div>
                           </div>
-                        )} */}
+                        )}
                       </div>
                     </div>
                   </div>
