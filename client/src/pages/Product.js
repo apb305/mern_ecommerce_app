@@ -138,7 +138,7 @@ function Product() {
                     <div className="text-center">
                       <Link
                         className="btn btn-sm btn-primary"
-                        to={`/reviews/product/${product._id}`}
+                        to={`/reviews/${product._id}`}
                       >
                         See All Reviews
                       </Link>
