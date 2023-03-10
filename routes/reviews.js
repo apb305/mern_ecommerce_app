@@ -2,21 +2,27 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 require("../models/Reviews");
-require("../models/Products")
+require("../models/Products");
 const Reviews = mongoose.model("reviews");
-const Product = mongoose.model("products")
+const Product = mongoose.model("products");
 const { ensureAuthenticated } = require("../middleware/auth");
 // const { cloudinary } = require("../config/cloudinary");
 
 router.get("/:id", async (req, res) => {
   const productId = mongoose.Types.ObjectId(req.params.id);
   try {
-    const reviews = await Reviews.find({"product": productId}).populate("product");
+    const reviews = await Reviews.find({ product: productId }).populate(
+      "product"
+    );
     const product = await Product.findById(productId);
-    console.log({reviews: reviews, product: product})
-    res.status(200).json({reviews: reviews, product: product});
+    const data = {
+      productReviews: reviews,
+      reviewsProduct: product
+    }
+    console.log(data);
+    res.status(200).json(data);
   } catch (error) {
-    res.status(400).json("An error has occured")
+    res.status(400).json("An error has occured");
     console.log(error);
   }
 });
@@ -32,10 +38,12 @@ router.post("/", ensureAuthenticated, async (req, res) => {
       body: body,
     });
     await newReview.save();
-    const reviews = await Reviews.find({"product": product}).populate("product");
+    const reviews = await Reviews.find({ product: product }).populate(
+      "product"
+    );
     res.status(200).json(reviews);
   } catch (error) {
-    res.status(400).json("An error has occured")
+    res.status(400).json("An error has occured");
     console.log(error);
   }
 });
