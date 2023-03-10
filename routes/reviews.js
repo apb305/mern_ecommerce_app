@@ -13,6 +13,7 @@ router.get("/:id", async (req, res) => {
   try {
     const reviews = await Reviews.find({"product": productId}).populate("product");
     const product = await Product.findById(productId);
+    console.log({reviews: reviews, product: product})
     res.status(200).json({reviews: reviews, product: product});
   } catch (error) {
     res.status(400).json("An error has occured")
