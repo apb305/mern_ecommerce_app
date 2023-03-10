@@ -19,8 +19,7 @@ router.get("/:id", async (req, res) => {
       productReviews: reviews,
       reviewsProduct: product
     }
-    console.log(data.productReviews);
-    res.status(200).json(data);
+    res.status(200).json(JSON.stringify(data));
   } catch (error) {
     res.status(400).json("An error has occured");
     console.log(error);
