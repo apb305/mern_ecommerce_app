@@ -35,10 +35,7 @@ const ProductSchema = new Schema(
     productRating: {
       type: Number,
       required: true,
-    },
-    productReviews: {
-      type: Array,
-    },
+    }
   },
   { timestamps: true }
 );

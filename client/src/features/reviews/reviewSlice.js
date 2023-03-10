@@ -17,8 +17,8 @@ export const reviewSlice = createSlice({
     builder.addCase(getReviews.fulfilled, (state, action) => {
       console.log(action.payload)
       state.isLoading = false;
-      state.productReviews = action.payload.reviews;
-      state.product = action.payload.product
+      state.productReviews = action.payload.productReviews;
+      state.product = action.payload.reviewsProduct
     });
     builder.addCase(getReviews.rejected, (state, action) => {
       state.isLoading = false;
