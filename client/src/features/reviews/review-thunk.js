@@ -1,10 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../../config/axiosConfig";
 import { auth } from "../../config/firebase";
+const headers = {
+  'Content-Type': 'application/json'
+};
 
 export const getReviews = createAsyncThunk("reviews/getReviews", async (productId) => {
   try {
-    const response = await instance.get(`/reviews/${productId}`);
+    const response = await instance.get(`/reviews/${productId}`, {headers});
     return response.data;
   } catch (error) {
     console.log(error.message);
