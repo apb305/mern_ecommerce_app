@@ -4,7 +4,7 @@ import { auth } from "../../config/firebase";
 
 export const getReviews = createAsyncThunk("reviews/getReviews", async (productId) => {
   try {
-    const response = await instance.get(`/reviews/${productId}`);
+    const response = await instance.post(`/reviews/${productId}`);
     return response.data;
   } catch (error) {
     console.log(error.message);

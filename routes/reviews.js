@@ -8,7 +8,7 @@ const Product = mongoose.model("products");
 const { ensureAuthenticated } = require("../middleware/auth");
 // const { cloudinary } = require("../config/cloudinary");
 
-router.get("/:id", async (req, res) => {
+router.post("/:id", async (req, res) => {
   const productId = mongoose.Types.ObjectId(req.params.id);
   try {
     const reviews = await Reviews.find({ product: productId }).populate(
