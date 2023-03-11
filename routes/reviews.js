@@ -33,11 +33,11 @@ router.post("/", ensureAuthenticated, async (req, res) => {
       body: body,
     });
     await newReview.save();
-    const reviews = await Reviews.find({ product: product }).populate(
+    const reviews = await Reviews.find({ product: product._id }).populate(
       "product"
     );
-    const product = await Product.findById(product._id);
-    res.status(200).json({ reviews: reviews, product: product });
+    const reviewedProduct = await Product.findById(product._id);
+    res.status(200).json({ reviews: reviews, product: reviewedProduct });
   } catch (error) {
     res.status(400).json("An error has occured");
     console.log(error);
