@@ -15,11 +15,7 @@ router.get("/:id", async (req, res) => {
       "product"
     );
     const product = await Product.findById(productId);
-    const data = {
-      productReviews: reviews,
-      reviewsProduct: product
-    }
-    res.status(200).json(JSON.stringify(data));
+    res.status(200).json({ reviews: reviews, product: product });
   } catch (error) {
     res.status(400).json("An error has occured");
     console.log(error);
