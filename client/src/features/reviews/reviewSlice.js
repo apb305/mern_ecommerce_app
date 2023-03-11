@@ -15,7 +15,6 @@ export const reviewSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(getReviews.fulfilled, (state, action) => {
-      console.log(action.payload)
       state.isLoading = false;
       state.productReviews = action.payload.reviews;
       state.product = action.payload.product
@@ -28,7 +27,8 @@ export const reviewSlice = createSlice({
     });
     builder.addCase(addProductReview.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.productReviews = action.payload;
+      state.productReviews = action.payload.reviews;
+      state.product = action.payload.product
     });
     builder.addCase(addProductReview.rejected, (state, action) => {
       state.isLoading = false;
