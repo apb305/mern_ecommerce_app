@@ -1,18 +1,12 @@
 import { Card, Button, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
-import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getProducts } from "../features/products/products-thunk";
 import { addToCart } from "../features/cart/cartSlice";
 
 function Products() {
   const { products, isLoading } = useSelector((state) => state.products)
   const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(getProducts())
-  }, [dispatch]);
 
   return (
     <>

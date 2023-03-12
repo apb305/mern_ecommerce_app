@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ToastContainer } from "react-toastify";
@@ -20,8 +20,16 @@ import Wishlist from "./pages/Wishlist";
 import ErrorPage from "./pages/ErrorPage";
 import { AuthProvider } from "./contexts/AuthContext";
 import Reviews from "./pages/Reviews";
+import { useDispatch } from "react-redux";
+import { getProducts } from "./features/products/products-thunk";
 
 function App() {
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(getProducts())
+  })
+
   return (
     <>
       <Router>
@@ -43,7 +51,7 @@ function App() {
             <Route path="/reviews/:id" element={<Reviews />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/success" element={<Success />} />
-            <Route path="/error" element={<ErrorPage />} />
+            <Route path="*" element={<ErrorPage />} />
           </Routes>
           <Footer />
         </AuthProvider>

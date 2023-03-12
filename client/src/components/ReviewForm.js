@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 import { UseAuth } from "../contexts/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { addProductReview } from "../features/reviews/review-thunk";
-import { getReviews } from "../features/reviews/review-thunk";
 import { Button, Container } from "react-bootstrap";
 
 export default function ReviewForm() {
@@ -37,7 +36,7 @@ export default function ReviewForm() {
     } else {
     try {
       const formData = {
-        product: id,
+        productId: id,
         user: userDetails._id,
         title: title,
         rating: 5,

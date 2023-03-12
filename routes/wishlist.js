@@ -9,9 +9,7 @@ const { ensureAuthenticated } = require("../middleware/auth");
 router.post("/", ensureAuthenticated, async (req, res) => {
   try {
     const user = await User.findOne({ uid: req.body.uid });
-    if (user) {
-      res.status(200).json(user.wishlist);
-    }
+    res.status(200).json(user.wishlist);
   } catch (error) {
     console.log(error);
   }

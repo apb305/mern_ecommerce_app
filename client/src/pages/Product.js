@@ -22,10 +22,6 @@ function Product() {
     dispatch(getProduct(id));
   }, [id, dispatch]);
 
-  // if (!product) {
-  //   return <Navigate to="/error" />;
-  // }
-
   const addToFavorites = async (product) => {
     if (!currentUser) {
       toast.error("Please login to use this feature");
@@ -77,7 +73,7 @@ function Product() {
                       className="btn btn-outline-secondary btn-sm px-4"
                       onClick={() => addToFavorites(product)}
                     >
-                      <i className="bi bi-heart mb-1"></i> Add to Wishlist
+                       Add to Wishlist
                     </button>
                   </div>
                 </div>
@@ -163,3 +159,4 @@ function Product() {
 }
 
 export default Product;
+

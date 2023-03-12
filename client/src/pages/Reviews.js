@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Container, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import ReviewForm from "../components/ReviewForm";
 import { getReviews } from "../features/reviews/review-thunk";
 
 function Reviews() {
   //   const [formView, setFormView] = useState(true);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
   const { productReviews, product, isLoading } = useSelector(
     (state) => state.reviews
@@ -16,11 +17,12 @@ function Reviews() {
 
   useEffect(() => {
     dispatch(getReviews(id));
-  }, [id, dispatch]);
+    if (!productReviews) {
+        navigate("/products")
+      }
+  }, [dispatch, id ]);
 
-  //   if (!productReviews) {
-  //     return <Navigate to="/error" />;
-  //   }
+    
 
   return (
     <>
@@ -94,3 +96,4 @@ function Reviews() {
 }
 
 export default Reviews;
+

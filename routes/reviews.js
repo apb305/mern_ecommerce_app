@@ -15,7 +15,10 @@ router.post("/:id", async (req, res) => {
       "product"
     );
     const product = await Product.findById(productId);
-    res.status(200).json({ reviews: reviews, product: product });
+    if(reviews && product) {
+      res.status(200).json({ reviews: reviews, product: product });
+    }
+   
   } catch (error) {
     res.status(400).json("An error has occured");
     console.log(error);
@@ -23,20 +26,20 @@ router.post("/:id", async (req, res) => {
 });
 
 router.post("/", ensureAuthenticated, async (req, res) => {
-  const { product, user, title, rating, body } = req.body.data;
+  const { productId, user, title, rating, body } = req.body.data;
   try {
     const newReview = new Reviews({
-      product: product,
+      product: productId,
       user: user,
       rating: rating,
       title: title,
       body: body,
     });
     await newReview.save();
-    const reviews = await Reviews.find({ product: product._id }).populate(
+    const reviews = await Reviews.find({ product: productId }).populate(
       "product"
     );
-    const reviewedProduct = await Product.findById(product._id);
+    const reviewedProduct = await Product.findById(productId);
     res.status(200).json({ reviews: reviews, product: reviewedProduct });
   } catch (error) {
     res.status(400).json("An error has occured");
