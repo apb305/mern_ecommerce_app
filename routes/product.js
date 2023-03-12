@@ -14,8 +14,7 @@ router.post("/:id", async (req, res) => {
     const reviews = await Reviews.find({"product": productId}).populate("product");
     res.status(200).json({product: product, reviews: reviews});
   } catch (error) {
-    res.status(400).json("An error has occured")
-    console.log(error);
+    res.status(500).json("An error has occured")
   }
 });
 

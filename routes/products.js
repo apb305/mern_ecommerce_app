@@ -12,8 +12,7 @@ router.post("/", async (req, res) => {
       res.status(200).json(products);
     }
   } catch (error) {
-    res.status(400).json("An error has occured")
-    console.log(error);
+    res.status(500).json("An error has occured")
   }
 });
 

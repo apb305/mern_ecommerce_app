@@ -13,7 +13,7 @@ router.post("/", ensureAuthenticated, async (req, res) => {
       res.status(200).json(user);
     }
   } catch (error) {
-    console.log(error);
+    res.status(500).json("An error has occured")
   }
 });
 
@@ -29,7 +29,7 @@ router.put("/", ensureAuthenticated, async (req, res) => {
       res.status(200).json(user);
     }
   } catch (error) {
-    console.log(error);
+    res.status(500).json("An error has occured")
   }
 });
 

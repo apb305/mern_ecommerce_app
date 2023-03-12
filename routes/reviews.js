@@ -20,8 +20,7 @@ router.post("/:id", async (req, res) => {
     }
    
   } catch (error) {
-    res.status(400).json("An error has occured");
-    console.log(error);
+    res.status(500).json("An error has occured");
   }
 });
 
@@ -42,8 +41,7 @@ router.post("/", ensureAuthenticated, async (req, res) => {
     const reviewedProduct = await Product.findById(productId);
     res.status(200).json({ reviews: reviews, product: reviewedProduct });
   } catch (error) {
-    res.status(400).json("An error has occured");
-    console.log(error);
+    res.status(500).json("An error has occured");
   }
 });
 
