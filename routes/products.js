@@ -7,13 +7,14 @@ const Product = mongoose.model("products");
 const Reviews = mongoose.model("reviews");
 const Products = mongoose.model("products");
 
-router.get("/", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const products = await Products.find();
     if (products) {
       res.status(200).json(products);
     }
   } catch (error) {
+    console.log(error.message)
     res.status(500).send("An error has occured")
   }
 });

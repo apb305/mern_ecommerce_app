@@ -22,6 +22,7 @@ router.post("/:id", async (req, res) => {
     }
     res.status(200).json({ reviews: reviews, product: product });
   } catch (error) {
+    console.log(error.message)
     res.status(500).send("An error has occured");
   }
 });
@@ -43,6 +44,7 @@ router.post("/", ensureAuthenticated, async (req, res) => {
     const reviewedProduct = await Product.findById(productId);
     res.status(200).json({ reviews: reviews, product: reviewedProduct });
   } catch (error) {
+    console.log(error.message)
     res.status(500).send("An error has occured");
   }
 });

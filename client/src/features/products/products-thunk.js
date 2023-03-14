@@ -5,7 +5,7 @@ export const getProducts = createAsyncThunk(
   "products/getProducts",
   async () => {
     try {
-      const response = await instance.get("/api/products");
+      const response = await instance.post("/api/products");
       return response.data;
     } catch (error) {
       console.log(error);

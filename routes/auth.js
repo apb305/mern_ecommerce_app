@@ -16,6 +16,7 @@ router.post("/", async (req, res) => {
     await newUser.save();
     res.status(200).send("Success");
   } catch (error) {
+    console.log(error.message)
     res.status(500).send("An error has occured")
   }
 });
