@@ -15,7 +15,7 @@ export const getProducts = createAsyncThunk(
 
 export const getProduct = createAsyncThunk("product/getProduct", async (id) => {
   try {
-    const response = await instance.get(`/api/products/product/${id}`);
+    const response = await instance.post(`/api/products/${id}`);
     return response.data;
   } catch (error) {
     throw error
