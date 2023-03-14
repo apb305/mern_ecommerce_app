@@ -6,12 +6,10 @@ const connectDB = require("./config/db");
 const users = require("./routes/users");
 const stripe = require("./routes/stripe");
 const products = require("./routes/products");
-const product = require("./routes/product")
 const auth = require("./routes/auth");
 const wishlist = require("./routes/wishlist")
 const reviews = require("./routes/reviews")
 const cart = require("./routes/cart")
-// app.use(express.static('public'))
 require("dotenv").config();
 
 //Connect DB
@@ -25,14 +23,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 //Use routes
-app.use("/users", users);
-app.use("/wishlist", wishlist);
-app.use("/stripe", stripe);
-app.use("/product", product);
-app.use("/products", products);
-app.use("/reviews", reviews);
-app.use("/auth", auth);
-app.use("/cart", cart)
+app.use("/api/users", users);
+app.use("/api/wishlist", wishlist);
+app.use("/api/stripe", stripe);
+app.use("/api/products", products);
+app.use("/api/reviews", reviews);
+app.use("/api/auth", auth);
+app.use("/api/cart", cart)
 
 // Serve Static assets for production
 if (process.env.NODE_ENV === "production") {

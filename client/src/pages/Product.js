@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getProduct } from "../features/products/products-thunk";
 import { addToCart } from "../features/cart/cartSlice";
 import { addToUserWishlist } from "../features/wishlist/wishlist-thunk";
+import moment from "moment";
 
 function Product() {
   const { id } = useParams();
@@ -73,7 +74,7 @@ function Product() {
                       className="btn btn-outline-secondary btn-sm px-4"
                       onClick={() => addToFavorites(product)}
                     >
-                       Add to Wishlist
+                      Add to Wishlist
                     </button>
                   </div>
                 </div>
@@ -101,7 +102,11 @@ function Product() {
                                   </h5>
                                   <div className="d-flex align-items-center mb-3">
                                     <p className="mb-0">
-                                      <small>Maggie M. - March 07, 2021</small>
+                                      <small>
+                                        {moment(review.created_at).format(
+                                          "MM/DD/YYYY"
+                                        )}
+                                      </small>
                                     </p>
                                     <a href="#!" className="link-muted">
                                       <i className="fas fa-pencil-alt ms-2"></i>
@@ -159,4 +164,3 @@ function Product() {
 }
 
 export default Product;
-

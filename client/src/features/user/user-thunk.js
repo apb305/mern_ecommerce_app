@@ -10,7 +10,7 @@ export const getUserDetails = createAsyncThunk(
     try {
       const token = await auth.currentUser.getIdToken();
       const response = await instance.post(
-        "/users",
+        "/api/users",
         { uid: state.uid },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -29,7 +29,7 @@ export const updateUserDetails = createAsyncThunk(
     try {
       const token = await auth.currentUser.getIdToken();
       const response = await instance.put(
-        "/users",
+        "/api/users",
         {
           uid: state.uid,
           name: name,

@@ -21,7 +21,7 @@ function Cart() {
 
   const checkout = async () => {
     setLoading(true);
-    const stripeUrl = await instance.post("/stripe", {
+    const stripeUrl = await instance.post("/api/stripe", {
       data: cartItems,
     });
     if (stripeUrl.data.url) {

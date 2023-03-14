@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Container, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ReviewForm from "../components/ReviewForm";
 import { getReviews } from "../features/reviews/review-thunk";
+import moment from "moment"
 
 function Reviews() {
   //   const [formView, setFormView] = useState(true);
@@ -21,9 +22,7 @@ function Reviews() {
         navigate("/products")
       }
   }, [dispatch, id ]);
-
     
-
   return (
     <>
       {isLoading ? (
@@ -56,7 +55,7 @@ function Reviews() {
                                 <h5 className="fw-bold mb-1">{review.title}</h5>
                                 <div className="d-flex align-items-center mb-3">
                                   <p className="mb-0">
-                                    <small>Maggie M. - March 07, 2021</small>
+                                    <small>{moment(review.created_at).format('MM/DD/YYYY')}</small>
                                   </p>
                                   <a href="#!" className="link-muted">
                                     <i className="fas fa-pencil-alt ms-2"></i>

@@ -24,7 +24,7 @@ router.post("/", ensureAuthenticated, async (req, res) => {
       res.status(200).json(cart);
     }
   } catch (error) {
-    res.status(500).json("An error has occured")
+    res.status(500).send("An error has occured")
   }
 });
 
@@ -35,7 +35,7 @@ router.put("/", ensureAuthenticated, async (req, res) => {
       { $addToSet: { wishlist: req.body.data } }
     );
   } catch (error) {
-    res.status(500).json("An error has occured")
+    res.status(500).send("An error has occured")
   }
 });
 
@@ -47,7 +47,7 @@ router.delete("/", ensureAuthenticated, async (req, res) => {
     );
     res.status(200).json("Success");
   } catch (error) {
-    res.status(500).json("An error has occured")
+    res.status(500).send("An error has occured")
   }
 });
 

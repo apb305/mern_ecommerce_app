@@ -9,18 +9,20 @@ const { ensureAuthenticated } = require("../middleware/auth");
 // const { cloudinary } = require("../config/cloudinary");
 
 router.post("/:id", async (req, res) => {
-  const productId = mongoose.Types.ObjectId(req.params.id);
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(400).json({ msg: "Invalid product ID" });
+  }
   try {
-    const reviews = await Reviews.find({ product: productId }).populate(
+    const reviews = await Reviews.find({ product: req.params.id }).populate(
       "product"
     );
-    const product = await Product.findById(productId);
-    if(reviews && product) {
-      res.status(200).json({ reviews: reviews, product: product });
+    const product = await Product.findById(req.params.id);
+    if (!product && !reviews) {
+      return res.status(400).json({ msg: "Product not found" });
     }
-   
+    res.status(200).json({ reviews: reviews, product: product });
   } catch (error) {
-    res.status(500).json("An error has occured");
+    res.status(500).send("An error has occured");
   }
 });
 
@@ -41,7 +43,7 @@ router.post("/", ensureAuthenticated, async (req, res) => {
     const reviewedProduct = await Product.findById(productId);
     res.status(200).json({ reviews: reviews, product: reviewedProduct });
   } catch (error) {
-    res.status(500).json("An error has occured");
+    res.status(500).send("An error has occured");
   }
 });
 

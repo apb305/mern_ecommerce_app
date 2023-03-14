@@ -10,7 +10,7 @@ export const getUserWishlist = createAsyncThunk(
     try {
       const token = await auth.currentUser.getIdToken();
       const response = await instance.post(
-        "/wishlist",
+        "/api/wishlist",
         {
           uid: state.uid,
         },
@@ -30,7 +30,7 @@ export const addToUserWishlist = createAsyncThunk(
     const token = await auth.currentUser.getIdToken();
     try {
       const response = await instance.put(
-        "/wishlist",
+        "/api/wishlist",
         {
           uid: state.uid,
           data: product,
@@ -50,7 +50,7 @@ export const removeFromUserWishlist = createAsyncThunk(
     const state = getState().auth;
     const token = await auth.currentUser.getIdToken();
     try {
-      const response = await instance.delete("/wishlist", {
+      const response = await instance.delete("/api/wishlist", {
         data: {
           uid: state.uid,
           _id: wishListItemId,
