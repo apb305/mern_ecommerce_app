@@ -18,7 +18,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/product/:id", async (req, res) => {
   try {
     if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
       return res.status(400).json({msg: "Invalid product ID"})
