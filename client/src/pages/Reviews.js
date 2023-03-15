@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Container, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ReviewForm from "../components/ReviewForm";
 import { getReviews } from "../features/reviews/review-thunk";
-import moment from "moment"
+import { format } from "date-fns";
 
 function Reviews() {
   //   const [formView, setFormView] = useState(true);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { id } = useParams();
   const { productReviews, product, isLoading } = useSelector(
     (state) => state.reviews
@@ -18,11 +17,8 @@ function Reviews() {
 
   useEffect(() => {
     dispatch(getReviews(id));
-    if (!productReviews) {
-        navigate("/products")
-      }
-  }, [dispatch, id ]);
-    
+  }, [dispatch, id]);
+
   return (
     <>
       {isLoading ? (
@@ -35,10 +31,14 @@ function Reviews() {
             <div>
               <div className="row d-flex justify-content-center">
                 <h1 className="text-center mt-2">Reviews</h1>
-                {product.productName ? <small className="text-center">
-                  Reviews for {product.productName}
-                </small> : ""}
-                
+                {product.productName ? (
+                  <small className="text-center">
+                    Reviews for {product.productName}
+                  </small>
+                ) : (
+                  ""
+                )}
+
                 <div className="p-4">
                   <div className="text-dark">
                     {/* Start of the review */}
@@ -54,8 +54,12 @@ function Reviews() {
                               <div>
                                 <h5 className="fw-bold mb-1">{review.title}</h5>
                                 <div className="d-flex align-items-center mb-3">
-                                  <p className="mb-0">
-                                    <small>{moment(review.created_at).format('MM/DD/YYYY')}</small>
+                                  <p className="text-muted small mb-0">
+                                    {review.user}{" "}-{" "}
+                                    {format(
+                                      new Date(review.created_at),
+                                      "MM-dd-yyyy"
+                                    )}
                                   </p>
                                   <a href="#!" className="link-muted">
                                     <i className="fas fa-pencil-alt ms-2"></i>
@@ -95,4 +99,3 @@ function Reviews() {
 }
 
 export default Reviews;
-

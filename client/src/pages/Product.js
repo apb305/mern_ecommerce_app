@@ -8,19 +8,20 @@ import { useSelector, useDispatch } from "react-redux";
 import { getProduct } from "../features/products/products-thunk";
 import { addToCart } from "../features/cart/cartSlice";
 import { addToUserWishlist } from "../features/wishlist/wishlist-thunk";
-import moment from "moment";
+import { format } from "date-fns";
+import { getReviews } from "../features/reviews/review-thunk";
 
 function Product() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { product, productReviews, isLoading } = useSelector(
-    (state) => state.products
-  );
+  const { product, isLoading } = useSelector((state) => state.products);
+  const { productReviews } = useSelector((state) => state.reviews);
   const { currentUser } = UseAuth();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getProduct(id));
+    dispatch(getReviews(id));
   }, [id, dispatch]);
 
   const addToFavorites = async (product) => {
@@ -101,13 +102,13 @@ function Product() {
                                     {review.title}
                                   </h5>
                                   <div className="d-flex align-items-center mb-3">
-                                    <p className="mb-0">
-                                      <small>
-                                        {moment(review.created_at).format(
-                                          "MM/DD/YYYY"
-                                        )}
-                                      </small>
-                                    </p>
+                                  <p className="text-muted small mb-0">
+                                    {review.user}{" "}-{" "}
+                                    {format(
+                                      new Date(review.created_at),
+                                      "MM-dd-yyyy"
+                                    )}
+                                  </p>
                                     <a href="#!" className="link-muted">
                                       <i className="fas fa-pencil-alt ms-2"></i>
                                     </a>

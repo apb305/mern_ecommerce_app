@@ -28,11 +28,12 @@ router.post("/:id", async (req, res) => {
 });
 
 router.post("/", ensureAuthenticated, async (req, res) => {
-  const { productId, user, title, rating, body } = req.body.data;
+  const { productId, user, userId, title, rating, body } = req.body.data;
   try {
     const newReview = new Reviews({
       product: productId,
       user: user,
+      uid: userId,
       rating: rating,
       title: title,
       body: body,

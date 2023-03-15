@@ -25,11 +25,10 @@ router.post("/:id", async (req, res) => {
       return res.status(400).json({msg: "Invalid product ID"})
     }
     const product = await Product.findById(req.params.id);
-    const reviews = await Reviews.find({"product": req.params.id}).populate("product");
-    if (!product && !reviews) {
+    if (!product) {
       return res.status(400).json({msg: "Product not found"})
     }
-    res.status(200).json({product: product, reviews: reviews});
+    res.status(200).json({product: product});
   } catch (error) {
     console.log(error.message)
     res.status(500).send("An error has occured")

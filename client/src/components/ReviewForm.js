@@ -12,14 +12,15 @@ export default function ReviewForm() {
     title: "",
     rating: "",
     body: "",
+    name: "",
   });
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { title, rating, body } = formData;
-  const { product } = useSelector((state) => state.products)
+  const { name, title, rating, body } = formData;
   const { userDetails } = useSelector((state) => state.user)
   const { currentUser } = UseAuth();
   const navigate = useNavigate();
+
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -35,14 +36,15 @@ export default function ReviewForm() {
       navigate("/login");
     } else {
     try {
-      const formData = {
+      const data = {
         productId: id,
-        user: userDetails._id,
+        user: name,
+        userId: userDetails._id,
         title: title,
         rating: 5,
         body: body,
       };
-      dispatch(addProductReview(formData));
+      dispatch(addProductReview(data));
       toast.success("Review Submitted");
     } catch (error) {
       toast.error("An error has occured");
@@ -52,10 +54,20 @@ export default function ReviewForm() {
 
   return (
     <div>
-      <div className="border">
+      <div className="border border-dark border-opacity-50">
         <Container>
         <Form className="p-2 w-auto">
         <p className="text-center"><strong>Leave a review</strong></p>
+        <Form.Group className="mb-3">
+            <Form.Label>Name</Form.Label>
+            <Form.Control
+              id="name"
+              name="name"
+              value={name}
+              onChange={onChange}
+              type="text"
+            />
+          </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Title</Form.Label>
             <Form.Control
