@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart } from "../features/cart/cartSlice";
-import { getProducts } from "./features/products/products-thunk";
+import { getProducts } from "../features/products/products-thunk";
 
 function Products() {
   const { products, isLoading } = useSelector((state) => state.products)
