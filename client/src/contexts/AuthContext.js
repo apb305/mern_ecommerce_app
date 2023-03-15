@@ -42,7 +42,7 @@ export function AuthProvider({ children }) {
         displayName: name,
       });
       //Create user in database.
-      await axios.post("/auth", {
+      await axios.post("/api/auth", {
         uid: user.user.uid,
         name: user.user.displayName,
         email: user.user.email,
@@ -76,7 +76,6 @@ export function AuthProvider({ children }) {
         newPassword
       );
       if (updatedPassword) {
-        console.log(updatedPassword);
         toast.success("Your password has been updated");
       }
     } catch (error) {
