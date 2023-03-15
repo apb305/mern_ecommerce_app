@@ -20,16 +20,8 @@ import Wishlist from "./pages/Wishlist";
 import ErrorPage from "./pages/ErrorPage";
 import { AuthProvider } from "./contexts/AuthContext";
 import Reviews from "./pages/Reviews";
-import { useDispatch } from "react-redux";
-import { getProducts } from "./features/products/products-thunk";
 
 function App() {
-
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getProducts())
-  }, [])
-
   return (
     <>
       <Router>
