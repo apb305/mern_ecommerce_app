@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { UseAuth } from "../contexts/AuthContext";
 import { Card, Form, Button, Container } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
 import { toast } from "react-toastify";
 
@@ -13,7 +14,7 @@ export default function Login() {
     password: "",
   });
   const { email, password } = formData;
-
+  const { currentUser } = UseAuth();
   const navigate = useNavigate();
 
   const onChange = (e) => {
@@ -37,7 +38,7 @@ export default function Login() {
         navigate(-1);
       }
     } catch (error) {
-      setLoading(false)
+      setLoading(false);
       toast.error("Bad User Credentials");
     }
   };
@@ -47,6 +48,9 @@ export default function Login() {
       className="d-flex align-items-center justify-content-center mt-5"
       style={{ minHeight: "40vh" }}
     >
+      {currentUser && (
+          <Navigate to="/" replace={true} />
+        )}
       <div className="w-100" style={{ maxWidth: "400px" }}>
         <Card>
           <Card.Body className="bg-light shadow-sm">
@@ -85,10 +89,15 @@ export default function Login() {
               {/* <OAuth /> */}
             </Form>
             <div className="text-center mt-4">
-              <Link className="text-decoration-none" to="/forgot-password">Forgot Password?</Link>
+              <Link className="text-decoration-none" to="/forgot-password">
+                Forgot Password?
+              </Link>
             </div>
             <div className="text-center mt-3">
-              Need an account? <Link className="text-decoration-none" to="/register">Sign Up</Link>
+              Need an account?{" "}
+              <Link className="text-decoration-none" to="/register">
+                Sign Up
+              </Link>
             </div>
           </Card.Body>
         </Card>
