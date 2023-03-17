@@ -59,7 +59,6 @@ function AccountDetails() {
               onChange={onChange}
             />
           </Form.Group>
-
           <p className="fw-bold mt-2">
             Email: <small className="fw-light">{userDetails.email}</small>
           </p>

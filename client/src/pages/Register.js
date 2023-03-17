@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { Card, Form, Button, Container } from "react-bootstrap";
-import { UseAuth } from "../contexts/AuthContext"
+import { UseAuth } from "../contexts/AuthContext";
 import { toast } from "react-toastify";
 import OAuth from "../components/OAuth";
 
 export default function Register() {
   // const [showPassword, setShowPassword] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -14,10 +15,10 @@ export default function Register() {
     password: "",
     passwordConfirm: "",
   });
-  const { signup } = UseAuth();
+  const { currentUser, signup } = UseAuth();
   const { email, password, passwordConfirm, name } = formData;
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -28,31 +29,55 @@ export default function Register() {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    if (password !== passwordConfirm) {
-      return toast("Passwords do not match");
-    }
+    const errors = validate();
     try {
-      setLoading(true);
-      const data = new FormData(event.currentTarget);
-      const formData = {
-        name: data.get("name"),
-        email: data.get("email"),
-        password: data.get("password"),
-      };
-      await signup(
-        formData.email,
-        formData.password,
-        formData.name
-      );
-      navigate(-1);
+      if (Object.keys(errors).length === 0) {
+        setLoading(true);
+        setFormErrors({})
+        const data = new FormData(event.currentTarget);
+        const formData = {
+          name: data.get("name"),
+          email: data.get("email"),
+          password: data.get("password"),
+        };
+        await signup(formData.email, formData.password, formData.name);
+        // navigate(-1);
+      } else {
+        setFormErrors(errors);
+      }
     } catch (error) {
       setLoading(false);
       toast.error("An error has occured");
     }
   };
 
+  const validate = () => {
+    const errors = {};
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    if (!name) {
+      errors.name = "Name is required!";
+    }
+    if (!email) {
+      errors.email = "Email is required!";
+    } else if (!regex.test(email)) {
+      errors.email = "This is not a valid email format!";
+    }
+    if (!password) {
+      errors.password = "Password is required!";
+    } else if (password.length < 6) {
+      errors.password = "Password must be more than 6 characters";
+    }
+    if (password !== passwordConfirm) {
+      errors.password = "Passwords do not match";
+    }
+    return errors;
+  };
+
   return (
     <Container className="d-flex align-items-center justify-content-center mt-5">
+      {currentUser && (
+          <Navigate to="/" replace={true} />
+        )}
       <div className="w-100" style={{ maxWidth: "400px" }}>
         <Card>
           <Card.Body className="bg-light shadow-sm">
@@ -68,6 +93,7 @@ export default function Register() {
                   value={name}
                   onChange={onChange}
                 ></Form.Control>
+                <p className="text-danger mt-1">{formErrors.name}</p>
               </Form.Group>
               <Form.Group id="email">
                 <Form.Label>Email</Form.Label>
@@ -79,6 +105,7 @@ export default function Register() {
                   value={email}
                   onChange={onChange}
                 ></Form.Control>
+                <p className="text-danger mt-1">{formErrors.email}</p>
               </Form.Group>
               <Form.Group id="password">
                 <Form.Label>Password</Form.Label>
@@ -103,8 +130,13 @@ export default function Register() {
                   value={passwordConfirm}
                   onChange={onChange}
                 ></Form.Control>
+                <p className="text-danger mt-1">{formErrors.password}</p>
               </Form.Group>
-              <Button disabled={loading} className="w-100 mt-4 btn-dark" type="submit">
+              <Button
+                disabled={loading}
+                className="w-100 mt-4 btn-dark"
+                type="submit"
+              >
                 {loading ? "Please Wait..." : "Sign Up"}
               </Button>
               {/* Google Login */}

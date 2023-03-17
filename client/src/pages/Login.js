@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 
 export default function Login() {
   // const [showPassword, setShowPassword] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -26,8 +27,11 @@ export default function Login() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    const errors = validate();
     try {
+      if (Object.keys(errors).length === 0) {
       setLoading(true);
+      setFormErrors({})
       const auth = getAuth();
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -37,10 +41,27 @@ export default function Login() {
       if (userCredential.user) {
         navigate(-1);
       }
+    } else {
+      setFormErrors(errors);
+    }
     } catch (error) {
       setLoading(false);
       toast.error("Bad User Credentials");
     }
+  };
+
+  const validate = () => {
+    const errors = {};
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    if (!email) {
+      errors.email = "Email is required!";
+    } else if (!regex.test(email)) {
+      errors.email = "This is not a valid email format!";
+    }
+    if (!password) {
+      errors.password = "Password is required!";
+    } 
+    return errors;
   };
 
   return (
@@ -66,9 +87,10 @@ export default function Login() {
                   value={email}
                   onChange={onChange}
                 ></Form.Control>
+                <p className="text-danger mt-1">{formErrors.email}</p>
               </Form.Group>
               <Form.Group id="password">
-                <Form.Label>Password</Form.Label>
+                <Form.Label className="mt-2">Password</Form.Label>
                 <Form.Control
                   type="password"
                   className="passwordInput"
@@ -77,6 +99,7 @@ export default function Login() {
                   value={password}
                   onChange={onChange}
                 ></Form.Control>
+                <p className="text-danger mt-1">{formErrors.password}</p>
               </Form.Group>
               <Button
                 disabled={loading}

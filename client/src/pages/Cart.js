@@ -29,6 +29,21 @@ function Cart() {
     }
   };
 
+  const increase = (id) => {
+    dispatch(increment(id));
+    dispatch(getTotal());
+  };
+
+  const decrease = (id) => {
+    dispatch(decrement(id));
+    dispatch(getTotal());
+  };
+
+  const removeProduct = (id) => {
+    dispatch(remove(id));
+    dispatch(getTotal());
+  };
+
   const renderedProducts = cartItems.map((item) => (
     <ListGroup.Item
       className="d-flex justify-content-between align-items-start"
@@ -49,12 +64,12 @@ function Cart() {
         <div className="d-flex mt-2 justify-content-left">
           <i
             className="bi bi-dash-circle-fill"
-            onClick={() => dispatch(decrement(item._id))}
+            onClick={() => decrease(item._id)}
           ></i>
           <div className="mx-3">{item.quantity}</div>
           <i
             className="bi bi-plus-circle-fill"
-            onClick={() => dispatch(increment(item._id))}
+            onClick={() => increase(item._id)}
           ></i>
         </div>
       </div>
@@ -63,7 +78,7 @@ function Cart() {
         <Link
           className="text-decoration-none text-danger"
           to="#"
-          onClick={() => dispatch(remove(item._id))}
+          onClick={() => removeProduct(item._id)}
         >
           Remove
         </Link>
