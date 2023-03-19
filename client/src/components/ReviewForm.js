@@ -18,7 +18,7 @@ export default function ReviewForm() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { name, title, rating, body } = formData;
-  const { userDetails } = useSelector((state) => state.user);
+  const { uid } = useSelector((state) => state.auth);
   const { currentUser } = UseAuth();
   const navigate = useNavigate();
 
@@ -42,7 +42,7 @@ export default function ReviewForm() {
         const data = {
           productId: id,
           user: name,
-          userId: userDetails._id,
+          userId: uid,
           title: title,
           rating: 5,
           body: body,
@@ -73,7 +73,7 @@ export default function ReviewForm() {
 
   return (
     <div>
-      <div className="border border-dark border-opacity-50">
+      <div className="border bg-light">
         <Container>
           <Form className="p-2 w-auto needs-validation">
             <p className="text-center">

@@ -7,7 +7,7 @@ import { UseAuth } from "../contexts/AuthContext";
 function AccountSecurity() {
   const { updateUserPassword, currentUser } = UseAuth();
   const [formErrors, setFormErrors] = useState({});
-  const [globalLoader, setGlobalLoader] = useState(false)
+  const [isLoading, setLoading] = useState(false)
   const [formData, setFormData] = useState({
     newPassword: "",
     passwordConfirm: "",
@@ -20,7 +20,7 @@ function AccountSecurity() {
     event.preventDefault();
     const errors = validate();
     if (Object.keys(errors).length === 0) {
-    setGlobalLoader(true)
+    setLoading(true)
     setFormErrors({})
     await updateUserPassword(
       currentUser.email,
@@ -32,7 +32,7 @@ function AccountSecurity() {
         passwordConfirm: "",
         currentPassword: "",
       });
-      setGlobalLoader(false) 
+      setLoading(false) 
     } else {
       setFormErrors(errors)
     }
@@ -105,10 +105,10 @@ function AccountSecurity() {
               size="sm"
               className="w-100"
               type="button"
-              disabled={globalLoader}
+              disabled={isLoading}
               onClick={onSubmit}
             >
-              {globalLoader ? "Please wait..." : "Save"}
+              {isLoading ? "Please wait..." : "Save"}
             </Button>
           </div>
         </Accordion.Body>

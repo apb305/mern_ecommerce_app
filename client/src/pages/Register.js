@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { Card, Form, Button, Container } from "react-bootstrap";
 import { UseAuth } from "../contexts/AuthContext";
 import { toast } from "react-toastify";
-import OAuth from "../components/OAuth";
+// import OAuth from "../components/OAuth";
 
 export default function Register() {
   // const [showPassword, setShowPassword] = useState(false);
@@ -46,8 +46,11 @@ export default function Register() {
         setFormErrors(errors);
       }
     } catch (error) {
+      console.log(error.code)
       setLoading(false);
-      toast.error("An error has occured");
+      if(error.code === "auth/email-already-in-use") {
+        toast.error("Email already in use");
+      }
     }
   };
 
