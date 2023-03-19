@@ -6,7 +6,7 @@ const connectDB = require("./config/db");
 const users = require("./routes/users");
 const stripe = require("./routes/stripe");
 const products = require("./routes/products");
-const auth = require("./routes/auth");
+const signup = require("./routes/signup");
 const wishlist = require("./routes/wishlist")
 const reviews = require("./routes/reviews")
 const cart = require("./routes/cart")
@@ -28,7 +28,7 @@ app.use("/api/wishlist", wishlist);
 app.use("/api/stripe", stripe);
 app.use("/api/products", products);
 app.use("/api/reviews", reviews);
-app.use("/api/auth", auth);
+app.use("/api/signup", signup);
 app.use("/api/cart", cart)
 
 // Serve Static assets for production

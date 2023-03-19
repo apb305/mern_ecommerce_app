@@ -37,15 +37,15 @@ export function AuthProvider({ children }) {
   async function signup(email, password, name) {
     try {
       //Create user with Firebase Auth
-      const user = await createUserWithEmailAndPassword(auth, email, password);
+      const data = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(auth.currentUser, {
         displayName: name,
       });
       //Create user in database.
-      await axios.post("/api/auth", {
-        uid: user.user.uid,
-        name: user.user.displayName,
-        email: user.user.email,
+      await axios.post("/api/signup", {
+        uid: data.user.uid,
+        name: data.user.displayName,
+        email: data.user.email,
       });
     } catch (error) {
       console.log(error);
