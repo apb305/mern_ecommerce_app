@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import instance from "../config/axiosConfig";
 import { clearCart } from "../features/cart/cartSlice";
-
 
 function Success() {
   const [orderDetails, setOrderDetails] = useState({
@@ -23,7 +22,9 @@ function Success() {
       navigate("/products");
     } else {
       setLoading(true);
-      const res = await instance.post("/stripe/order", { sessionId: sessionId });
+      const res = await instance.post("api/stripe/order", {
+        sessionId: sessionId,
+      });
       setOrderDetails({
         orderName: res.data.name,
         orderEmail: res.data.email,
@@ -34,8 +35,9 @@ function Success() {
 
   useEffect(() => {
     confirmOrder();
-    dispatch(clearCart())
+    dispatch(clearCart());
   }, [dispatch]);
+
 
   return (
     <Container>
@@ -53,8 +55,8 @@ function Success() {
               <div className="container text-center mt-4">
                 <p className="mt-4">
                   A confirmation email has been sent to{" "}
-                  {orderDetails.orderEmail}. If you
-                  have any questions, please email
+                  {orderDetails.orderEmail}. If you have any questions, please
+                  email
                   <a
                     className="text-decoration-none"
                     href="mailto:orders@example.com"
@@ -62,13 +64,10 @@ function Success() {
                     {""} orders@example.com.
                   </a>
                 </p>
-                <a
-                  href="https://mern-ecommerce-app-client.onrender.com"
-                  className="btn btn-sm btn-primary mt-2"
-                >
+                <Link to={"/products"} className="btn btn-sm btn-primary mt-2">
                   {" "}
                   Continue Shopping
-                </a>
+                </Link>
               </div>
             </main>
           </Container>
