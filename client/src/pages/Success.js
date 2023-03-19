@@ -38,7 +38,6 @@ function Success() {
     dispatch(clearCart());
   }, [dispatch]);
 
-
   return (
     <Container>
       {isLoading ? (
