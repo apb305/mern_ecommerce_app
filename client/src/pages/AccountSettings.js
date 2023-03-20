@@ -30,7 +30,7 @@ function Profile() {
           <main className="mt-4">
             <div className="row justify-content-center">
               <div className="col-md-6">
-                <Form>
+                <Form className="w-100">
                   <Accordion className="my-3" defaultActiveKey="0">
                     <AccountDetails />
                     <AccountSecurity />
