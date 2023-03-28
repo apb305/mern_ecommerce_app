@@ -10,11 +10,14 @@ import { addToCart } from "../features/cart/cartSlice";
 import { addToUserWishlist } from "../features/wishlist/wishlist-thunk";
 import { format } from "date-fns";
 import { getReviews } from "../features/reviews/review-thunk";
+import ReviewForm from "../components/ReviewForm";
 
 function Product() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { product, isLoading } = useSelector((state) => state.products);
+  const { product, isLoading } = useSelector(
+    (state) => state.products
+  );
   const { productReviews } = useSelector((state) => state.reviews);
   const { currentUser } = UseAuth();
   const dispatch = useDispatch();
@@ -94,55 +97,55 @@ function Product() {
                       <div className="text-dark">
                         {/* Start of the review */}
                         {productReviews.length > 0 ? (
-                          productReviews.map((review) => (
-                            <div className="border mb-3 p-4" key={review._id}>
-                              <div className="d-flex flex-start">
-                                <div>
-                                  <h5 className="fw-bold mb-1">
-                                    {review.title}
-                                  </h5>
-                                  <div className="d-flex align-items-center mb-3">
-                                  <p className="text-muted small mb-0">
-                                    {review.user}{" "}-{" "}
-                                    {format(
-                                      new Date(review.created_at),
-                                      "MM-dd-yyyy"
-                                    )}
-                                  </p>
-                                    <a href="#!" className="link-muted">
-                                      <i className="fas fa-pencil-alt ms-2"></i>
-                                    </a>
-                                    <a href="#!" className="link-muted">
-                                      <i className="fas fa-redo-alt ms-2"></i>
-                                    </a>
-                                    <a href="#!" className="link-muted">
-                                      <i className="fas fa-heart ms-2"></i>
-                                    </a>
+                          <div>
+                            <div className="my-3">
+                              <ReviewForm />
+                            </div>
+                            {productReviews.map((review) => (
+                              <div className="border mb-3 p-4" key={review._id}>
+                                <div className="d-flex flex-start">
+                                  <div>
+                                    <h5 className="fw-bold mb-1">
+                                      {review.title}
+                                    </h5>
+                                    <div className="d-flex align-items-center mb-3">
+                                      <p className="text-muted small mb-0">
+                                        {review.user} -{" "}
+                                        {format(
+                                          new Date(review.created_at),
+                                          "MM-dd-yyyy"
+                                        )}
+                                      </p>
+                                      <a href="#!" className="link-muted">
+                                        <i className="fas fa-pencil-alt ms-2"></i>
+                                      </a>
+                                      <a href="#!" className="link-muted">
+                                        <i className="fas fa-redo-alt ms-2"></i>
+                                      </a>
+                                      <a href="#!" className="link-muted">
+                                        <i className="fas fa-heart ms-2"></i>
+                                      </a>
+                                    </div>
+                                    <p className="mb-0">{review.body}</p>
                                   </div>
-                                  <p className="mb-0">{review.body}</p>
                                 </div>
                               </div>
-                            </div>
-                          ))
+                            ))}{" "}
+                          </div>
                         ) : (
                           <div>
                             <p className="fw-bold text-center mt-4">
                               No reviews available
                             </p>
-                            <div className="text-center mt-3">
-                              <Link
-                                className="btn btn-sm btn-primary"
-                                to={`/reviews/${product._id}`}
-                              >
-                                Write a review
-                              </Link>
+                            <div className="mt-3">
+                              <ReviewForm />
                             </div>
                           </div>
                         )}
                       </div>
                     </div>
                   </div>
-                  {productReviews.length > 0 ? (
+                  {/* {productReviews.length > 0 ? (
                     <div className="text-center">
                       <Link
                         className="btn btn-sm btn-primary"
@@ -153,7 +156,7 @@ function Product() {
                     </div>
                   ) : (
                     ""
-                  )}
+                  )} */}
                 </Tab>
               </Tabs>
             </div>

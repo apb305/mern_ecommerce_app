@@ -44,7 +44,7 @@ function AccountDetails() {
   return (
     <>
       <Accordion.Item eventKey="0">
-        <Accordion.Header>Account Details</Accordion.Header>
+        <Accordion.Header>Profile Details</Accordion.Header>
         <Accordion.Body>
         <Card.Title className="fw-bold text-center">Account Profile</Card.Title>
           <p className="fw-bold mt-2">
@@ -60,7 +60,7 @@ function AccountDetails() {
             />
           </Form.Group>
           <p className="fw-bold mt-2">
-            Email: <small className="fw-light">{userDetails.email}</small>
+            Display Email: <small className="fw-light">{userDetails.email}</small>
           </p>
           <Form.Group className="mb-3">
             <Form.Control

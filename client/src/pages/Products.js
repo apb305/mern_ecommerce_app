@@ -1,18 +1,28 @@
 import { useEffect } from "react";
 import { Card, Button, Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart } from "../features/cart/cartSlice";
 import { getProducts } from "../features/products/products-thunk";
+import Paginate from "../components/Paginate";
 
 function Products() {
-  const { products, isLoading } = useSelector((state) => state.products)
-  const dispatch = useDispatch()
+  const { products, isLoading, pages, page } = useSelector(
+    (state) => state.products
+  );
+  const dispatch = useDispatch();
+  const { pageNumber } = useParams();
+  const productsPage = pageNumber || 1;
+  const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(getProducts())
-  }, [])
+    if (pageNumber > pages || pageNumber < 1) {
+      navigate("/products");
+    } else {
+      dispatch(getProducts(productsPage));
+    }
+  }, [dispatch, productsPage]);
 
   return (
     <>
@@ -34,7 +44,11 @@ function Products() {
                           className="text-decoration-none text-dark"
                           to={`/product/${product._id}`}
                         >
-                          <img src={product.img} className="productImage" alt={product.productName} />
+                          <img
+                            src={product.img}
+                            className="productImage"
+                            alt={product.productName}
+                          />
                           <Card.Title className="mt-2">
                             {product.productName}
                           </Card.Title>
@@ -52,6 +66,9 @@ function Products() {
                     </Card>
                   </div>
                 ))}
+              </div>
+              <div className="mt-4">
+                <Paginate page={page} pages={pages} />
               </div>
             </main>
           </Container>

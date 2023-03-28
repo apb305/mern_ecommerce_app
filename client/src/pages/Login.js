@@ -78,7 +78,6 @@ export default function Login() {
             <h4 className="text-center mb-4">Sign in</h4>
             <Form onSubmit={onSubmit}>
               <Form.Group id="email">
-                <Form.Label>Email</Form.Label>
                 <Form.Control
                   type="email"
                   className="emailInput"
@@ -90,7 +89,6 @@ export default function Login() {
                 <p className="text-danger mt-1">{formErrors.email}</p>
               </Form.Group>
               <Form.Group id="password">
-                <Form.Label className="mt-2">Password</Form.Label>
                 <Form.Control
                   type="password"
                   className="passwordInput"
@@ -103,7 +101,7 @@ export default function Login() {
               </Form.Group>
               <Button
                 disabled={loading}
-                className="w-100 mt-4 btn-dark"
+                className="w-100 mt-2 btn-dark"
                 type="submit"
               >
                 {loading ? "Please wait..." : "Log In"}

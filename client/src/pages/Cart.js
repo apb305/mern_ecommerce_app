@@ -99,16 +99,18 @@ function Cart() {
             {" "}
             {cartItems.length > 0 ? (
               <div>
-                <h3 className="fw-bold mt-3 text-center">
+                <p className="fw-bold mt-3">
                   Total: ${cartTotal.toFixed(2)}
-                </h3>
+                </p>
+                <div className="text-center">
                 <Button
                   disabled={isLoading}
-                  className="w-100"
+                  className="w-50 btn-sm"
                   onClick={checkout}
                 >
                   {isLoading ? "Please wait..." : "Checkout"}
                 </Button>
+                </div>
               </div>
             ) : (
               <div className="text-center">

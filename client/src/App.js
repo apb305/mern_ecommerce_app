@@ -19,7 +19,9 @@ import PrivateRoute from "./components/PrivateRoute";
 import Wishlist from "./pages/Wishlist";
 import ErrorPage from "./pages/ErrorPage";
 import { AuthProvider } from "./contexts/AuthContext";
-import Reviews from "./pages/Reviews";
+import Admin from "./pages/Admin";
+import AddProduct from "./pages/AddProduct";
+import AdminRoute from "./components/AdminRoute";
 
 function App() {
   return (
@@ -38,9 +40,15 @@ function App() {
             <Route path="/wishlist" element={<PrivateRoute />}>
               <Route path="/wishlist" element={<Wishlist />} />
             </Route>
+            <Route path="/add-product" element={<AdminRoute />}>
+              <Route path="/add-product" element={<AddProduct />} />
+            </Route>
+            <Route path="/admin" element={<AdminRoute />}>
+              <Route path="/admin" element={<Admin />} />
+            </Route>
             <Route path="/products" element={<Products />} />
+            <Route path="/products/page/:pageNumber" element={<Products />} exact />
             <Route path="/product/:id" element={<Product />} />
-            <Route path="/reviews/:id" element={<Reviews />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/success" element={<Success />} />
             <Route path="*" element={<ErrorPage />} />

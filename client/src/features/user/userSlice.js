@@ -9,7 +9,11 @@ const initialState = {
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    setUserDetails: (state, action) => {
+      state.userDetails = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getUserDetails.pending, (state, action) => {
       state.isLoading = true;
@@ -34,4 +38,5 @@ const userSlice = createSlice({
   },
 });
 
+export const { setUserDetails } = userSlice.actions;
 export default userSlice.reducer;

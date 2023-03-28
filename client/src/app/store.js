@@ -33,7 +33,7 @@ const persistConfig = {
   key: "root",
   version: 1,
   storage,
-  blacklist: ["wishlist", "user", "reviews"],
+  blacklist: ["wishlist", "reviews"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

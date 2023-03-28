@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { UseAuth } from "../contexts/AuthContext";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { addProductReview } from "../features/reviews/review-thunk";
 import { Button, Container } from "react-bootstrap";
 
@@ -32,10 +32,6 @@ export default function ReviewForm() {
   const onSubmit = async (event) => {
     event.preventDefault();
     const errors = validate();
-    if (!currentUser) {
-      toast.error("Please login to use this feature");
-      navigate("/login");
-    }
     try {
       if (Object.keys(errors).length === 0) {
         setFormErrors({});
@@ -47,6 +43,10 @@ export default function ReviewForm() {
           rating: 5,
           body: body,
         };
+        if (!currentUser) {
+          toast.error("Please login to use this feature");
+          navigate("/login");
+        }
         dispatch(addProductReview(data));
         toast.success("Review Submitted");
       } else {
@@ -73,57 +73,63 @@ export default function ReviewForm() {
 
   return (
     <div>
-      <div className="border bg-light">
-        <Container>
-          <Form className="p-2 w-auto needs-validation">
-            <p className="text-center">
-              <strong>Leave a review</strong>
-            </p>
-            <Form.Group className="mb-3">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                id="name"
-                name="name"
-                value={name}
-                onChange={onChange}
-                type="text"
-                required
-              />
-              <p className="text-danger">{formErrors.name}</p>
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Title</Form.Label>
-              <Form.Control
-                id="title"
-                name="title"
-                value={title}
-                onChange={onChange}
-                type="text"
-                required
-              />
-              <p className="text-danger">{formErrors.title}</p>
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Review</Form.Label>
-              <Form.Control
-                id="body"
-                name="body"
-                value={body}
-                onChange={onChange}
-                as="textarea"
-                rows={3}
-                required
-              />
-              <p className="text-danger">{formErrors.body}</p>
-            </Form.Group>
-            <div className="text-center">
-              <Button onClick={onSubmit} className="btn btn-sm">
-                Submit Review
-              </Button>
-            </div>
-          </Form>
-        </Container>
-      </div>
+      {currentUser ? (
+        <div className="border bg-light">
+          <Container>
+            <Form className="p-2 w-auto">
+              <p className="text-center">
+                <strong>Leave a review</strong>
+              </p>
+              <Form.Group className="mb-3">
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  id="name"
+                  name="name"
+                  value={name}
+                  onChange={onChange}
+                  type="text"
+                  required
+                />
+                <p className="text-danger">{formErrors.name}</p>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Title</Form.Label>
+                <Form.Control
+                  id="title"
+                  name="title"
+                  value={title}
+                  onChange={onChange}
+                  type="text"
+                  required
+                />
+                <p className="text-danger">{formErrors.title}</p>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Review</Form.Label>
+                <Form.Control
+                  id="body"
+                  name="body"
+                  value={body}
+                  onChange={onChange}
+                  as="textarea"
+                  rows={3}
+                  required
+                />
+                <p className="text-danger">{formErrors.body}</p>
+              </Form.Group>
+              <div className="text-center">
+                <Button onClick={onSubmit} className="btn btn-sm">
+                  Submit Review
+                </Button>
+              </div>
+            </Form>
+          </Container>
+        </div>
+      ) : (
+        <div className="text-center">
+        <Link to={"/login"} className="text-decoration-none">Sign in to write a review</Link>
+        </div>
+      )}
     </div>
   );
 }

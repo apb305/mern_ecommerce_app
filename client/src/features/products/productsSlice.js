@@ -16,7 +16,9 @@ export const productsSlice = createSlice({
     });
     builder.addCase(getProducts.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.products = action.payload;
+      state.products = action.payload.products;
+      state.pages = action.payload.pages;
+      state.page = action.payload.page;
     });
     builder.addCase(getProducts.rejected, (state, action) => {
       state.isLoading = false;

@@ -2,12 +2,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../../config/axiosConfig";
 import { auth } from "../../config/firebase";
 
-export const getReviews = createAsyncThunk("reviews/getReviews", async (productId) => {
+export const getReviews = createAsyncThunk("reviews/getReviews", async (productId, {rejectWithValue}) => {
   try {
     const response = await instance.post(`/api/reviews/${productId}`);
     return response.data;
   } catch (error) {
-    console.log(error.message);
+    throw rejectWithValue(error.message)
   }
 });
 

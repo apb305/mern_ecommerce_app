@@ -87,7 +87,6 @@ export default function Register() {
             <h4 className="text-center mb-2">Sign Up</h4>
             <Form onSubmit={onSubmit}>
               <Form.Group id="name">
-                <Form.Label>Name</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Name"
@@ -99,7 +98,6 @@ export default function Register() {
                 <p className="text-danger mt-1">{formErrors.name}</p>
               </Form.Group>
               <Form.Group id="email">
-                <Form.Label>Email</Form.Label>
                 <Form.Control
                   type="email"
                   placeholder="Email"
@@ -111,7 +109,6 @@ export default function Register() {
                 <p className="text-danger mt-1">{formErrors.email}</p>
               </Form.Group>
               <Form.Group id="password">
-                <Form.Label>Password</Form.Label>
                 <Form.Control
                   type="password"
                   // type={showPassword ? "text" : "password"}
@@ -121,9 +118,9 @@ export default function Register() {
                   value={password}
                   onChange={onChange}
                 ></Form.Control>
+                <p className="text-danger mt-1">{formErrors.password}</p>
               </Form.Group>
               <Form.Group id="password-confirm">
-                <Form.Label>Confirm Password</Form.Label>
                 <Form.Control
                   type="password"
                   // type={showPassword ? "text" : "password"}
@@ -137,7 +134,7 @@ export default function Register() {
               </Form.Group>
               <Button
                 disabled={loading}
-                className="w-100 mt-4 btn-dark"
+                className="w-100 mt-2 btn-dark"
                 type="submit"
               >
                 {loading ? "Please Wait..." : "Sign Up"}

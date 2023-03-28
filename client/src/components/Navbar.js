@@ -26,6 +26,23 @@ export default function NavigationBar() {
       console.log(error);
     }
   }
+
+  const adminLinks = (
+    <Fragment>
+      <NavDropdown.Item className=" text-dark" as={Link} to="/admin">
+        Admin Dashboard
+      </NavDropdown.Item>
+      <Dropdown.Divider />
+      <NavDropdown.Item className=" text-dark" as={Link} to="/add-product">
+        Add products
+      </NavDropdown.Item>
+      <Dropdown.Divider />
+      {/* <NavDropdown.Item className=" text-dark" onClick={onLogout}>
+        <i className="bi bi-box-arrow-right"></i>{" "}
+        <span className="hide-sm">Logout</span>
+      </NavDropdown.Item> */}
+    </Fragment>
+  )
   
   const authLinks = (
     <Fragment>
@@ -81,6 +98,7 @@ export default function NavigationBar() {
                 }
                 id="dropdown-menu-align-end"
               >
+                 {currentUser && userDetails.isAdmin && adminLinks}
                 {currentUser ? authLinks : guestLinks}
               </NavDropdown>
             </Nav>
