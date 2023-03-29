@@ -8,17 +8,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { getProduct } from "../features/products/products-thunk";
 import { addToCart } from "../features/cart/cartSlice";
 import { addToUserWishlist } from "../features/wishlist/wishlist-thunk";
-import { format } from "date-fns";
 import { getReviews } from "../features/reviews/review-thunk";
 import ReviewForm from "../components/ReviewForm";
+import Reviews from "../components/Reviews";
 
 function Product() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { product, isLoading } = useSelector(
-    (state) => state.products
+  const { product, isLoading } = useSelector((state) => state.products);
+  const { productReviews, reviewsLoading } = useSelector(
+    (state) => state.reviews
   );
-  const { productReviews } = useSelector((state) => state.reviews);
   const { currentUser } = UseAuth();
   const dispatch = useDispatch();
 
@@ -93,56 +93,27 @@ function Product() {
                 </Tab>
                 <Tab eventKey="reviews" title="Reviews">
                   <div className="row d-flex justify-content-center">
-                    <div className="">
-                      <div className="text-dark">
-                        {/* Start of the review */}
-                        {productReviews.length > 0 ? (
-                          <div>
-                            <div className="my-3">
-                              <ReviewForm />
-                            </div>
-                            {productReviews.map((review) => (
-                              <div className="border mb-3 p-4" key={review._id}>
-                                <div className="d-flex flex-start">
-                                  <div>
-                                    <h5 className="fw-bold mb-1">
-                                      {review.title}
-                                    </h5>
-                                    <div className="d-flex align-items-center mb-3">
-                                      <p className="text-muted small mb-0">
-                                        {review.user} -{" "}
-                                        {format(
-                                          new Date(review.created_at),
-                                          "MM-dd-yyyy"
-                                        )}
-                                      </p>
-                                      <a href="#!" className="link-muted">
-                                        <i className="fas fa-pencil-alt ms-2"></i>
-                                      </a>
-                                      <a href="#!" className="link-muted">
-                                        <i className="fas fa-redo-alt ms-2"></i>
-                                      </a>
-                                      <a href="#!" className="link-muted">
-                                        <i className="fas fa-heart ms-2"></i>
-                                      </a>
-                                    </div>
-                                    <p className="mb-0">{review.body}</p>
-                                  </div>
-                                </div>
-                              </div>
-                            ))}{" "}
+                    <div className="text-dark">
+                      {/* Product reviews start here */}
+                      {productReviews.length > 0 ? (
+                        <div>
+                          <div className="my-3">
+                            <ReviewForm />
                           </div>
-                        ) : (
-                          <div>
-                            <p className="fw-bold text-center mt-4">
-                              No reviews available
-                            </p>
-                            <div className="mt-3">
-                              <ReviewForm />
-                            </div>
-                          </div>
-                        )}
-                      </div>
+                          {reviewsLoading ? (
+                            <Spinner />
+                          ) : (
+                            <Reviews reviews={productReviews} />
+                          )}
+                        </div>
+                      ) : (
+                        <div className="mt-3">
+                          <p className="fw-bold text-center mt-4">
+                            No reviews available
+                          </p>
+                          <ReviewForm />
+                        </div>
+                      )}
                     </div>
                   </div>
                   {/* {productReviews.length > 0 ? (

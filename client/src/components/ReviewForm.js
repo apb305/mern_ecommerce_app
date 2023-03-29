@@ -48,6 +48,12 @@ export default function ReviewForm() {
           navigate("/login");
         }
         dispatch(addProductReview(data));
+        setFormData({
+          title: "",
+          rating: "",
+          body: "",
+          name: "",
+        });
         toast.success("Review Submitted");
       } else {
         setFormErrors(errors);
