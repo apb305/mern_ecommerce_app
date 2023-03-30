@@ -33,7 +33,7 @@ function Footer() {
               </Link>
             </li>
           </ul>
-          <p className="text-center text-dark">© 2022 Some Ecommerce Company, Inc</p>
+          <p className="text-center text-dark">© 2022 Your Ecommerce Company, Inc</p>
         </footer>
       </div>
     </div>
