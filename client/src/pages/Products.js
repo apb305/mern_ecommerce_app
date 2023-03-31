@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Card, Button, Container } from "react-bootstrap";
+import { Card, Button, Container, Placeholder, CardImg } from "react-bootstrap";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { useSelector, useDispatch } from "react-redux";
@@ -42,7 +42,7 @@ function Products() {
                       <Card.Body>
                         <Link
                           className="text-decoration-none text-dark"
-                          to={`/product/${product._id}`}
+                          to={`/products/${product._id}`}
                         >
                           <img
                             src={product.img}

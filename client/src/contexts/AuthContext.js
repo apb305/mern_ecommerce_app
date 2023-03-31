@@ -37,12 +37,16 @@ export function AuthProvider({ children }) {
     await updateProfile(auth.currentUser, {
       displayName: name,
     });
-    //Create user in database.
-    await axios.post("/api/signup", {
-      uid: data.user.uid,
-      name: data.user.displayName,
-      email: data.user.email,
-    });
+    const token = await auth.currentUser.getIdToken();
+    await axios.post(
+      "/api/signup",
+      {
+        uid: data.user.uid,
+        name: data.user.displayName,
+        email: data.user.email,
+      },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
     return data;
   }
 
@@ -107,11 +111,17 @@ export function AuthProvider({ children }) {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       setCurrentUser(user);
       if (user) {
-        dispatch(setAuthUser({ email: user.email, name: user.displayName, uid: user.uid }));
+        dispatch(
+          setAuthUser({
+            email: user.email,
+            name: user.displayName,
+            uid: user.uid,
+          })
+        );
         dispatch(getUserDetails());
       } else {
         dispatch(setAuthUser({}));
-        dispatch(setUserDetails({}))
+        dispatch(setUserDetails({}));
       }
       setLoading(false);
     });

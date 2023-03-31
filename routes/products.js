@@ -9,7 +9,7 @@ const { cloudinary } = require("../config/cloudinary");
 const { isAdmin, ensureAuthenticated } = require("../middleware/auth");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-router.post("/", async (req, res) => {
+router.get("/", async (req, res) => {
   const pageSize = 9;
   const page = Number(req.query.pageNumber) || 1;
   //Info regarding querying
@@ -38,7 +38,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.post("/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
       return res.status(400).json({ msg: "Invalid product ID" });
@@ -102,7 +102,7 @@ router.post("/add-product", ensureAuthenticated, isAdmin, async (req, res) => {
   }
 });
 
-router.post("/edit-product", async (req, res) => {
+router.put("/edit-product", async (req, res) => {
   try {
     const product = await Products.findById({ _id: req.body._id });
     if (product.photoId) {

@@ -43,12 +43,12 @@ function App() {
             <Route path="/add-product" element={<AdminRoute />}>
               <Route path="/add-product" element={<AddProduct />} />
             </Route>
-            <Route path="/admindashboard" element={<AdminRoute />}>
-              <Route path="/admindashboard" element={<AdminDashboard />} />
+            <Route path="/admin" element={<AdminRoute />}>
+              <Route path="/admin" element={<AdminDashboard />} />
             </Route>
             <Route path="/products" element={<Products />} />
             <Route path="/products/page/:pageNumber" element={<Products />} exact />
-            <Route path="/product/:id" element={<Product />} />
+            <Route path="/products/:id" element={<Product />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/success" element={<Success />} />
             <Route path="*" element={<ErrorPage />} />

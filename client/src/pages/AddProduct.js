@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { UseAuth } from "../contexts/AuthContext";
 import { toast } from "react-toastify";
 import { addProduct } from "../features/products/products-thunk";
+import Spinner from "../components/Spinner";
 
 function AddProduct() {
   const [formData, setFormData] = useState({
@@ -22,6 +23,7 @@ function AddProduct() {
   const imageInputRef = React.useRef();
   const reader = new FileReader();
   const { uid } = useSelector((state) => state.auth);
+  const { isLoading } = useSelector((state) => state.products);
   const { currentUser } = UseAuth();
   const navigate = useNavigate();
 
@@ -121,6 +123,7 @@ function AddProduct() {
             <p className="text-center mt-4">
               <strong>Add a product</strong>
             </p>
+            {isLoading && <Spinner />}
             <Form className="w-100">
               <Form.Group className="mb-3">
                 <Form.Label>Product name</Form.Label>
@@ -157,9 +160,11 @@ function AddProduct() {
                   <option value="Audio">Audio</option>
                   <option value="Cell Phones">Cell Phones</option>
                   <option value="Desktop Computers">Desktop Computers</option>
+                  <option value="Drones">Drones</option>
                   <option value="Laptops">Laptops</option>
                   <option value="Tablets">Tablets</option>
                   <option value="TVs">TVs</option>
+                  <option value="VR Headsets">VR Headsets</option>
                   <option value="Watches">Watches</option>
                 </Form.Select>
                 <p className="text-danger">{formErrors.productCategory}</p>
@@ -188,8 +193,8 @@ function AddProduct() {
               </Form.Group>
               <div className="text-center">
               <small className="d-block">Allowed formats: .png, .jpg, .jpeg, .svg, .ico, .jfif, .webp</small>
-                <Button onClick={onSubmit} className="btn btn-sm my-3 w-100">
-                  Add Product
+                <Button disabled={isLoading} onClick={onSubmit} className="btn btn-sm my-3 w-100">
+                {isLoading ? "Please wait..." : "Add Product"}
                 </Button>
               </div>
             </Form>

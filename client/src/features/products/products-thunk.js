@@ -7,7 +7,7 @@ export const getProducts = createAsyncThunk(
   "products/getProducts",
   async (pageNumber) => {
     try {
-      const response = await instance.post(
+      const response = await instance.get(
         `/api/products?pageNumber=${pageNumber}`
       );
       return response.data;
@@ -19,7 +19,7 @@ export const getProducts = createAsyncThunk(
 
 export const getProduct = createAsyncThunk("product/getProduct", async (id, {rejectWithValue}) => {
   try {
-    const response = await instance.post(`/api/products/${id}`);
+    const response = await instance.get(`/api/products/${id}`);
     return response.data;
   } catch (error) {
     throw rejectWithValue(error.message)
@@ -52,7 +52,7 @@ export const editProduct = createAsyncThunk(
     const token = await auth.currentUser.getIdToken();
     const state = getState().auth;
     try {
-      const response = await instance.post(
+      const response = await instance.put(
         `/api/products/edit-product`,
         { uid: state.uid, data },
         { headers: { Authorization: `Bearer ${token}` } }

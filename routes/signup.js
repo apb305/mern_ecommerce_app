@@ -2,11 +2,12 @@ const express = require("express");
 const Joi = require("joi");
 const router = express.Router();
 const mongoose = require("mongoose");
+const { ensureAuthenticated } = require("../middleware/auth");
 const { validateSignup } = require("../validation/validator");
 require("../models/Users");
 const User = mongoose.model("users");
 
-router.post("/", async (req, res) => {
+router.post("/", ensureAuthenticated, async (req, res) => {
   const { error, value } = validateSignup(req.body);
   if (error) {
     console.log(error);
