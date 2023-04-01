@@ -29,8 +29,8 @@ export const addToUserWishlist = createAsyncThunk(
     const state = getState().auth;
     const token = await auth.currentUser.getIdToken();
     try {
-      const response = await instance.put(
-        "/api/wishlist",
+      const response = await instance.post(
+        "/api/wishlist/addWishlist",
         {
           uid: state.uid,
           data: product,

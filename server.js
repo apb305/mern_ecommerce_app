@@ -9,7 +9,8 @@ const products = require("./routes/products");
 const signup = require("./routes/signup");
 const wishlist = require("./routes/wishlist")
 const reviews = require("./routes/reviews")
-const cart = require("./routes/cart")
+const cart = require("./routes/cart");
+const { notFound, errorHandler } = require("./middleware/errorHandler");
 require("dotenv").config();
 
 //Connect DB
@@ -30,6 +31,8 @@ app.use("/api/products", products);
 app.use("/api/reviews", reviews);
 app.use("/api/signup", signup);
 app.use("/api/cart", cart)
+app.use(notFound)
+app.use(errorHandler)
 
 // Serve Static assets for production
 if (process.env.NODE_ENV === "production") {

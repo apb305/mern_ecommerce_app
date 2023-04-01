@@ -1,39 +1,43 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
+const { getUser, updateUser } = require("../controllers/usersController");
 require("../models/Users");
-const User = mongoose.model("users");
 const { ensureAuthenticated } = require("../middleware/auth");
-// const { cloudinary } = require("../config/cloudinary");
 
-router.post("/", ensureAuthenticated, async (req, res) => {
-  try {
-    const user = await User.findOne({ uid: req.body.uid });
-    if (user) {
-      res.status(200).json(user);
-    }
-  } catch (error) {
-    console.log(error.message)
-    res.status(500).json("An error has occured")
-  }
-});
+router
+  .route("/")
+  .post(ensureAuthenticated, getUser).put(ensureAuthenticated, updateUser)
+router
 
-router.put("/", ensureAuthenticated, async (req, res) => {
-  try {
-    const user = await User.findOne({ uid: req.body.uid });
-    user.name = req.body.name ? req.body.name : user.name;
-    user.email = req.body.email ? req.body.email : user.email;
-    user.phone = req.body.phone ? req.body.phone : user.phone;
-    user.bio = req.body.bio ? req.body.bio : user.bio;
-    await user.save();
-    if (user) {
-      res.status(200).json(user);
-    }
-  } catch (error) {
-    console.log(error.message)
-    res.status(500).send("An error has occured")
-  }
-});
+
+// router.post("/", ensureAuthenticated, async (req, res) => {
+//   try {
+//     const user = await User.findOne({ uid: req.body.uid });
+//     if (user) {
+//       res.status(200).json(user);
+//     }
+//   } catch (error) {
+//     console.log(error.message)
+//     res.status(500).json("An error has occured")
+//   }
+// });
+
+// router.put("/", ensureAuthenticated, async (req, res) => {
+//   try {
+//     const user = await User.findOne({ uid: req.body.uid });
+//     user.name = req.body.name ? req.body.name : user.name;
+//     user.email = req.body.email ? req.body.email : user.email;
+//     user.phone = req.body.phone ? req.body.phone : user.phone;
+//     user.bio = req.body.bio ? req.body.bio : user.bio;
+//     await user.save();
+//     if (user) {
+//       res.status(200).json(user);
+//     }
+//   } catch (error) {
+//     console.log(error.message)
+//     res.status(500).send("An error has occured")
+//   }
+// });
 
 // //Profile Image Upload
 // router.put("/edit-profile-image", ensureAuthenticated, async (req, res) => {
