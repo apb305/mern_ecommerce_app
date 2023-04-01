@@ -4,31 +4,25 @@ const User = mongoose.model("users");
 const asyncHandler = require("express-async-handler");
 
 const getUser = asyncHandler(async (req, res) => {
-  try {
-    const user = await User.findOne({ uid: req.body.uid });
-    if (user) {
-      res.status(200).json(user);
-    }
-  } catch (error) {
-    console.log(error.message)
-    res.status(500).json("An error has occured")
+  const user = await User.findOne({ uid: req.body.uid });
+  if (user) {
+    res.status(200).json(user);
+  } else {
+    res.status(400).send("An error has occured");
   }
 });
 
 const updateUser = asyncHandler(async (req, res) => {
-  try {
-    const user = await User.findOne({ uid: req.body.uid });
-    user.name = req.body.name ? req.body.name : user.name;
-    user.email = req.body.email ? req.body.email : user.email;
-    user.phone = req.body.phone ? req.body.phone : user.phone;
-    user.bio = req.body.bio ? req.body.bio : user.bio;
-    await user.save();
-    if (user) {
-      res.status(200).json(user);
-    }
-  } catch (error) {
-    console.log(error.message)
-    res.status(500).send("An error has occured")
+  const user = await User.findOne({ uid: req.body.uid });
+  user.name = req.body.name ? req.body.name : user.name;
+  user.email = req.body.email ? req.body.email : user.email;
+  user.phone = req.body.phone ? req.body.phone : user.phone;
+  user.bio = req.body.bio ? req.body.bio : user.bio;
+  await user.save();
+  if (user) {
+    res.status(200).json(user);
+  } else {
+    res.status(400).send("An error has occured");
   }
 });
 
@@ -54,6 +48,6 @@ const updateUser = asyncHandler(async (req, res) => {
 // });
 
 module.exports = {
-    getUser,
-    updateUser
-}
+  getUser,
+  updateUser,
+};

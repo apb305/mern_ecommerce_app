@@ -7,7 +7,7 @@ export const getProducts = createAsyncThunk(
   "products/getProducts",
   async (pageNumber) => {
     try {
-      const response = await instance.get(
+      const response = await instance.post(
         `/api/products?pageNumber=${pageNumber}`
       );
       return response.data;
@@ -19,7 +19,7 @@ export const getProducts = createAsyncThunk(
 
 export const getProduct = createAsyncThunk("product/getProduct", async (id, {rejectWithValue}) => {
   try {
-    const response = await instance.get(`/api/products/${id}`);
+    const response = await instance.post(`/api/products/${id}`);
     return response.data;
   } catch (error) {
     throw rejectWithValue(error.message)

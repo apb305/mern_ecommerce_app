@@ -11,11 +11,11 @@ const { isAdmin, ensureAuthenticated } = require("../middleware/auth");
 
 router
   .route("/")
-  .get(getProducts)
+  .post(getProducts)
   .post(ensureAuthenticated, isAdmin, addProduct);
 router
   .route("/:id")
-  .get(getProduct)
+  .post(getProduct)
   .put(ensureAuthenticated, isAdmin, editProduct)
   .delete(ensureAuthenticated, isAdmin, deleteProduct);
 
