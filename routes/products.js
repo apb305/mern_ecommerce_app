@@ -9,10 +9,10 @@ const {
 } = require("../controllers/productsController");
 const { isAdmin, ensureAuthenticated } = require("../middleware/auth");
 
-router
-  .route("/")
-  .post(getProducts)
-  .post(ensureAuthenticated, isAdmin, addProduct);
+router.route("/").post(getProducts);
+
+router.route("/add-product").post(ensureAuthenticated, isAdmin, addProduct);
+
 router
   .route("/:id")
   .post(getProduct)
