@@ -40,7 +40,7 @@ function Wishlist() {
                       <div className="ms-2 me-auto text-left">
                         <Link
                           className="text-decoration-none text-dark"
-                          to={`/product/${product._id}`}
+                          to={`/products/${product._id}`}
                         >
                           <div className="fw-bold mb-2">
                             {product.productName}
