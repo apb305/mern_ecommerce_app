@@ -16,23 +16,26 @@ require("dotenv").config();
 //Connect DB
 connectDB();
 
+//Cors
+app.use(cors());
+
+//Strie Route
+app.use("/api/stripe", stripe);
+
 //Init Middleware
 app.use(express.urlencoded({limit: '50mb', extended: true }));
 app.use(express.json({limit:'50mb'}));
 
-//Cors
-app.use(cors());
-
-//Use routes
+//Routes
 app.use("/api/users", users);
 app.use("/api/wishlist", wishlist);
-app.use("/api/stripe", stripe);
 app.use("/api/products", products);
 app.use("/api/reviews", reviews);
 app.use("/api/signup", signup);
 app.use("/api/cart", cart)
 app.use(notFound)
 app.use(errorHandler)
+
 
 // Serve Static assets for production
 if (process.env.NODE_ENV === "production") {

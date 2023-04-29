@@ -3,6 +3,7 @@ import { ListGroup, Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  clearCart,
   decrement,
   getTotal,
   increment,
@@ -102,6 +103,7 @@ function Cart() {
                 <p className="fw-bold mt-3">
                   Total: ${cartTotal.toFixed(2)}
                 </p>
+                {/* <Link to="#" className="btn float-right" onClick={() => dispatch(clearCart())}>Clear cart</Link> */}
                 <div className="text-center">
                 <Button
                   disabled={isLoading}

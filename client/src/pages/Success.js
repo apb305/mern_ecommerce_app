@@ -22,7 +22,7 @@ function Success() {
       navigate("/products");
     } else {
       setLoading(true);
-      const res = await instance.post("api/stripe/order", {
+      const res = await instance.post("api/stripe/success", {
         sessionId: sessionId,
       });
       setOrderDetails({
