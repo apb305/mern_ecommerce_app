@@ -20,7 +20,7 @@ const fulfillOrder = async (customer, items, data) => {
 
   const newOrder = new Order({
     customerEmail: customer.email,
-    orderId: data.client_reference_id,
+    orderId: customer.invoice_prefix,
     // orderId: "12345",
     items: lineItems,
     total: data.amount_total,
@@ -76,21 +76,33 @@ const stripeWebhook = asyncHandler(async (request, response) => {
     // Extract the checkout object itself from the event
     const data = event.data.object;
     try {
+        
       //Get customer
       const customer = await stripe.customers.retrieve(data.customer);
 
       //Get line items
-      const items = await new Promise((resolve, reject) => {
-        stripe.checkout.sessions.listLineItems(
-          data.id,
-          { limit: 100 },
-          (err, lineItems) => {
-            if (err) {
-              return reject(err);
-            }
-            resolve(lineItems);
-          }
-        );
+    //   const items = await new Promise((resolve, reject) => {
+    //     stripe.checkout.sessions.listLineItems(
+    //       data.id,
+    //       { limit: 100 },
+    //       (err, lineItems) => {
+    //         if (err) {
+    //           return reject(err);
+    //         }
+    //         resolve(lineItems);
+    //       }
+    //     );
+    //   });
+
+    const session = await stripe.checkout.sessions.retrieve(
+        event.data.object.id,
+        {
+          expand: ['line_items'],
+        }
+      );
+
+      const items = session.line_items.data.map((item) => {
+        return item;
       });
 
       // Fulfill the purchase...

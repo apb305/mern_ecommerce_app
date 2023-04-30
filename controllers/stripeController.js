@@ -5,7 +5,7 @@ require("../models/Order");
 const Order = mongoose.model("order");
 
 const createPayment = asyncHandler(async (req, res) => {
-  const items = req.body.data;
+  const { items, id} = req.body.data;
   let lineItems = [];
   items.forEach((item) => {
     lineItems.push({
@@ -18,6 +18,9 @@ const createPayment = asyncHandler(async (req, res) => {
     // Create a PaymentIntent with the order amount and currency
     const session = await stripe.checkout.sessions.create({
       line_items: lineItems,
+      metadata: {
+        userId: id,
+      },
       mode: "payment",
       payment_method_types: ["card"],
       billing_address_collection: "required",

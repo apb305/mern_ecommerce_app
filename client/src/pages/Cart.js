@@ -15,6 +15,7 @@ function Cart() {
   const [isLoading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { cartItems, cartTotal } = useSelector((state) => state.cart);
+  const { userDetails } = useSelector((state) => state.user)
 
   useEffect(() => {
     dispatch(getTotal());
@@ -25,6 +26,7 @@ function Cart() {
       setLoading(true);
       const stripeUrl = await instance.post("/api/stripe/checkout", {
         data: cartItems,
+        id: userDetails.uid
       });
       if (stripeUrl.data.url) {
         window.location.assign(stripeUrl.data.url); // Forwarding user to Stripe
