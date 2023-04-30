@@ -6,10 +6,8 @@ const Order = mongoose.model("order");
 
 //Fulfull the order
 const fulfillOrder = async (customer, items, data) => {
-//   console.log(data);
-
   let lineItems = [];
-  items.data.forEach((item) => {
+  items.forEach((item) => {
     lineItems.push({
       productId: item.id,
       productName: item.description,
@@ -21,7 +19,6 @@ const fulfillOrder = async (customer, items, data) => {
   const newOrder = new Order({
     customerEmail: customer.email,
     orderId: customer.invoice_prefix,
-    // orderId: "12345",
     items: lineItems,
     total: data.amount_total,
     shippingAddress: {
@@ -31,19 +28,9 @@ const fulfillOrder = async (customer, items, data) => {
       postalCode: customer.address.postal_code,
       country: customer.address.country,
     },
-    // shippingAddress: {
-    //     address: "1411 La casita st",
-    //     addressTwo: null,
-    //     city: "Deltona",
-    //     postalCode: "32725",
-    //     country: "USA"
-    // }
   });
 
   await newOrder.save();
-
-//   console.log(lineItems);
-//   console.log(customer);
 };
 
 //Stripe CLI webhook secret for testing your endpoint locally.
@@ -76,41 +63,25 @@ const stripeWebhook = asyncHandler(async (request, response) => {
     // Extract the checkout object itself from the event
     const data = event.data.object;
     try {
-        
       //Get customer
       const customer = await stripe.customers.retrieve(data.customer);
 
-      //Get line items
-    //   const items = await new Promise((resolve, reject) => {
-    //     stripe.checkout.sessions.listLineItems(
-    //       data.id,
-    //       { limit: 100 },
-    //       (err, lineItems) => {
-    //         if (err) {
-    //           return reject(err);
-    //         }
-    //         resolve(lineItems);
-    //       }
-    //     );
-    //   });
-
-    const session = await stripe.checkout.sessions.retrieve(
+      const session = await stripe.checkout.sessions.retrieve(
         event.data.object.id,
         {
-          expand: ['line_items'],
+          expand: ["line_items"],
         }
       );
 
-      const items = session.line_items.data
+      const items = session.line_items.data;
 
-       // Return a 200 response to acknowledge receipt of the event
-    response.status(200).json({items: items, customer: customer})
+      // Return a 200 response to acknowledge receipt of the event
+      response.status(200).json({ items: items, customer: customer });
       // Fulfill the purchase...
       fulfillOrder(customer, items, data);
     } catch (error) {
       console.log(error);
     }
-   
   }
 });
 
