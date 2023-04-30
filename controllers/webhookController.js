@@ -6,10 +6,7 @@ const Order = mongoose.model("order");
 
 //Fulfull the order
 const fulfillOrder = (customer, lineItems) => {
-
-  const newOrder = new Order({
-    
-  });
+  const newOrder = new Order({});
 
   console.log(lineItems);
   console.log(customer);
@@ -42,7 +39,6 @@ const stripeWebhook = asyncHandler(async (request, response) => {
   // Handle the event
   try {
     if (event.type === "checkout.session.completed") {
-
       // Extract the checkout object itself from the event
       const data = event.data.object;
 
@@ -65,10 +61,13 @@ const stripeWebhook = asyncHandler(async (request, response) => {
 
       // Fulfill the purchase...
       fulfillOrder(customer, items);
-    }
 
-    // Return a 200 response to acknowledge receipt of the event
-    response.send();
+      // Return a 200 response to acknowledge receipt of the event
+      response.json({
+        customer: customer,
+        items: items,
+      });
+    }
   } catch (error) {
     console.log(error);
   }
