@@ -101,9 +101,7 @@ const stripeWebhook = asyncHandler(async (request, response) => {
         }
       );
 
-      const items = session.line_items.data.map((item) => {
-        return item;
-      });
+      const items = session.line_items.data
 
        // Return a 200 response to acknowledge receipt of the event
     response.status(200).json({items: items, customer: customer})
