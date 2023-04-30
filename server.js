@@ -10,24 +10,20 @@ const signup = require("./routes/signup");
 const wishlist = require("./routes/wishlist")
 const reviews = require("./routes/reviews")
 const cart = require("./routes/cart");
+const webhook = require("./routes/webhook")
 const { notFound, errorHandler } = require("./middleware/errorHandler");
 require("dotenv").config();
 
 //Connect DB
 connectDB();
 
-//Cors
 app.use(cors());
 
-//Init Middleware
-app.use((req, res, next) => {
-  if (req.originalUrl === '/api/stripe/webhook') {
-    next()
-  } else {
-    express.json()(req, res, next)
-  }
-})
-app.use(express.urlencoded({extended: true }));
+//Stripe webhook
+app.use("/api/stripe/webhook", express.raw({ type: '*/*' }), webhook);
+
+app.use(express.json({limit:'50mb'}));
+app.use(express.urlencoded({limit: '50mb', extended: true }));
 
 //Routes
 app.use("/api/users", users);
