@@ -5,7 +5,8 @@ require("../models/Order");
 const Order = mongoose.model("order");
 
 const createPayment = asyncHandler(async (req, res) => {
-  const { items, id} = req.body.data;
+  const { items, id} = req.body;
+  console.log(req.body)
   let lineItems = [];
   items.forEach((item) => {
     lineItems.push({
