@@ -43,6 +43,7 @@ const OrderSchema = new Schema(
     },
     shippingAddress: {
       address: { type: String, required: true },
+      addressTwo: {type: String},
       city: { type: String, required: true },
       postalCode: { type: String, required: true },
       country: { type: String, required: true },

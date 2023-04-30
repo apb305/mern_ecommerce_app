@@ -6,11 +6,13 @@ const Order = mongoose.model("order");
 
 //Fulfull the order
 const fulfillOrder = async (customer, items, data) => {
+//   console.log(data);
 
   let lineItems = [];
-  items.date.forEach((item) => {
+  items.data.forEach((item) => {
     lineItems.push({
-        productId: item.id,
+      productId: item.id,
+      productName: item.description,
       price: item.amount_total,
       quantity: item.quantity,
     });
@@ -18,16 +20,30 @@ const fulfillOrder = async (customer, items, data) => {
 
   const newOrder = new Order({
     customerEmail: customer.email,
-    orderId: data.metadata.orderId,
+    orderId: data.client_reference_id,
+    // orderId: "12345",
     items: lineItems,
     total: data.amount_total,
-    shippingAddress: customer.address
+    shippingAddress: {
+      address: customer.address.line1,
+      addressTwo: customer.address.line2,
+      city: customer.address.city,
+      postalCode: customer.address.postal_code,
+      country: customer.address.country,
+    },
+    // shippingAddress: {
+    //     address: "1411 La casita st",
+    //     addressTwo: null,
+    //     city: "Deltona",
+    //     postalCode: "32725",
+    //     country: "USA"
+    // }
   });
 
-  await newOrder.save()
+  await newOrder.save();
 
-  console.log(lineItems);
-  console.log(customer);
+//   console.log(lineItems);
+//   console.log(customer);
 };
 
 //Stripe CLI webhook secret for testing your endpoint locally.
@@ -83,7 +99,7 @@ const stripeWebhook = asyncHandler(async (request, response) => {
       console.log(error);
     }
     // Return a 200 response to acknowledge receipt of the event
-    response.status(200);
+    response.status(200).send();
   }
 });
 
