@@ -4,6 +4,6 @@ const {
 } = require("../controllers/webhookController");
 const router = express.Router();
 
-router.route("/").post(express.raw({ type: 'application/json' }), stripeWebhook)
+router.route("/").post(stripeWebhook)
 
 module.exports = router;

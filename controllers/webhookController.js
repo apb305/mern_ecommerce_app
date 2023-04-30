@@ -6,7 +6,6 @@ const Order = mongoose.model("order");
 
 //Fulfull the order
 const fulfillOrder = (customer, lineItems) => {
-  // TODO: fill me in
 
   const newOrder = new Order({
     
