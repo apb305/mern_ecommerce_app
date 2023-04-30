@@ -21,12 +21,17 @@ function Cart() {
   }, [dispatch]);
 
   const checkout = async () => {
-    setLoading(true);
-    const stripeUrl = await instance.post("/api/stripe/checkout", {
-      data: cartItems,
-    });
-    if (stripeUrl.data.url) {
-      window.location.assign(stripeUrl.data.url); // Forwarding user to Stripe
+    try {
+      setLoading(true);
+      const stripeUrl = await instance.post("/api/stripe/checkout", {
+        data: cartItems,
+      });
+      if (stripeUrl.data.url) {
+        window.location.assign(stripeUrl.data.url); // Forwarding user to Stripe
+      }
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
     }
   };
 
@@ -100,18 +105,16 @@ function Cart() {
             {" "}
             {cartItems.length > 0 ? (
               <div>
-                <p className="fw-bold mt-3">
-                  Total: ${cartTotal.toFixed(2)}
-                </p>
+                <p className="fw-bold mt-3">Total: ${cartTotal.toFixed(2)}</p>
                 {/* <Link to="#" className="btn float-right" onClick={() => dispatch(clearCart())}>Clear cart</Link> */}
                 <div className="text-center">
-                <Button
-                  disabled={isLoading}
-                  className="w-50 btn-sm"
-                  onClick={checkout}
-                >
-                  {isLoading ? "Please wait..." : "Checkout"}
-                </Button>
+                  <Button
+                    disabled={isLoading}
+                    className="w-50 btn-sm"
+                    onClick={checkout}
+                  >
+                    {isLoading ? "Please wait..." : "Checkout"}
+                  </Button>
                 </div>
               </div>
             ) : (

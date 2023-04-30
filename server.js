@@ -19,9 +19,6 @@ connectDB();
 //Cors
 app.use(cors());
 
-//Strie Route
-app.use("/api/stripe", stripe);
-
 //Init Middleware
 app.use(express.urlencoded({limit: '50mb', extended: true }));
 app.use(express.json({limit:'50mb'}));
@@ -33,6 +30,7 @@ app.use("/api/products", products);
 app.use("/api/reviews", reviews);
 app.use("/api/signup", signup);
 app.use("/api/cart", cart)
+app.use("/api/stripe", stripe);
 app.use(notFound)
 app.use(errorHandler)
 
