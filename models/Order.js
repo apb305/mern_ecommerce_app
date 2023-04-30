@@ -3,25 +3,26 @@ const Schema = mongoose.Schema;
 
 const OrderSchema = new Schema(
   {
-    customerId: {
+    customerEmail: {
       type: String,
+      required: true
+    },
+    orderId: {
+      type: String,
+      required: true
     },
     items: [
       {
+        // productId: {
+        //   type: mongoose.Schema.Types.ObjectId,
+        //   required: true,
+        //   ref: "products",
+        // },
         productId: {
-          type: mongoose.Schema.Types.ObjectId,
-          required: true,
-          ref: "products",
+          type: String,
+          required: true
         },
         productName: {
-          type: String,
-          required: true,
-        },
-        img: {
-          type: String,
-          required: true,
-        },
-        productDescription: {
           type: String,
           required: true,
         },
@@ -45,10 +46,6 @@ const OrderSchema = new Schema(
       city: { type: String, required: true },
       postalCode: { type: String, required: true },
       country: { type: String, required: true },
-    },
-    date_added: {
-      type: Date,
-      default: Date.now,
     },
   },
   { timestamps: true }

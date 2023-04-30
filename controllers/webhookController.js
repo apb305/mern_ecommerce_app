@@ -5,8 +5,26 @@ require("../models/Order");
 const Order = mongoose.model("order");
 
 //Fulfull the order
-const fulfillOrder = (customer, lineItems) => {
-  const newOrder = new Order({});
+const fulfillOrder = async (customer, items, data) => {
+
+  let lineItems = [];
+  items.date.forEach((item) => {
+    lineItems.push({
+        productId: item.id,
+      price: item.amount_total,
+      quantity: item.quantity,
+    });
+  });
+
+  const newOrder = new Order({
+    customerEmail: customer.email,
+    orderId: data.metadata.orderId,
+    items: lineItems,
+    total: data.amount_total,
+    shippingAddress: customer.address
+  });
+
+  await newOrder.save()
 
   console.log(lineItems);
   console.log(customer);
@@ -37,11 +55,11 @@ const stripeWebhook = asyncHandler(async (request, response) => {
   }
 
   // Handle the event
-  try {
-    if (event.type === "checkout.session.completed") {
-      // Extract the checkout object itself from the event
-      const data = event.data.object;
 
+  if (event.type === "checkout.session.completed") {
+    // Extract the checkout object itself from the event
+    const data = event.data.object;
+    try {
       //Get customer
       const customer = await stripe.customers.retrieve(data.customer);
 
@@ -60,16 +78,12 @@ const stripeWebhook = asyncHandler(async (request, response) => {
       });
 
       // Fulfill the purchase...
-      fulfillOrder(customer, items);
-
-      // Return a 200 response to acknowledge receipt of the event
-      response.json({
-        customer: customer,
-        items: items,
-      });
+      fulfillOrder(customer, items, data);
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
+    // Return a 200 response to acknowledge receipt of the event
+    response.status(200);
   }
 });
 
