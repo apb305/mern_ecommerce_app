@@ -105,13 +105,14 @@ const stripeWebhook = asyncHandler(async (request, response) => {
         return item;
       });
 
+       // Return a 200 response to acknowledge receipt of the event
+    response.status(200).json({items: items})
       // Fulfill the purchase...
       fulfillOrder(customer, items, data);
     } catch (error) {
       console.log(error);
     }
-    // Return a 200 response to acknowledge receipt of the event
-    response.status(200).send();
+   
   }
 });
 
