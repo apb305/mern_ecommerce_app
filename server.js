@@ -20,8 +20,14 @@ connectDB();
 app.use(cors());
 
 //Init Middleware
-app.use(express.urlencoded({limit: '50mb', extended: true }));
-app.use(express.json({limit:'50mb'}));
+app.use((req, res, next) => {
+  if (req.originalUrl === '/api/stripe/webhook') {
+    next()
+  } else {
+    express.json()(req, res, next)
+  }
+})
+app.use(express.urlencoded({extended: true }));
 
 //Routes
 app.use("/api/users", users);
