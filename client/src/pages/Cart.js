@@ -25,7 +25,7 @@ function Cart() {
     try {
       setLoading(true);
       const stripeUrl = await instance.post("/api/stripe/checkout", {
-        data: cartItems,
+        items: cartItems,
         id: userDetails.uid
       });
       if (stripeUrl.data.url) {
