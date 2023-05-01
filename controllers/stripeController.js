@@ -30,9 +30,9 @@ const createPayment = asyncHandler(async (req, res) => {
         { shipping_rate: "shr_1McHupEacISszt8dhGiguzgc" },
         { shipping_rate: "shr_1McI0WEacISszt8dEObQBwpo" },
       ],
-      // automatic_tax: {
-      //   enabled: true
-      // },
+      automatic_tax: {
+        enabled: true
+      },
       success_url: `${process.env.SUCCESS_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.SUCCESS_URL}/cart`,
     });

@@ -59,11 +59,12 @@ const stripeWebhook = asyncHandler(async (request, response) => {
   }
 
   // Handle the event
-
   if (event.type === "checkout.session.completed") {
+
     // Extract the checkout object itself from the event
     const data = event.data.object;
     try {
+
       //Get customer
       //   const customer = await stripe.customers.retrieve(data.customer);
 
@@ -74,12 +75,12 @@ const stripeWebhook = asyncHandler(async (request, response) => {
         }
       );
 
-      console.log(session);
-
       // Return a 200 response to acknowledge receipt of the event
       response.status(200).json({ session: session });
+
       // Fulfill the purchase...
       fulfillOrder(session);
+
     } catch (error) {
       console.log(error);
     }
