@@ -5,8 +5,9 @@ require("../models/Order");
 const Order = mongoose.model("order");
 
 const createPayment = asyncHandler(async (req, res) => {
+
   const { items, id} = req.body;
-  console.log(req.body)
+
   let lineItems = [];
   items.forEach((item) => {
     lineItems.push({
@@ -54,7 +55,6 @@ const checkoutSuccess = asyncHandler(async (req, res) => {
   const customer = await stripe.customers.retrieve(session.customer);
   res.status(200).json(customer);
 });
-
 
 module.exports = {
   createPayment,

@@ -5,9 +5,10 @@ require("../models/Order");
 const Order = mongoose.model("order");
 
 //Fulfull the order
-const fulfillOrder = async (customer, items, data) => {
+const fulfillOrder = async (session) => {
+  const { customer_details, line_items, amount_total } = session;
   let lineItems = [];
-  items.forEach((item) => {
+  line_items.data.forEach((item) => {
     lineItems.push({
       productId: item.id,
       productName: item.description,
@@ -17,16 +18,16 @@ const fulfillOrder = async (customer, items, data) => {
   });
 
   const newOrder = new Order({
-    customerEmail: customer.email,
-    orderId: customer.invoice_prefix,
+    customerEmail: customer_details.email,
+    // orderId: customer.invoice_prefix,
     items: lineItems,
-    total: data.amount_total,
+    total: amount_total,
     shippingAddress: {
-      address: customer.address.line1,
-      addressTwo: customer.address.line2,
-      city: customer.address.city,
-      postalCode: customer.address.postal_code,
-      country: customer.address.country,
+      address: customer_details.address.line1,
+      addressTwo: customer_details.address.line2,
+      city: customer_details.address.city,
+      postalCode: customer_details.address.postal_code,
+      country: customer_details.address.country,
     },
   });
 
@@ -64,7 +65,7 @@ const stripeWebhook = asyncHandler(async (request, response) => {
     const data = event.data.object;
     try {
       //Get customer
-      const customer = await stripe.customers.retrieve(data.customer);
+      //   const customer = await stripe.customers.retrieve(data.customer);
 
       const session = await stripe.checkout.sessions.retrieve(
         event.data.object.id,
@@ -73,12 +74,12 @@ const stripeWebhook = asyncHandler(async (request, response) => {
         }
       );
 
-      const items = session.line_items.data;
+      console.log(session);
 
       // Return a 200 response to acknowledge receipt of the event
-      response.status(200).json({ items: items, customer: customer });
+      response.status(200).json({ session: session });
       // Fulfill the purchase...
-      fulfillOrder(customer, items, data);
+      fulfillOrder(session);
     } catch (error) {
       console.log(error);
     }

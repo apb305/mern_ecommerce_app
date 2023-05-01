@@ -7,10 +7,10 @@ const OrderSchema = new Schema(
       type: String,
       required: true
     },
-    orderId: {
-      type: String,
-      required: true
-    },
+    // orderId: {
+    //   type: String,
+    //   required: true
+    // },
     items: [
       {
         // productId: {
