@@ -27,6 +27,7 @@ const createPayment = asyncHandler(async (req, res) => {
       payment_method_types: ["card"],
       billing_address_collection: "required",
       shipping_options: [
+        {tax_behavior: "inclusive"},
         { shipping_rate: "shr_1McHupEacISszt8dhGiguzgc" },
         { shipping_rate: "shr_1McI0WEacISszt8dEObQBwpo" },
       ],
