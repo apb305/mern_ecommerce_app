@@ -40,26 +40,6 @@ export const updateUserDetails = createAsyncThunk(
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-
-      //   try {
-      //     // Updates firebase data
-      //     await updateProfile(auth.currentUser, {
-      //       displayName: data.name,
-      //       email: data.email,
-      //     });
-      //     await axios.put(
-      //     "/users",
-      //       {
-      //         uid: id,
-      //         name: data.name,
-      //         email: data.email,
-      //         phone: data.phone,
-      //         bio: data.bio,
-      //         photoURL: data.photoURL,
-      //       },
-      //       { headers: { Authorization: `Bearer ${token}` } }
-      //     );
-
       return response.data;
     } catch (error) {
       console.log(error);

@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 
 
 export default function NavigationBar() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userDetails } = useSelector((state) => state.user);
   const { cartItems } = useSelector((state) => state.cart)

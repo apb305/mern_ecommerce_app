@@ -7,6 +7,5 @@ const { ensureAuthenticated } = require("../middleware/auth");
 router
   .route("/")
   .post(ensureAuthenticated, getUser).put(ensureAuthenticated, updateUser)
-router
 
 module.exports = router;
