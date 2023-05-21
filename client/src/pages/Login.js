@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { UseAuth } from "../contexts/AuthContext";
 import { Card, Form, Button, Container } from "react-bootstrap";
 import { Link, useNavigate, Navigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 export default function Login() {
   // const [showPassword, setShowPassword] = useState(false);
@@ -15,7 +15,7 @@ export default function Login() {
     password: "",
   });
   const { email, password } = formData;
-  const { currentUser } = UseAuth();
+  const { isAuthUser } = useSelector((state) => state.authUser);
   const navigate = useNavigate();
 
   const onChange = (e) => {
@@ -69,7 +69,7 @@ export default function Login() {
       className="d-flex align-items-center justify-content-center mt-5"
       style={{ minHeight: "40vh" }}
     >
-      {currentUser && (
+      {isAuthUser && (
           <Navigate to="/" replace={true} />
         )}
       <div className="w-100" style={{ maxWidth: "400px" }}>

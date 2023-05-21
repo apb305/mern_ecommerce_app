@@ -24,7 +24,7 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   products: productsReducer,
   reviews: reviewReducer,
-  auth: authReducer,
+  authUser: authReducer,
   user: userReducer,
   wishlist: wishlistReducer,
 });

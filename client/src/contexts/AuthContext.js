@@ -10,15 +10,15 @@ import {
   updatePassword,
   reauthenticateWithCredential,
   EmailAuthProvider,
+  reload
   // signInWithRedirect,
 } from "firebase/auth";
 import axios from "../config/axiosConfig";
 import { toast } from "react-toastify";
 import { auth } from "../config/firebase";
 import { useDispatch } from "react-redux";
-import { setAuthUser } from "../features/auth/authSlice";
+import { setAuthUser, logout } from "../features/auth/authSlice";
 import { getUserDetails } from "../features/user/user-thunk";
-import { setUserDetails } from "../features/user/userSlice";
 
 const AuthContext = React.createContext();
 
@@ -47,14 +47,14 @@ export function AuthProvider({ children }) {
       },
       { headers: { Authorization: `Bearer ${token}` } }
     );
-    return data;
   }
 
   function login(email, password) {
     return signInWithEmailAndPassword(auth, email, password);
   }
 
-  function logout() {
+  function signOut() {
+    dispatch(logout())
     return auth.signOut();
   }
 
@@ -108,20 +108,23 @@ export function AuthProvider({ children }) {
   }
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      setCurrentUser(user);
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         dispatch(
           setAuthUser({
             email: user.email,
             name: user.displayName,
             uid: user.uid,
+            isAuthUser: true
           })
         );
-        dispatch(getUserDetails());
       } else {
-        dispatch(setAuthUser({}));
-        dispatch(setUserDetails({}));
+        dispatch(setAuthUser({
+          email: null,
+          name: null,
+          uid: null,
+          isAuthUser: false
+        }));
       }
       setLoading(false);
     });
@@ -134,7 +137,7 @@ export function AuthProvider({ children }) {
     googleLogin,
     signup,
     login,
-    logout,
+    signOut,
     updateEmail,
     updateUserPassword,
   };

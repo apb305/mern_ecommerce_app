@@ -56,7 +56,7 @@ function App() {
           <Footer />
         </AuthProvider>
       </Router>
-      <ToastContainer autoClose={1500} hideProgressBar={true} />
+      <ToastContainer autoClose={1500} hideProgressBar={true} position="top-center"/>
     </>
   );
 }

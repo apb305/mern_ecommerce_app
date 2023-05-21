@@ -3,6 +3,7 @@ import { Link, Navigate } from "react-router-dom";
 import { Card, Form, Button, Container } from "react-bootstrap";
 import { UseAuth } from "../contexts/AuthContext";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 // import OAuth from "../components/OAuth";
 
 export default function Register() {
@@ -15,7 +16,8 @@ export default function Register() {
     password: "",
     passwordConfirm: "",
   });
-  const { currentUser, signup } = UseAuth();
+  const { signup } = UseAuth();
+  const { isAuthUser } = useSelector((state) => state.authUser);
   const { email, password, passwordConfirm, name } = formData;
 
   // const navigate = useNavigate();
@@ -78,7 +80,7 @@ export default function Register() {
 
   return (
     <Container className="d-flex align-items-center justify-content-center mt-5">
-      {currentUser && (
+      {isAuthUser && (
           <Navigate to="/" replace={true} />
         )}
       <div className="w-100" style={{ maxWidth: "400px" }}>

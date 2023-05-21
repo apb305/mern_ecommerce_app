@@ -16,10 +16,10 @@ function Product() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { product, isLoading } = useSelector((state) => state.products);
+  const { isAuthUser} = useSelector((state) => state.authUser);
   const { productReviews, reviewsLoading } = useSelector(
     (state) => state.reviews
   );
-  const { currentUser } = UseAuth();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,7 +28,7 @@ function Product() {
   }, [id, dispatch]);
 
   const addToFavorites = async (product) => {
-    if (!currentUser) {
+    if (!isAuthUser) {
       toast.error("Please login to use this feature");
       navigate("/login");
     } else {

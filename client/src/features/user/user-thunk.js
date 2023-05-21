@@ -6,7 +6,7 @@ import { auth } from "../../config/firebase";
 export const getUserDetails = createAsyncThunk(
   "user/getUserDetails",
   async (args, { getState }) => {
-    const state = getState().auth;
+    const state = getState().authUser;
     try {
       const token = await auth.currentUser.getIdToken();
       const response = await instance.post(
@@ -24,7 +24,7 @@ export const getUserDetails = createAsyncThunk(
 export const updateUserDetails = createAsyncThunk(
   "user/updateUserDetails",
   async (args, { getState }) => {
-    const state = getState().auth;
+    const state = getState().authUser;
     const { name, email } = args;
     try {
       const token = await auth.currentUser.getIdToken();

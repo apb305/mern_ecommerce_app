@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { UseAuth } from "../contexts/AuthContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { addProductReview } from "../features/reviews/review-thunk";
 import { Button, Container } from "react-bootstrap";
@@ -18,8 +17,7 @@ export default function ReviewForm() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { name, title, rating, body } = formData;
-  const { uid } = useSelector((state) => state.auth);
-  const { currentUser } = UseAuth();
+  const { isAuthUser, uid } = useSelector((state) => state.authUser);
   const navigate = useNavigate();
 
   const onChange = (e) => {
@@ -43,7 +41,7 @@ export default function ReviewForm() {
           rating: 5,
           body: body,
         };
-        if (!currentUser) {
+        if (!isAuthUser) {
           toast.error("Please login to use this feature");
           navigate("/login");
         }
@@ -79,7 +77,7 @@ export default function ReviewForm() {
 
   return (
     <div>
-      {currentUser ? (
+      {isAuthUser ? (
         <div className="border bg-light">
           <Container>
             <Form className="p-2 w-auto">

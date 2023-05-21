@@ -1,17 +1,12 @@
 import { useState } from "react";
-import {
-  Button,
-  Card,
-  Form,
-  Accordion,
-} from "react-bootstrap";
+import { Button, Card, Form, Accordion } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { getUserDetails, updateUserDetails } from "../features/user/user-thunk";
 
 function AccountDetails() {
-  const dispatch = useDispatch()
-  const { userDetails, isLoading } = useSelector((state) => state.user)
+  const dispatch = useDispatch();
+  const { userDetails, isLoading } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,8 +17,8 @@ function AccountDetails() {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-    dispatch(updateUserDetails(formData))
-     dispatch(getUserDetails());
+      dispatch(updateUserDetails(formData));
+      dispatch(getUserDetails());
       toast.success("Your profile has been updated");
       setFormData({
         name: "",
@@ -46,9 +41,11 @@ function AccountDetails() {
       <Accordion.Item eventKey="0">
         <Accordion.Header>Profile Details</Accordion.Header>
         <Accordion.Body>
-        <Card.Title className="fw-bold text-center">Account Profile</Card.Title>
+          <Card.Title className="fw-bold text-center">
+            Account Profile
+          </Card.Title>
           <p className="fw-bold mt-2">
-            Account Name: <small className="fw-light">{userDetails.name}</small>
+            Display Name: <small className="fw-light">{userDetails.name}</small>
           </p>
           <Form.Group className="mb-3">
             <Form.Control
@@ -60,7 +57,8 @@ function AccountDetails() {
             />
           </Form.Group>
           <p className="fw-bold mt-2">
-            Display Email: <small className="fw-light">{userDetails.email}</small>
+            Display Email:{" "}
+            <small className="fw-light">{userDetails.email}</small>
           </p>
           <Form.Group className="mb-3">
             <Form.Control

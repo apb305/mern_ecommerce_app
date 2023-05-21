@@ -1,47 +1,41 @@
 import React, { Fragment } from "react";
 import { Navbar, Container, Nav, NavDropdown, Dropdown} from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import { UseAuth } from "../contexts/AuthContext";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { auth } from "../config/firebase";
 import { logout } from "../features/auth/authSlice";
 import { toast } from "react-toastify";
-
+import { UseAuth } from "../contexts/AuthContext";
 
 export default function NavigationBar() {
   const dispatch = useDispatch();
-  const { userDetails } = useSelector((state) => state.user);
+  const { isAuthUser } = useSelector((state) => state.authUser);
   const { cartItems } = useSelector((state) => state.cart)
-  // const { user } = useSelector((state) => state.auth)
-  const { currentUser } = UseAuth();
-  
+  const { signOut } = UseAuth();
 
-  async function onLogout() {
+ function onLogout() {
     try {
+      //Remove user from store
       dispatch(logout());
-      auth.signOut();
+      //Sign user out of firebase
+      signOut();
       toast.success("You have logged out successfully")
     } catch (error) {
       console.log(error);
     }
   }
 
-  const adminLinks = (
-    <Fragment>
-      <NavDropdown.Item className=" text-dark" as={Link} to="/admin">
-        Admin Dashboard
-      </NavDropdown.Item>
-      <Dropdown.Divider />
-      <NavDropdown.Item className=" text-dark" as={Link} to="/add-product">
-        Add products
-      </NavDropdown.Item>
-      <Dropdown.Divider />
-      {/* <NavDropdown.Item className=" text-dark" onClick={onLogout}>
-        <i className="bi bi-box-arrow-right"></i>{" "}
-        <span className="hide-sm">Logout</span>
-      </NavDropdown.Item> */}
-    </Fragment>
-  )
+  // const adminLinks = (
+  //   <Fragment>
+  //     <NavDropdown.Item className=" text-dark" as={Link} to="/admin">
+  //       Admin Dashboard
+  //     </NavDropdown.Item>
+  //     <Dropdown.Divider />
+  //     <NavDropdown.Item className=" text-dark" as={Link} to="/add-product">
+  //       Add products
+  //     </NavDropdown.Item>
+  //     <Dropdown.Divider />
+  //   </Fragment>
+  // )
   
   const authLinks = (
     <Fragment>
@@ -90,15 +84,15 @@ export default function NavigationBar() {
               <NavDropdown
                 align="end"
                 title={
-                  <i
-                    className="bi bi-person-circle text-dark"
-                    style={{ fontSize: "1.5rem" }}
-                  ></i>
+                <i
+                  className="bi bi-person-circle text-dark"
+                  style={{ fontSize: "1.5rem" }}
+                ></i> 
                 }
                 id="dropdown-menu-align-end"
               >
-                 {currentUser && userDetails.isAdmin && adminLinks}
-                {currentUser ? authLinks : guestLinks}
+                 {/* {currentUser && userDetails.isAdmin ? adminLinks : ""} */}
+                {isAuthUser ? authLinks : guestLinks}
               </NavDropdown>
             </Nav>
             <Nav>
