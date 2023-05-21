@@ -27,7 +27,6 @@ export function UseAuth() {
 }
 
 export function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
@@ -113,7 +112,6 @@ export function AuthProvider({ children }) {
         dispatch(
           setAuthUser({
             email: user.email,
-            name: user.displayName,
             uid: user.uid,
             isAuthUser: true
           })
@@ -121,7 +119,6 @@ export function AuthProvider({ children }) {
       } else {
         dispatch(setAuthUser({
           email: null,
-          name: null,
           uid: null,
           isAuthUser: false
         }));
@@ -132,7 +129,6 @@ export function AuthProvider({ children }) {
   }, [dispatch]);
 
   const value = {
-    currentUser,
     sendPasswordReset,
     googleLogin,
     signup,
