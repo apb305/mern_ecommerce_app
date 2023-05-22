@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Button, Card, Form, FormGroup, Accordion } from "react-bootstrap";
 import { UseAuth } from "../contexts/AuthContext";
-// import { UserData } from "../contexts/UserContext";
 
 function AccountSecurity() {
   const { updateUserPassword, currentUser } = UseAuth();

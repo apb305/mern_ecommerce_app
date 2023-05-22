@@ -1,12 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
-import instance from "../../config/axiosConfig";
-import { auth } from "../../config/firebase";
+import instance from "../../../config/axiosConfig";
+import { auth } from "../../../config/firebase";
 
 export const getUserDetails = createAsyncThunk(
   "user/getUserDetails",
   async (args, { getState }) => {
-    const state = getState().authUser;
+    const state = getState().auth;
     try {
       const token = await auth.currentUser.getIdToken();
       const response = await instance.post(
@@ -24,7 +23,7 @@ export const getUserDetails = createAsyncThunk(
 export const updateUserDetails = createAsyncThunk(
   "user/updateUserDetails",
   async (args, { getState }) => {
-    const state = getState().authUser;
+    const state = getState().auth;
     const { name, email } = args;
     try {
       const token = await auth.currentUser.getIdToken();
@@ -33,10 +32,7 @@ export const updateUserDetails = createAsyncThunk(
         {
           uid: state.uid,
           name: name,
-          email: email,
-          //   phone: phone,
-          //   bio: bio,
-          //   photoURL: photoURL,
+          email: email
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );

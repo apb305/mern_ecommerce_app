@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import instance from "../../config/axiosConfig";
-import { auth } from "../../config/firebase";
+import instance from "../../../config/axiosConfig";
+import { auth } from "../../../config/firebase";
 
 export const getReviews = createAsyncThunk("reviews/getReviews", async (productId, {rejectWithValue}) => {
   try {

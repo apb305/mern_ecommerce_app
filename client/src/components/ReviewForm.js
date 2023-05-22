@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { addProductReview } from "../features/reviews/review-thunk";
+import { addProductReview } from "../store/features/reviews/review-thunk";
 import { Button, Container } from "react-bootstrap";
 
 export default function ReviewForm() {
@@ -17,7 +17,7 @@ export default function ReviewForm() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { name, title, rating, body } = formData;
-  const { isAuthUser, uid } = useSelector((state) => state.authUser);
+  const { isAuthUser, uid } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
   const onChange = (e) => {

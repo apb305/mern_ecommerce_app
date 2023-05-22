@@ -1,7 +1,7 @@
 import { Container } from "react-bootstrap";
 import FeaturedItemsCarousel from "../components/FeaturedItemsCarousel";
 import { useSelector, useDispatch } from "react-redux";
-import { getProducts } from "../features/products/productsSlice";
+import { getProducts } from "../store/features/products/productsSlice";
 import Spinner from "../components/Spinner";
 import { useEffect } from "react";
 import HomePageDeals from "../components/HomePageDeals";

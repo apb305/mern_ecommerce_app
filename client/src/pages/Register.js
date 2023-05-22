@@ -17,7 +17,7 @@ export default function Register() {
     passwordConfirm: "",
   });
   const { signup } = UseAuth();
-  const { isAuthUser } = useSelector((state) => state.authUser);
+  const { isAuthUser } = useSelector((state) => state.auth);
   const { email, password, passwordConfirm, name } = formData;
 
   // const navigate = useNavigate();

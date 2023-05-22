@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 import { Container, Tab, Tabs } from "react-bootstrap";
-import { useParams, Navigate, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
-import { UseAuth } from "../contexts/AuthContext";
 import { useSelector, useDispatch } from "react-redux";
-import { getProduct } from "../features/products/products-thunk";
-import { addToCart } from "../features/cart/cartSlice";
-import { addToUserWishlist } from "../features/wishlist/wishlist-thunk";
-import { getReviews } from "../features/reviews/review-thunk";
+import { getProduct } from "../store/features/products/products-thunk";
+import { addToCart } from "../store/features/cart/cartSlice";
+import { addToUserWishlist } from "../store/features/wishlist/wishlist-thunk";
+import { getReviews } from "../store/features/reviews/review-thunk";
 import ReviewForm from "../components/ReviewForm";
 import Reviews from "../components/Reviews";
 
@@ -16,7 +15,7 @@ function Product() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { product, isLoading } = useSelector((state) => state.products);
-  const { isAuthUser} = useSelector((state) => state.authUser);
+  const { isAuthUser} = useSelector((state) => state.auth);
   const { productReviews, reviewsLoading } = useSelector(
     (state) => state.reviews
   );

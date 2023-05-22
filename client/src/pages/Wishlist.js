@@ -5,9 +5,9 @@ import { Link } from "react-router-dom";
 import {
   getUserWishlist,
   removeFromUserWishlist,
-} from "../features/wishlist/wishlist-thunk";
+} from "../store/features/wishlist/wishlist-thunk";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../features/cart/cartSlice";
+import { addToCart } from "../store/features/cart/cartSlice";
 
 function Wishlist() {
   

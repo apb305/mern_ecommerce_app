@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import { Card, Form, Button, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { toast } from "react-toastify";
 import { UseAuth } from "../contexts/AuthContext";
 
 export default function ForgotPassword() {
-  const auth = getAuth();
   const [formData, setFormData] = useState({
     email: "",
   });

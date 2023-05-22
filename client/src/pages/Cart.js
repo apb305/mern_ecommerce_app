@@ -8,7 +8,7 @@ import {
   getTotal,
   increment,
   remove,
-} from "../features/cart/cartSlice";
+} from "../store/features/cart/cartSlice";
 import instance from "../config/axiosConfig";
 
 function Cart() {

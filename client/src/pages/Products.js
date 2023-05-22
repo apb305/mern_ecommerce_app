@@ -3,8 +3,8 @@ import { Card, Button, Container, Placeholder, CardImg } from "react-bootstrap";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart } from "../features/cart/cartSlice";
-import { getProducts } from "../features/products/products-thunk";
+import { addToCart } from "../store/features/cart/cartSlice";
+import { getProducts } from "../store/features/products/products-thunk";
 import Paginate from "../components/Paginate";
 
 function Products() {

@@ -15,7 +15,7 @@ export default function Login() {
     password: "",
   });
   const { email, password } = formData;
-  const { isAuthUser } = useSelector((state) => state.authUser);
+  const { isAuthUser } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
   const onChange = (e) => {

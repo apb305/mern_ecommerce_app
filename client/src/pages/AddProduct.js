@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { UseAuth } from "../contexts/AuthContext";
 import { toast } from "react-toastify";
-import { addProduct } from "../features/products/products-thunk";
+import { addProduct } from "../store/features/products/products-thunk";
 import Spinner from "../components/Spinner";
 
 function AddProduct() {

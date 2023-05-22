@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import instance from "../../config/axiosConfig";
-import { auth } from "../../config/firebase";
+import { auth } from "../../../config/firebase";
+import instance from "../../../config/axiosConfig";
 
 export const getProducts = createAsyncThunk(
   "products/getProducts",

@@ -10,15 +10,14 @@ import {
   updatePassword,
   reauthenticateWithCredential,
   EmailAuthProvider,
-  reload
   // signInWithRedirect,
 } from "firebase/auth";
 import axios from "../config/axiosConfig";
 import { toast } from "react-toastify";
 import { auth } from "../config/firebase";
 import { useDispatch } from "react-redux";
-import { setAuthUser, logout } from "../features/auth/authSlice";
-import { getUserDetails } from "../features/user/user-thunk";
+import { setAuthUser } from "../store/features/auth/authSlice";
+import { setUserDetails } from "../store/features/user/userSlice";
 
 const AuthContext = React.createContext();
 
@@ -53,7 +52,9 @@ export function AuthProvider({ children }) {
   }
 
   function signOut() {
-    dispatch(logout())
+    //Sign user out of Firebase
+    //Clear user account details from store.
+    dispatch(setUserDetails({}));
     return auth.signOut();
   }
 
@@ -111,17 +112,17 @@ export function AuthProvider({ children }) {
       if (user) {
         dispatch(
           setAuthUser({
-            email: user.email,
             uid: user.uid,
-            isAuthUser: true
+            isAuthUser: true,
           })
         );
       } else {
-        dispatch(setAuthUser({
-          email: null,
-          uid: null,
-          isAuthUser: false
-        }));
+        dispatch(
+          setAuthUser({
+            uid: null,
+            isAuthUser: false,
+          })
+        );
       }
       setLoading(false);
     });

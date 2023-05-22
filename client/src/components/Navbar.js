@@ -1,22 +1,17 @@
 import React, { Fragment } from "react";
 import { Navbar, Container, Nav, NavDropdown, Dropdown} from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../features/auth/authSlice";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { UseAuth } from "../contexts/AuthContext";
 
 export default function NavigationBar() {
-  const dispatch = useDispatch();
-  const { isAuthUser } = useSelector((state) => state.authUser);
+  const { isAuthUser } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart)
   const { signOut } = UseAuth();
 
  function onLogout() {
     try {
-      //Remove user from store
-      dispatch(logout());
-      //Sign user out of firebase
       signOut();
       toast.success("You have logged out successfully")
     } catch (error) {

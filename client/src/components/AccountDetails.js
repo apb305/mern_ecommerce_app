@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Card, Form, Accordion } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { getUserDetails, updateUserDetails } from "../features/user/user-thunk";
+import { getUserDetails, updateUserDetails } from "../store/features/user/user-thunk";
 
 function AccountDetails() {
   const dispatch = useDispatch();

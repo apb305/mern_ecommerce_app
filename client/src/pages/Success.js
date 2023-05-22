@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Spinner from "../components/Spinner";
 import instance from "../config/axiosConfig";
-import { clearCart } from "../features/cart/cartSlice";
+import { clearCart } from "../store/features/cart/cartSlice";
 
 function Success() {
   const [orderDetails, setOrderDetails] = useState({

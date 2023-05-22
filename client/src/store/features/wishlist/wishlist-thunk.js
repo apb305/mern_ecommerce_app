@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import instance from "../../config/axiosConfig";
-import { auth } from "../../config/firebase";
+import instance from "../../../config/axiosConfig";
+import { auth } from "../../../config/firebase";
 
 export const getUserWishlist = createAsyncThunk(
   "wishlist/getUserWishlist",
   async (args, { getState }) => {
-    const state = getState().authUser;
+    const state = getState().auth;
     try {
       const token = await auth.currentUser.getIdToken();
       const response = await instance.post(
@@ -26,7 +26,7 @@ export const getUserWishlist = createAsyncThunk(
 export const addToUserWishlist = createAsyncThunk(
   "wishlist/addToUserWishlist",
   async (product, { getState }) => {
-    const state = getState().authUser;
+    const state = getState().auth;
     const token = await auth.currentUser.getIdToken();
     try {
       const response = await instance.post(
@@ -47,7 +47,7 @@ export const addToUserWishlist = createAsyncThunk(
 export const removeFromUserWishlist = createAsyncThunk(
   "wishlist/removeFromUserWishlist",
   async (wishListItemId, { getState }) => {
-    const state = getState().authUser;
+    const state = getState().auth;
     const token = await auth.currentUser.getIdToken();
     try {
       const response = await instance.delete("/api/wishlist", {
