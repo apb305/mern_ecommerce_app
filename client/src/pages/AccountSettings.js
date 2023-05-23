@@ -1,18 +1,11 @@
-import { useEffect } from "react";
 import Spinner from "../components/Spinner";
 import { Container, Form, Accordion } from "react-bootstrap";
 import AccountDetails from "../components/AccountDetails";
 import AccountSecurity from "../components/AccountSecurity";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserDetails } from "../store/features/user/user-thunk";
+import { useSelector } from "react-redux";
 
-function Profile() {
+function AccountSettings() {
   const { isLoading } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getUserDetails());
-  }, []);
 
   return (
     <>
@@ -41,4 +34,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default AccountSettings;

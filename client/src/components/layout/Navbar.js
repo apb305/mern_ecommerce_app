@@ -3,7 +3,7 @@ import { Navbar, Container, Nav, NavDropdown, Dropdown} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { UseAuth } from "../contexts/AuthContext";
+import { UseAuth } from "../../contexts/AuthContext";
 
 export default function NavigationBar() {
   const { isAuthUser } = useSelector((state) => state.auth);

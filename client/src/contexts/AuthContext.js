@@ -18,6 +18,7 @@ import { auth } from "../config/firebase";
 import { useDispatch } from "react-redux";
 import { setAuthUser } from "../store/features/auth/authSlice";
 import { setUserDetails } from "../store/features/user/userSlice";
+import { getUserDetails } from "../store/features/user/user-thunk";
 
 const AuthContext = React.createContext();
 
@@ -53,8 +54,6 @@ export function AuthProvider({ children }) {
 
   function signOut() {
     //Sign user out of Firebase
-    //Clear user account details from store.
-    dispatch(setUserDetails({}));
     return auth.signOut();
   }
 
@@ -110,12 +109,15 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
+        //Keeps the user's auth status updated
         dispatch(
           setAuthUser({
             uid: user.uid,
             isAuthUser: true,
           })
         );
+        //Keeps user's account details loaded.
+        dispatch(getUserDetails())
       } else {
         dispatch(
           setAuthUser({
@@ -123,6 +125,7 @@ export function AuthProvider({ children }) {
             isAuthUser: false,
           })
         );
+        dispatch(setUserDetails({}))
       }
       setLoading(false);
     });
