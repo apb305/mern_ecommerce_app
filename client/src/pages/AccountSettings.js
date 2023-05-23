@@ -1,11 +1,19 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserDetails } from "../store/features/user/user-thunk";
 import Spinner from "../components/Spinner";
 import { Container, Form, Accordion } from "react-bootstrap";
 import AccountDetails from "../components/AccountDetails";
 import AccountSecurity from "../components/AccountSecurity";
-import { useSelector } from "react-redux";
 
 function AccountSettings() {
-  const { isLoading } = useSelector((state) => state.user);
+  const { isLoading, userDetails } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log("this works")
+    dispatch(getUserDetails());
+  }, [dispatch]);
 
   return (
     <>
@@ -21,7 +29,7 @@ function AccountSettings() {
               <div className="col-md-6">
                 <Form className="w-100">
                   <Accordion className="my-3" defaultActiveKey="0">
-                    <AccountDetails />
+                    <AccountDetails userDetails={userDetails} isLoading={isLoading} />
                     <AccountSecurity />
                   </Accordion>
                 </Form>

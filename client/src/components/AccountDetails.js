@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { Button, Card, Form, Accordion } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { getUserDetails, updateUserDetails } from "../store/features/user/user-thunk";
 
-function AccountDetails() {
+function AccountDetails({userDetails, isLoading}) {
   const dispatch = useDispatch();
-  const { userDetails, isLoading } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -38,6 +37,7 @@ function AccountDetails() {
 
   return (
     <>
+    {userDetails ? 
       <Accordion.Item eventKey="0">
         <Accordion.Header>Profile Details</Accordion.Header>
         <Accordion.Body>
@@ -81,7 +81,7 @@ function AccountDetails() {
             </Button>
           </div>
         </Accordion.Body>
-      </Accordion.Item>
+      </Accordion.Item> : "" }
     </>
   );
 }
