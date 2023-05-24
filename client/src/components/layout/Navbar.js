@@ -34,16 +34,14 @@ export default function NavigationBar() {
   
   const authLinks = (
     <Fragment>
-      <NavDropdown.Item className="text-dark" as={Link} to="/account-settings">
-        <span><i className="bi bi-gear me-3"></i></span>
+      <NavDropdown.Item className="text-dark mt-2" as={Link} to="/account-settings">
         Account Settings
       </NavDropdown.Item>
-      <NavDropdown.Item className=" text-dark" as={Link} to="/wishlist">
-      <span><i className="bi bi-heart me-3"></i></span>
+      <NavDropdown.Item className=" text-dark mt-2" as={Link} to="/wishlist">
         Wishlist
       </NavDropdown.Item>
-      <NavDropdown.Item className=" text-dark" onClick={onLogout}>
-        <i className="bi bi-box-arrow-right me-3"></i>
+      <NavDropdown.Item className=" text-dark mt-2" onClick={onLogout}>
+        <i className="bi bi-box-arrow-right me-1"></i>
         Logout
       </NavDropdown.Item>
     </Fragment>
