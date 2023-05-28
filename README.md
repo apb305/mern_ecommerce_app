@@ -21,10 +21,10 @@ A full-stack e-commerce site created using the MERN stack technologies. This app
 
 Create your Firebase Admin SDK, MongoDB, Cloudinary, and Stripe credentials, and include them in your .env file with the following:
 
-# Mongo
+### Mongo
 ATLAS_URI= 
 
-# Firebase
+### Firebase
 FIREBASE_AUTH_CERT_URL=<br> 
 FIREBASE_AUTH_URI=<br>
 FIREBASE_CLIENT_CERT_URL=<br> 
@@ -35,14 +35,14 @@ FIREBASE_PRIVATE_KEY_ID=<br>
 FIREBASE_PROJECT_ID=<br> 
 FIREBASE_TOKEN_URI=<br> 
 
-# Stripe
+### Stripe
 STRIPE_PUBLISHABLE_KEY=<br> 
 STRIPE_SECRET_KEY=<br> 
 STRIPE_WEBHOOK_SECRET=<br> 
 SUCCESS_URL=http://localhost:3000<br>
 CANCEL_URL=http://localhost:3000<br>
 
-# Cloudinary
+### Cloudinary
 CLOUDINARY_NAME=<br>
 CLOUDINARY_API_KEY=<br>
 CLOUDINARY_API_SECRET=<br>
