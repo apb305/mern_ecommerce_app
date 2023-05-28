@@ -46,3 +46,6 @@ CANCEL_URL=http://localhost:3000<br>
 CLOUDINARY_NAME=<br>
 CLOUDINARY_API_KEY=<br>
 CLOUDINARY_API_SECRET=<br>
+
+
+Server runs on http://localhost:4000 and client on http://localhost:3000
