@@ -7,7 +7,8 @@ A full-stack e-commerce site created using the MERN stack technologies. This app
 * Node JS/ Express
 * Bootstrap framework
 * Mongo DB (to store user and order data)
-* Firebase (handles authentication only)
+* Firebase Auth
+* Firebase admin sdk
 * Redux Toolkit
 * Stripe payment integration / Stripe webhooks
 * Cloudinary for image storage.
