@@ -19,3 +19,30 @@ A full-stack e-commerce site created using the MERN stack technologies. This app
 * Leave feedback comments on a product.
 * Checkout process using Stripe.
 
+Create your Firebase Admin SDK, MongoDB, Cloudinary, and Stripe credentials, and include them in your .env file with the following:
+
+# Mongo
+ATLAS_URI= 
+
+# Firebase
+FIREBASE_AUTH_CERT_URL= 
+FIREBASE_AUTH_URI= 
+FIREBASE_CLIENT_CERT_URL= 
+FIREBASE_CLIENT_EMAIL= 
+FIREBASE_CLIENT_ID= 
+FIREBASE_PRIVATE_KEY= 
+FIREBASE_PRIVATE_KEY_ID= 
+FIREBASE_PROJECT_ID= 
+FIREBASE_TOKEN_URI= 
+
+# Stripe
+STRIPE_PUBLISHABLE_KEY= 
+STRIPE_SECRET_KEY= 
+STRIPE_WEBHOOK_SECRET= 
+SUCCESS_URL=http://localhost:3000
+CANCEL_URL=http://localhost:3000
+
+# Cloudinary
+CLOUDINARY_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
