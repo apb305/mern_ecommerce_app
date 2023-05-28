@@ -1,6 +1,6 @@
 # E-Commerce App
 
-A full-stack e-commerce site created using the MERN stack technologies. This app was deployed on Render.com (front-end/back-end). Here is a DEMO of the project.
+A full-stack e-commerce site created using the MERN stack technologies. This app was deployed on Render.com (front-end/back-end). Here is a [DEMO](https://mern-ecommerce-app-client.onrender.com/) of the project.
 
 ### Technologies used in this project:
 * React
