@@ -60,7 +60,7 @@ function Cart() {
       <div className="ms-2 me-auto text-left">
         <Link
           className="text-decoration-none text-dark"
-          to={`/product/${item._id}`}
+          to={`/products/${item._id}`}
         >
           <p className="fw-bold mb-2">{item.productName}</p>
           <img

@@ -11,7 +11,6 @@ function AccountSettings() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("this works")
     dispatch(getUserDetails());
   }, [dispatch]);
 
