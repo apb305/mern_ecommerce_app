@@ -30,7 +30,7 @@ export const addProduct = createAsyncThunk(
   "products/addProduct",
   async (data, { getState }) => {
     const token = await auth.currentUser.getIdToken();
-    const state = getState().authUser;
+    const state = getState().auth;
     try {
       const response = await instance.post(
         `/api/products/add-product`,
@@ -50,7 +50,7 @@ export const editProduct = createAsyncThunk(
   "products/editProduct",
   async (data, { getState }) => {
     const token = await auth.currentUser.getIdToken();
-    const state = getState().authUser;
+    const state = getState().auth;
     try {
       const response = await instance.put(
         `/api/products/edit-product`,

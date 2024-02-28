@@ -1,14 +1,13 @@
-const { boolean } = require("joi");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ProductSchema = new Schema(
   {
-    admin: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "users",
-    },
+    // admin: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   required: true,
+    //   ref: "users",
+    // },
     img: {
       type: String,
       required: [true, "Please add image"],

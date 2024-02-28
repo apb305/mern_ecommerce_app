@@ -8,6 +8,7 @@ import { UseAuth } from "../../contexts/AuthContext";
 export default function NavigationBar() {
   const { isAuthUser } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart)
+  const { userDetails } = useSelector((state => state.user))
   const { signOut } = UseAuth();
 
  function onLogout() {
@@ -19,18 +20,18 @@ export default function NavigationBar() {
     }
   }
 
-  // const adminLinks = (
-  //   <Fragment>
-  //     <NavDropdown.Item className=" text-dark" as={Link} to="/admin">
-  //       Admin Dashboard
-  //     </NavDropdown.Item>
-  //     <Dropdown.Divider />
-  //     <NavDropdown.Item className=" text-dark" as={Link} to="/add-product">
-  //       Add products
-  //     </NavDropdown.Item>
-  //     <Dropdown.Divider />
-  //   </Fragment>
-  // )
+  const adminLinks = (
+    <Fragment>
+      <NavDropdown.Item className=" text-dark" as={Link} to="/admin">
+        Admin Dashboard
+      </NavDropdown.Item>
+      <Dropdown.Divider />
+      <NavDropdown.Item className=" text-dark" as={Link} to="/add-product">
+        Add products
+      </NavDropdown.Item>
+      <Dropdown.Divider />
+    </Fragment>
+  )
   
   const authLinks = (
     <Fragment>
@@ -84,7 +85,7 @@ export default function NavigationBar() {
                 }
                 id="dropdown-menu-align-end"
               >
-                 {/* {currentUser && userDetails.isAdmin ? adminLinks : ""} */}
+                 {isAuthUser && userDetails?.isAdmin ? adminLinks : ""}
                 {isAuthUser ? authLinks : guestLinks}
               </NavDropdown>
             </Nav>

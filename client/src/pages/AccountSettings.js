@@ -10,9 +10,9 @@ function AccountSettings() {
   const { isLoading, userDetails } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getUserDetails());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getUserDetails());
+  // }, [dispatch]);
 
   return (
     <>

@@ -38,7 +38,7 @@ export const productsSlice = createSlice({
     });
     builder.addCase(addProduct.fulfilled, (state, action) => {
       state.isLoading = false;
-      // state.product = action.payload.product;
+      state.product = action.payload.product;
     });
     builder.addCase(addProduct.rejected, (state, action) => {
       state.isLoading = false;

@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 import { auth } from "../config/firebase";
 import { useDispatch } from "react-redux";
 import { setAuthUser } from "../store/features/auth/authSlice";
+import { getUserDetails } from "../store/features/user/user-thunk";
 
 const AuthContext = React.createContext();
 
@@ -114,6 +115,7 @@ export function AuthProvider({ children }) {
             isAuthUser: true,
           })
         );
+        dispatch(getUserDetails());
       } else {
         dispatch(
           setAuthUser({
